@@ -26,8 +26,8 @@ export default function TextSlider() {
   }, []);
 
   return (
-    <div className="w-full max-w-3xl mx-auto text-center py-10 px-4">
-      <h2 className="text-2xl sm:text-3xl font-semibold text-gray-800 transition-opacity duration-500 ease-in-out">
+    <div className="w-full max-w-3xl text-center py-10 px-4">
+      <h2 className="text-2xl lg:text-4xl font-semibold text-gray-800 transition-opacity duration-500 ease-in-out">
         {slides[current].title}
       </h2>
       <p className="mt-2 text-gray-600 text-base sm:text-lg transition-opacity duration-500 ease-in-out">

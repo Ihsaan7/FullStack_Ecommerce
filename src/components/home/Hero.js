@@ -6,7 +6,7 @@ import TextSlider from './TextSlider'
 const Hero = () => {
   return (
     <Container >
-    <div className='flex'>
+    <div className='flex justify-between mt-10 items-center'>
     <TextSlider/>
     <ImageSlider/>
     </div>

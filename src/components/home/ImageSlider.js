@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const images = [
   '../images/iamge3.webp',
@@ -10,40 +10,30 @@ export default function ImageSlider() {
   const [current, setCurrent] = useState(0);
   const length = images.length;
 
-  const nextSlide = () => {
-    setCurrent(current === length - 1 ? 0 : current + 1);
-  };
+  // Auto-slide every 3 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrent((prev) => (prev === length - 1 ? 0 : prev + 1));
+    }, 3000);
 
-  const prevSlide = () => {
-    setCurrent(current === 0 ? length - 1 : current - 1);
-  };
+    return () => clearInterval(interval); // Cleanup
+  }, [length]);
 
   return (
-    <div className="relative w-full max-w-3xl mx-auto overflow-hidden rounded-lg shadow-md">
-      <div className="flex transition-transform duration-500 ease-in-out" style={{ transform: `translateX(-${current * 100}%)` }}>
+    <div className="relative w-full max-w-3xl h-[500px] mx-auto overflow-hidden border-2 rounded-lg shadow-md">
+      <div
+        className="flex transition-transform duration-500 ease-in-out"
+        style={{ transform: `translateX(-${current * 100}%)` }}
+      >
         {images.map((src, index) => (
           <img
             key={index}
             src={src}
             alt={`Slide ${index}`}
-            className="w-full flex-shrink-0 object-cover h-64"
+            className="w-full flex-shrink-0 object-cover h-full"
           />
         ))}
       </div>
-
-      {/* Navigation Buttons */}
-      <button
-        onClick={prevSlide}
-        className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white p-2 rounded-full shadow hover:bg-gray-100"
-      >
-        ‹
-      </button>
-      <button
-        onClick={nextSlide}
-        className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white p-2 rounded-full shadow hover:bg-gray-100"
-      >
-        ›
-      </button>
     </div>
   );
 }
