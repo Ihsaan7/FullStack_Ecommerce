@@ -3,7 +3,6 @@ import FeaturedProducts from './FeaturedProducts';
 import RecentProducts from './RecentProducts';
 import ProductBox from './ProductBox';
 
-
 const Products = () => {
 
 const [products ,setProducts ]=useState([]); 
@@ -14,6 +13,7 @@ useEffect(()=>
         .then(res=> res.json())
         .then(data=>setProducts(data))
     },[])
+  
 
 const recentProducts = products.slice(-12);
 const featuredProducts = products
