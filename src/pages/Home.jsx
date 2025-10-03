@@ -1,5 +1,5 @@
 import React from "react";
-import Crousel from "../components/Crousel";
+import Crousel from "../components/home/Crousel";
 import Container from "../components/Container";
 
 const Home = () => {
@@ -7,7 +7,6 @@ const Home = () => {
     <>
       <Container>
         <Crousel />
-        <h1>Home</h1>
       </Container>
     </>
   );
