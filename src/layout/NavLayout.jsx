@@ -1,48 +1,43 @@
-import React from "react";
-import { FiSearch } from "react-icons/fi";
-import Container from "../components/Container";
-import { Link, Outlet } from "react-router-dom";
+import React from 'react';
+import { FaSearch, FaStore, FaShoppingCart } from 'react-icons/fa';
+import { Link, Outlet } from 'react-router-dom';
 
-const NavBar = () => {
+
+export function NavLayout()
+{
+    return(
+        <>
+            <Navbar />
+            <Outlet />
+        </>
+    )
+}
+
+const Navbar = () => {
   return (
-    <div>
-      <ul className="flex gap-6">
-        <li>
-          <Link to="/">Home</Link>
-        </li>
-        <li>
-          <Link to="/store">Store</Link>
-        </li>
-        <li>
-          <Link to="/cart">Cart</Link>
-        </li>
-      </ul>
-    </div>
+    <nav className="w-full h-16 bg-white shadow-md flex items-center justify-between px-6">
+      {/* Logo */}
+     <Link to="/"> <div className="text-xl font-bold text-blue-600">        MyShop
+      </div>
+      </Link>
+
+
+      {/* Search Bar */}
+      <div className="flex items-center w-1/2 max-w-md bg-gray-100 rounded-full px-4 py-2">
+        <input
+          type="text"
+          placeholder="Search products..."
+          className="flex-grow bg-transparent outline-none text-gray-700"
+        />
+        <FaSearch className="text-gray-500" />
+      </div>
+
+      {/* Store / Cart Icons */}
+      <div className="flex items-center space-x-6 text-gray-700 text-xl">
+       <Link to="/store"> <FaStore className="cursor-pointer hover:text-blue-600" /></Link>
+        <FaShoppingCart className="cursor-pointer hover:text-blue-600" />
+      </div>
+    </nav>
   );
 };
 
-const NavLayout = () => {
-  return (
-    <>
-      <Container>
-        <div className="w-full border flex justify-around items-center py-3 bg-white text-black shadow-md ">
-          <div>
-            <h3>LOGO</h3>
-          </div>
-          <div className="flex items-center bg-gray-100 rounded-md px-4 py-2 w-full max-w-md shadow-sm">
-            <input
-              type="text"
-              placeholder="Search..."
-              className="bg-transparent outline-none w-full text-gray-700 placeholder-gray-500"
-            />
-            <FiSearch className="text-gray-500 text-xl ml-2" />
-          </div>
-          <NavBar />
-        </div>
-      </Container>
-      <Outlet />
-    </>
-  );
-};
-
-export default NavLayout;
