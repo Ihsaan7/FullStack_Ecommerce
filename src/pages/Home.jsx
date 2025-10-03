@@ -1,9 +1,14 @@
 import React from "react";
+import Crousel from "../components/Crousel";
+import Container from "../components/Container";
 
 const Home = () => {
   return (
     <>
-      <div>Home</div>
+      <Container>
+        <Crousel />
+        <h1>Home</h1>
+      </Container>
     </>
   );
 };
