@@ -1,12 +1,21 @@
 import React from "react";
 
 const CartCard = ({ product, onDecrease, onIncrease, onRemove }) => {
-  const { id, title, price, images, image, category } = product;
-  const url = images?.[0] || image; // Handle both image formats
+  const {
+    id,
+    title,
+    price,
+    images,
+    image,
+    category,
+    quantity = 1,
+    url: productUrl,
+  } = product;
+  const url = images?.[0] || image || productUrl; // Handle multiple image formats
   const discount = 0; // Default discount
-  const quantity = 1; // Default quantity
 
   const discountedPrice = price - price * (discount / 100);
+  const totalPrice = discountedPrice * quantity; // Calculate total based on quantity
 
   return (
     <div className="flex border rounded-lg p-4 mb-4 shadow-sm bg-white">
@@ -22,11 +31,16 @@ const CartCard = ({ product, onDecrease, onIncrease, onRemove }) => {
             {title}
           </p>
           <p className="text-xs text-gray-500">
-            Original: ${price?.toFixed(2) || "0.00"}
+            Price per item: ${price?.toFixed(2) || "0.00"}
           </p>
+          {quantity > 1 && (
+            <p className="text-xs text-gray-500">
+              Quantity: {quantity} × ${price?.toFixed(2)}
+            </p>
+          )}
           <p className="text-xs text-green-600">Discount: {discount}%</p>
           <p className="text-sm font-bold text-blue-600">
-            Final: ${discountedPrice?.toFixed(2) || "0.00"}
+            Total: ${totalPrice?.toFixed(2) || "0.00"}
           </p>
         </div>
 
