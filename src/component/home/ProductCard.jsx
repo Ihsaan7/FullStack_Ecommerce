@@ -1,16 +1,18 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useState } from "react";
+import { Link } from "react-router-dom";
+import ProductContext from "../context/ProductContext";
 
-const ProductCard = ({ price, title, url, category , id}) => {
+const ProductCard = ({ price, title, url, category, id }) => {
+  const { setSelectProduct } = useContext(ProductContext);
+  const handleAddtoCart = () => {
+    setSelectProduct(id);
+  };
+
   return (
     <div className="border rounded-lg shadow-md w-full max-w-xs bg-white overflow-hidden hover:shadow-lg transition-shadow duration-300">
       {/* Image */}
       <div className="h-48 w-full overflow-hidden">
-        <img
-          src={url}
-          alt={title}
-          className="w-full h-full object-cover"
-        />
+        <img src={url} alt={title} className="w-full h-full object-cover" />
       </div>
 
       {/* Details */}
@@ -21,10 +23,13 @@ const ProductCard = ({ price, title, url, category , id}) => {
         <p className="text-blue-600 font-bold">THE ID is {id}</p>
       </div>
       <Link to={`/cart/${id}`}>
-      <button className='border-2 text-black'onClick={()=>{}}>Add to Cart</button>
+        <button className="border-2 text-black" onClick={handleAddtoCart}>
+          {console.log(products)}
+          Add to Cart
+        </button>
       </Link>
     </div>
   );
 };
 
-export default ProductCard; 
+export default ProductCard;
