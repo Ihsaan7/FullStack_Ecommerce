@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
-import ProductContext from "../context/ProductContext";
+import { ProductContext } from "../../context/ProductContext";
 
 const ProductCard = ({ price, title, url, category, id }) => {
   const { setSelectProduct } = useContext(ProductContext);
@@ -24,7 +24,6 @@ const ProductCard = ({ price, title, url, category, id }) => {
       </div>
       <Link to={`/cart/${id}`}>
         <button className="border-2 text-black" onClick={handleAddtoCart}>
-          {console.log(products)}
           Add to Cart
         </button>
       </Link>

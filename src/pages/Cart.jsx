@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import ProductContext from "../context/ProductContext";
+import { ProductContext } from "../context/ProductContext";
 
 const Cart = () => {
   const { selectProduct } = useContext(ProductContext);
@@ -14,6 +14,7 @@ const Cart = () => {
           </div>
           <div>
             <p>Title</p>
+            <p>{id}</p>
             <p>- 01 +</p>
             <p>Price</p>
           </div>
