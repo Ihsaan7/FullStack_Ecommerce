@@ -3,9 +3,10 @@ import { Link } from "react-router-dom";
 import { ProductContext } from "../../context/ProductContext";
 
 const ProductCard = ({ price, title, url, category, id }) => {
-  const { setSelectProduct } = useContext(ProductContext);
-  const handleAddtoCart = () => {
-    setSelectProduct(id);
+  const { addToCart } = useContext(ProductContext);
+
+  const handleAdd = () => {
+    addToCart({ price, title, url, category, id, quantity: 1 });
   };
 
   return (
@@ -23,7 +24,7 @@ const ProductCard = ({ price, title, url, category, id }) => {
         <p className="text-blue-600 font-bold">THE ID is {id}</p>
       </div>
       <Link to={`/cart/${id}`}>
-        <button className="border-2 text-black" onClick={handleAddtoCart}>
+        <button className="border-2 text-black" onClick={handleAdd}>
           Add to Cart
         </button>
       </Link>

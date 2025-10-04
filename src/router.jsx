@@ -16,7 +16,7 @@ export const router = createBrowserRouter([
         loader: recentLoader,
         children: [
           { index: true, element: <Cart /> },
-          { path: ":id", element: <Cart /> },
+          { path: ":id", element: <Cart />, loader: recentLoader },
         ],
       },
     ],
