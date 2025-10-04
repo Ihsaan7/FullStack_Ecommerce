@@ -1,8 +1,10 @@
-import { NavLink, useLoaderData } from "react-router-dom";
+import { NavLink, useLoaderData, useSearchParams } from "react-router-dom";
 import ProductCard from "../component/home/ProductCard";
 import { useState } from "react";
 
 export function Store() {
+  const [searchParams] = useSearchParams();
+  const selectCategory = searchParams.get("category");
   const [cartProduct, setCartProducts] = useState([]);
   const products = useLoaderData();
 
@@ -11,23 +13,46 @@ export function Store() {
     ...new Set(products.map((prod) => prod.category?.name).filter(Boolean)),
   ];
 
+  // Filter products based on selected category
+  const filteredProducts =
+    selectCategory && selectCategory !== "All"
+      ? products.filter((prod) => prod.category?.name === selectCategory)
+      : products; // Show all products if no category or "All" is selected
+
   return (
     <div className="main h-full flex w-full">
       {/* Sidebar */}
       <div className="hleft h-screen w-[30%] border-2 flex items-center justify-center">
         <div>
-          <h1 className="text-xl font-bold mb-4">Search</h1>
-          <input
-            className="border-2 px-2 py-1 mb-4 w-full"
-            type="text"
-            placeholder="Search Here!"
-          />
+          <h1 className="text-xl font-bold mb-4">Categories</h1>
+
           <div className="border-2 p-3 space-y-2">
-            {uniqueCategories.slice(0, 8).map((catName) => (
+            {/* All Category - Shows all products */}
+            <NavLink
+              to="/store?category=All"
+              className={({ isActive }) =>
+                `block px-3 py-2 rounded transition-colors ${
+                  !selectCategory || selectCategory === "All"
+                    ? "bg-blue-500 text-white font-semibold"
+                    : "text-blue-600 hover:bg-blue-50"
+                }`
+              }
+            >
+              All Products
+            </NavLink>
+
+            {/* Individual Categories */}
+            {uniqueCategories.slice(0, 5).map((catName) => (
               <NavLink
                 key={catName}
                 to={`/store?category=${catName}`}
-                className="block text-blue-600 hover:underline"
+                className={({ isActive }) =>
+                  `block px-3 py-2 rounded transition-colors ${
+                    selectCategory === catName
+                      ? "bg-blue-500 text-white font-semibold"
+                      : "text-blue-600 hover:bg-blue-50"
+                  }`
+                }
               >
                 {catName}
               </NavLink>
@@ -38,11 +63,20 @@ export function Store() {
 
       {/* Main Content */}
       <div className="hright w-full h-full border-2 pt-5 px-6">
-        <h1 className="text-3xl font-bold mb-6">Everything At One Place</h1>
+        <div className="mb-6">
+          <h1 className="text-3xl font-bold">
+            {selectCategory && selectCategory !== "All"
+              ? `${selectCategory} Products`
+              : "Everything At One Place"}
+          </h1>
+          <p className="text-gray-600 mt-2">
+            Showing {filteredProducts.length} product
+            {filteredProducts.length !== 1 ? "s" : ""}
+          </p>
+        </div>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-          {products.map((prod) => (
-            <>
-              {console.log(prod.id)}
+          {filteredProducts.length > 0 ? (
+            filteredProducts.map((prod) => (
               <ProductCard
                 key={prod.id}
                 id={prod.id}
@@ -51,9 +85,14 @@ export function Store() {
                 url={prod.images[0]}
                 category={prod.category?.name || "Uncategorized"}
               />
-            </>
-          ))}
-          <button>Helllo</button>
+            ))
+          ) : (
+            <div className="col-span-full text-center py-12">
+              <p className="text-gray-500 text-lg">
+                No products found in this category.
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </div>
