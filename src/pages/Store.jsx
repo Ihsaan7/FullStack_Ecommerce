@@ -1,4 +1,9 @@
-import { NavLink, useLoaderData, useSearchParams } from "react-router-dom";
+import {
+  NavLink,
+  Outlet,
+  useLoaderData,
+  useSearchParams,
+} from "react-router-dom";
 import ProductCard from "../component/home/ProductCard";
 import { useState } from "react";
 

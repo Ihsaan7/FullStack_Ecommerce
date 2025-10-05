@@ -17,7 +17,9 @@ const ProductCard = ({ price, title, url, category, id }) => {
     <div className="border rounded-lg shadow-md w-full max-w-xs bg-white overflow-hidden hover:shadow-lg transition-shadow duration-300">
       {/* Image */}
       <div className="h-48 w-full overflow-hidden">
-        <img src={url} alt={title} className="w-full h-full object-cover" />
+        <Link to={`/store/${id}`}>
+          <img src={url} alt={title} className="w-full h-full object-cover" />
+        </Link>
       </div>
 
       {/* Details */}
