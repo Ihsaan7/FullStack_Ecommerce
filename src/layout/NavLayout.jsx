@@ -98,8 +98,8 @@ const Navbar = () => {
                 to="/store" 
                 className="hidden sm:flex items-center space-x-1.5 px-3 py-2 hover:bg-white/10 dark:hover:bg-gray-800/20 transition-all duration-300 group"
               >
-                <FaStore className="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-blue-500 dark:group-hover:text-slate-400 transition-colors duration-300" />
-                <span className="text-gray-700 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white font-medium text-sm">Store</span>
+                <FaStore className="w-4 h-4 text-gray-800 dark:text-gray-400 group-hover:text-blue-500 dark:group-hover:text-slate-400 transition-colors duration-300" />
+                <span className="text-gray-900 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white font-medium text-sm">Store</span>
               </Link>
 
               {/* Cart Link */}
@@ -107,8 +107,8 @@ const Navbar = () => {
                 to="/cart" 
                 className="relative flex items-center space-x-1.5 px-3 py-2 hover:bg-white/10 dark:hover:bg-gray-800/20 transition-all duration-300 group mr-2"
               >
-                <FaShoppingCart className="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-blue-500 dark:group-hover:text-slate-400 transition-colors duration-300" />
-                <span className="hidden sm:block text-gray-700 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white font-medium text-sm">Cart</span>
+                <FaShoppingCart className="w-4 h-4 text-gray-800 dark:text-gray-400 group-hover:text-blue-500 dark:group-hover:text-slate-400 transition-colors duration-300" />
+                <span className="hidden sm:block text-gray-900 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white font-medium text-sm">Cart</span>
                 {/* Cart Badge */}
                 <div className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-gradient-to-r from-blue-500 to-slate-700 flex items-center justify-center shadow-lg">
                   <span className="text-xs text-white font-bold">0</span>
@@ -119,7 +119,7 @@ const Navbar = () => {
               <button
                 type="button"
                 onClick={toggleTheme}
-                className="w-10 h-10 flex items-center justify-center border border-white/20 dark:border-gray-700/50 bg-white/10 dark:bg-gray-900/30 backdrop-blur-sm text-gray-600 dark:text-gray-400 hover:bg-white/20 dark:hover:bg-gray-800/40 hover:text-blue-500 dark:hover:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 dark:focus:ring-slate-500/50 transition-all duration-300 shadow-lg"
+                className="w-10 h-10 flex items-center justify-center border border-white/20 dark:border-gray-700/50 bg-white/10 dark:bg-gray-900/30 backdrop-blur-sm text-gray-800 dark:text-gray-400 hover:bg-white/20 dark:hover:bg-gray-800/40 hover:text-blue-500 dark:hover:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 dark:focus:ring-slate-500/50 transition-all duration-300 shadow-lg"
                 aria-label="Toggle theme"
               >
                 {theme === "dark" ? (

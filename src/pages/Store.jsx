@@ -25,79 +25,81 @@ export function Store() {
       : products; // Show all products if no category or "All" is selected
 
   return (
-    <div className="main h-full flex w-full">
-      {/* Sidebar */}
-      <div className="hleft h-screen w-[30%] border-2 flex items-center justify-center">
-        <div>
-          <h1 className="text-xl font-bold mb-4">Categories</h1>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50/80 via-white to-gray-100/60 dark:from-black dark:to-gray-900 transition-all duration-500">
+      <div className="main h-full flex w-full">
+        {/* Sidebar */}
+        <div className="hleft h-screen w-[30%] bg-white/80 dark:bg-gray-900/90 backdrop-blur-sm border-r border-gray-200/50 dark:border-gray-700/70 flex items-center justify-center">
+          <div className="w-full px-6">
+            <h1 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">Categories</h1>
 
-          <div className="border-2 p-3 space-y-2">
-            {/* All Category - Shows all products */}
-            <NavLink
-              to="/store?category=All"
-              className={({ isActive }) =>
-                `block px-3 py-2 rounded transition-colors ${
-                  !selectCategory || selectCategory === "All"
-                    ? "bg-blue-500 text-white font-semibold"
-                    : "text-blue-600 hover:bg-blue-50"
-                }`
-              }
-            >
-              All Products
-            </NavLink>
-
-            {/* Individual Categories */}
-            {uniqueCategories.slice(0, 5).map((catName) => (
+            <div className="bg-white/60 dark:bg-black/20 backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50 p-4 space-y-2 shadow-lg">
+              {/* All Category - Shows all products */}
               <NavLink
-                key={catName}
-                to={`/store?category=${catName}`}
+                to="/store?category=All"
                 className={({ isActive }) =>
-                  `block px-3 py-2 rounded transition-colors ${
-                    selectCategory === catName
-                      ? "bg-blue-500 text-white font-semibold"
-                      : "text-blue-600 hover:bg-blue-50"
+                  `block px-3 py-2 transition-all duration-300 ${
+                    !selectCategory || selectCategory === "All"
+                      ? "bg-gradient-to-r from-blue-600 to-slate-800 text-white font-semibold shadow-lg"
+                      : "text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-gray-800/50 hover:text-blue-600 dark:hover:text-blue-400"
                   }`
                 }
               >
-                {catName}
+                All Products
               </NavLink>
-            ))}
+
+              {/* Individual Categories */}
+              {uniqueCategories.slice(0, 5).map((catName) => (
+                <NavLink
+                  key={catName}
+                  to={`/store?category=${catName}`}
+                  className={({ isActive }) =>
+                    `block px-3 py-2 transition-all duration-300 ${
+                      selectCategory === catName
+                        ? "bg-gradient-to-r from-blue-600 to-slate-800 text-white font-semibold shadow-lg"
+                        : "text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-gray-800/50 hover:text-blue-600 dark:hover:text-blue-400"
+                    }`
+                  }
+                >
+                  {catName}
+                </NavLink>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Main Content */}
-      <div className="hright w-full h-full border-2 pt-5 px-6">
-        <div className="mb-6">
-          <h1 className="text-3xl font-bold">
-            {selectCategory && selectCategory !== "All"
-              ? `${selectCategory} Products`
-              : "Everything At One Place"}
-          </h1>
-          <p className="text-gray-600 mt-2">
-            Showing {filteredProducts.length} product
-            {filteredProducts.length !== 1 ? "s" : ""}
-          </p>
-        </div>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-          {filteredProducts.length > 0 ? (
-            filteredProducts.map((prod) => (
-              <ProductCard
-                key={prod.id}
-                id={prod.id}
-                price={prod.price}
-                title={prod.title}
-                url={prod.images[0]}
-                category={prod.category?.name || "Uncategorized"}
-              />
-            ))
-          ) : (
-            <div className="col-span-full text-center py-12">
-              <p className="text-gray-500 text-lg">
-                No products found in this category.
-              </p>
-            </div>
-          )}
+        {/* Main Content */}
+        <div className="hright w-full h-full pt-5 px-6">
+          <div className="mb-6">
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+              {selectCategory && selectCategory !== "All"
+                ? `${selectCategory} Products`
+                : "Everything At One Place"}
+            </h1>
+            <p className="text-gray-600 dark:text-gray-400 mt-2">
+              Showing {filteredProducts.length} product
+              {filteredProducts.length !== 1 ? "s" : ""}
+            </p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+            {filteredProducts.length > 0 ? (
+              filteredProducts.map((prod) => (
+                <ProductCard
+                  key={prod.id}
+                  id={prod.id}
+                  price={prod.price}
+                  title={prod.title}
+                  url={prod.images[0]}
+                  category={prod.category?.name || "Uncategorized"}
+                />
+              ))
+            ) : (
+              <div className="col-span-full text-center py-12">
+                <p className="text-gray-500 dark:text-gray-400 text-lg">
+                  No products found in this category.
+                </p>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>

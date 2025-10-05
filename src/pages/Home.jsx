@@ -7,51 +7,87 @@ const Home = () => {
   const products = useLoaderData();
 
   return (
-    <div className="relative flex flex-col gap-16 pb-24">
-      <div className="absolute inset-0 -z-10 bg-lux-light dark:bg-lux-gradient transition-colors" />
-      <Carousel />
+    <div className="min-h-screen bg-gradient-to-br from-white/5 to-gray-100/10 dark:from-black/10 dark:to-gray-900/20 transition-all duration-500">
+      {/* Hero Section */}
+      <section className="relative overflow-hidden">
+        <Carousel />
+      </section>
 
-      {/* Recent Products */}
-      <section className="px-4 md:px-8">
-        <header className="flex items-center justify-between mb-6">
-          <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-slate-800 via-slate-600 to-slate-400 dark:from-slate-100 dark:via-slate-300 dark:to-slate-500">
-            New Arrivals
-          </h2>
-          <div className="h-px flex-1 ml-6 bg-gradient-to-r from-slate-300/60 to-transparent dark:from-slate-600" />
-        </header>
-        <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
-          {products.slice(0, 4).map((prod) => (
-            <ProductCard
-              key={prod.id}
-              id={prod.id}
-              price={prod.price}
-              title={prod.title}
-              url={prod.images[0]}
-              category={prod.category?.name || "Uncategorized"}
-            />
-          ))}
+      {/* New Arrivals Section */}
+      <section className="py-20 px-4 md:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <div className="inline-block px-4 py-2 bg-gradient-to-r from-blue-600 to-slate-800 text-white rounded-full text-sm font-medium mb-4 shadow-lg">
+              NEW ARRIVALS
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
+              Latest Collection
+            </h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-slate-800 mx-auto"></div>
+          </div>
+          
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            {products.slice(0, 4).map((prod) => (
+              <div key={prod.id} className="group">
+                <ProductCard
+                  id={prod.id}
+                  price={prod.price}
+                  title={prod.title}
+                  url={prod.images[0]}
+                  category={prod.category?.name || "Uncategorized"}
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* Featured */}
-      <section className="px-4 md:px-8">
-        <header className="flex items-center justify-between mb-6">
-          <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-800 dark:text-slate-100">
-            Featured Picks
+      {/* Featured Collection */}
+      <section className="py-20 px-4 md:px-8 bg-white/5 dark:bg-black/10 backdrop-blur-sm">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <div className="inline-block px-4 py-2 bg-gradient-to-r from-slate-700 to-blue-900 text-white rounded-full text-sm font-medium mb-4 shadow-lg">
+              FEATURED
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
+              Editor's Choice
+            </h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-slate-700 to-blue-900 mx-auto"></div>
+          </div>
+          
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {products.slice(4, 12).map((prod) => (
+              <div key={prod.id} className="group">
+                <ProductCard
+                  id={prod.id}
+                  price={prod.price}
+                  title={prod.title}
+                  url={prod.images[0]}
+                  category={prod.category?.name || "Uncategorized"}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Call to Action */}
+      <section className="py-20 px-4 md:px-8 bg-gradient-to-r from-gray-900 via-slate-800 to-gray-900 dark:from-white dark:via-gray-100 dark:to-white">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-4xl md:text-5xl font-bold mb-8 text-white dark:text-gray-900">
+            Ready to Experience Luxury?
           </h2>
-          <div className="h-px flex-1 ml-6 bg-gradient-to-r from-slate-300/60 to-transparent dark:from-slate-600" />
-        </header>
-        <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
-          {products.slice(4, 12).map((prod) => (
-            <ProductCard
-              key={prod.id}
-              id={prod.id}
-              price={prod.price}
-              title={prod.title}
-              url={prod.images[0]}
-              category={prod.category?.name || "Uncategorized"}
-            />
-          ))}
+          <p className="text-xl text-gray-300 dark:text-gray-600 mb-12 max-w-2xl mx-auto">
+            Join thousands of satisfied customers who have chosen quality and elegance.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <button className="px-8 py-4 bg-gradient-to-r from-blue-600 to-slate-800 text-white font-semibold hover:from-blue-700 hover:to-slate-900 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
+              Explore Collection
+            </button>
+            <button className="px-8 py-4 border-2 border-white dark:border-gray-900 text-white dark:text-gray-900 font-semibold hover:bg-white hover:text-gray-900 dark:hover:bg-gray-900 dark:hover:text-white transition-all duration-300">
+              Learn More
+            </button>
+          </div>
         </div>
       </section>
     </div>
