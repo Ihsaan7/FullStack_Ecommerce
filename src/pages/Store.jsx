@@ -25,14 +25,14 @@ export function Store() {
       : products; // Show all products if no category or "All" is selected
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50/80 via-white to-gray-100/60 dark:from-black dark:to-gray-900 transition-all duration-500">
-      <div className="main h-full flex w-full">
+    <div className="min-h-screen bg-gradient-to-br from-white/5 to-gray-100/10 dark:from-black/10 dark:to-gray-900/20 transition-all duration-500">
+      <div className="main h-full flex w-full max-w-7xl mx-auto">
         {/* Sidebar */}
         <div className="hleft h-screen w-[30%] bg-white/80 dark:bg-gray-900/90 backdrop-blur-sm border-r border-gray-200/50 dark:border-gray-700/70 flex items-center justify-center">
           <div className="w-full px-6">
-            <h1 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">Categories</h1>
+            <h1 className="text-xl font-bold mb-4 text-gray-900 dark:text-white tracking-tight">Categories</h1>
 
-            <div className="bg-white/60 dark:bg-black/20 backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50 p-4 space-y-2 shadow-lg">
+            <div className="bg-white/60 dark:bg-gray-900/80 backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50 p-4 space-y-2 shadow-lg">
               {/* All Category - Shows all products */}
               <NavLink
                 to="/store?category=All"
@@ -68,19 +68,19 @@ export function Store() {
         </div>
 
         {/* Main Content */}
-        <div className="hright w-full h-full pt-5 px-6">
+        <div className="hright w-full h-full pt-8 px-6 md:px-10">
           <div className="mb-6">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white tracking-tight">
               {selectCategory && selectCategory !== "All"
                 ? `${selectCategory} Products`
                 : "Everything At One Place"}
             </h1>
-            <p className="text-gray-600 dark:text-gray-400 mt-2">
+            <p className="text-gray-600 dark:text-gray-400 mt-2 text-sm">
               Showing {filteredProducts.length} product
               {filteredProducts.length !== 1 ? "s" : ""}
             </p>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
             {filteredProducts.length > 0 ? (
               filteredProducts.map((prod) => (
                 <ProductCard
