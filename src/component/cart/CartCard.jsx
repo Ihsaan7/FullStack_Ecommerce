@@ -17,11 +17,11 @@ const CartCard = ({ product, onDecrease, onIncrease, onRemove }) => {
   const totalPrice = price * quantity;
 
   return (
-    <div className="bg-white/10 dark:bg-black/20 backdrop-blur-sm border border-white/20 dark:border-blue-500/30 p-6 shadow-lg hover:shadow-xl transition-all duration-300 group">
-      <div className="flex gap-6">
+    <div className="bg-white/10 dark:bg-black/20 backdrop-blur-sm border border-white/20 dark:border-blue-500/30 p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 group">
+      <div className="flex gap-4 sm:gap-6">
         {/* Product Image */}
         <div className="flex-shrink-0">
-          <div className="w-24 h-24 md:w-32 md:h-32 overflow-hidden bg-white/5 dark:bg-black/10 border border-white/10 dark:border-blue-400/20">
+          <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 overflow-hidden bg-white/5 dark:bg-black/10 border border-white/10 dark:border-blue-400/20">
             <img 
               src={url} 
               alt={title} 
@@ -71,7 +71,7 @@ const CartCard = ({ product, onDecrease, onIncrease, onRemove }) => {
           </div>
 
           {/* Quantity Controls */}
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-3">
               <button
                 onClick={() => onDecrease && onDecrease(id)}
@@ -93,7 +93,7 @@ const CartCard = ({ product, onDecrease, onIncrease, onRemove }) => {
             </div>
 
             {/* Total Price */}
-            <div className="text-right">
+            <div className="text-right min-w-0 flex-shrink-0">
               <div className="text-sm text-gray-500 dark:text-gray-400">Total</div>
               <div className="text-xl font-bold text-gray-900 dark:text-white">
                 ${totalPrice.toFixed(2)}

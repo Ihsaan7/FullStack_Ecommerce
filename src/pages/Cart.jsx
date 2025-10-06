@@ -43,7 +43,7 @@ const Cart = () => {
           {/* Navigation */}
           <Link 
             to="/store" 
-            className="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 mb-8"
+            className="inline-flex items-center gap-1.5 text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 mb-8 px-3 py-1.5 border border-gray-300 dark:border-gray-600 hover:border-blue-500 dark:hover:border-blue-400 sm:border-0 sm:px-0 sm:py-0 sm:text-base sm:gap-2"
           >
             <FaArrowLeft className="w-4 h-4" />
             Continue Shopping
@@ -76,10 +76,10 @@ const Cart = () => {
     <div className="min-h-screen bg-gradient-to-br from-white/5 to-gray-100/10 dark:from-black/10 dark:to-gray-900/20 transition-all duration-500">
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-6">
         {/* Navigation */}
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex flex-col md:flex-row items-center justify-between mb-8">
           <Link 
             to="/store" 
-            className="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300"
+            className="inline-flex items-center gap-1.5 text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 px-3 py-1.5 border border-gray-300 dark:border-gray-600 hover:border-blue-500 dark:hover:border-blue-400 sm:border-0 sm:px-0 sm:py-0 sm:text-base sm:gap-2"
           >
             <FaArrowLeft className="w-4 h-4" />
             Continue Shopping
@@ -95,9 +95,9 @@ const Cart = () => {
           </div>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-8">
+        <div className="grid lg:grid-cols-3 gap-6 lg:gap-8">
           {/* Cart Items */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="lg:col-span-2 space-y-4 sm:space-y-6">
             {/* Cart Header */}
             <div className="flex items-center justify-between">
               <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
@@ -127,8 +127,8 @@ const Cart = () => {
           </div>
 
           {/* Order Summary */}
-          <div className="lg:col-span-1">
-            <div className="bg-white/10 dark:bg-black/20 backdrop-blur-sm border border-white/20 dark:border-blue-500/30 p-6 shadow-xl sticky top-6">
+          <div className="lg:col-span-1 mt-6 lg:mt-0">
+            <div className="bg-white/10 dark:bg-black/20 backdrop-blur-sm border border-white/20 dark:border-blue-500/30 p-4 sm:p-6 shadow-xl sticky top-6">
               <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-6">
                 Order Summary
               </h2>
