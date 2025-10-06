@@ -2,11 +2,13 @@ import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ProductContext } from "../../context/ProductContext";
 
-const ProductCard = ({ price, title, url, category, id }) => {
+const ProductCard = ({ price, title, url, category, id, size = 'md' }) => {
   const { addToCart } = useContext(ProductContext);
   const navigate = useNavigate();
   const [added, setAdded] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+
+  const imageHeight = size === 'lg' ? 'h-80' : 'h-64';
 
   const handleAdd = (e) => {
     e.preventDefault(); // Prevent navigation
@@ -27,7 +29,7 @@ const ProductCard = ({ price, title, url, category, id }) => {
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Image Container */}
-      <div className="relative h-64 w-full overflow-hidden">
+      <div className={`relative ${imageHeight} w-full overflow-hidden`}>
         <Link to={`/store/${id}`}>
           <img
             src={url}

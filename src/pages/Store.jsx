@@ -25,16 +25,14 @@ export function Store() {
       : products; // Show all products if no category or "All" is selected
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50/80 via-white to-gray-100/60 dark:from-black dark:to-gray-900 transition-all duration-500">
-      <div className="main h-full flex w-full">
+    <div className="min-h-screen bg-gradient-to-br from-white/5 to-gray-100/10 dark:from-black/10 dark:to-gray-900/20 transition-all duration-500">
+      <div className="main min-h-screen flex w-full max-w-7xl mx-auto">
         {/* Sidebar */}
-        <div className="hleft h-screen w-[30%] bg-white/80 dark:bg-gray-900/90 backdrop-blur-sm border-r border-gray-200/50 dark:border-gray-700/70 flex items-center justify-center">
-          <div className="w-full px-6">
-            <h1 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">
-              Categories
-            </h1>
+        <div className="hleft min-h-screen w-[30%] bg-white/5 dark:bg-black/10 backdrop-blur-sm border-r border-white/20 dark:border-gray-800/30 flex items-start justify-start">
+          <div className="w-full px-6 pt-6">
+            <h1 className="text-xl font-bold mb-4 bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent tracking-tight">Categories</h1>
 
-            <div className="bg-white/60 dark:bg-black/20 backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50 p-4 space-y-2 shadow-lg">
+            <div className="bg-white/5 dark:bg-black/10 backdrop-blur-sm border border-white/20 dark:border-gray-800/30 p-4 space-y-2 shadow-lg rounded-md">
               {/* All Category - Shows all products */}
               <NavLink
                 to="/store?category=All"
@@ -70,9 +68,9 @@ export function Store() {
         </div>
 
         {/* Main Content */}
-        <div className="hright w-full h-full pt-5 px-6">
+        <div className="hright w-full min-h-screen pt-8 px-6 md:px-10 bg-white/5 dark:bg-black/10 backdrop-blur-sm">
           <div className="mb-6">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent mb-6 tracking-tight">
               {selectCategory && selectCategory !== "All"
                 ? `${selectCategory} Products`
                 : "Everything At One Place"}
@@ -82,7 +80,7 @@ export function Store() {
               {filteredProducts.length !== 1 ? "s" : ""}
             </p>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {filteredProducts.length > 0 ? (
               filteredProducts.map((prod) => (
                 <ProductCard
@@ -92,6 +90,7 @@ export function Store() {
                   title={prod.title}
                   url={prod.images[0]}
                   category={prod.category?.name || "Uncategorized"}
+                  size="lg"
                 />
               ))
             ) : (
