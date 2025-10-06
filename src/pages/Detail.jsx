@@ -1,21 +1,35 @@
-import React, { useContext } from "react";
-import { useLoaderData, useParams } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { useLoaderData, useParams, Link } from "react-router-dom";
 import { ProductContext } from "../context/ProductContext";
 import ProductCard from "../component/home/ProductCard";
+import { useTheme } from "../context/ThemeContext";
+import { FaArrowLeft, FaHeart, FaShare, FaShoppingCart } from "react-icons/fa";
 
 const Detail = () => {
   const { id } = useParams();
   const products = useLoaderData();
-  const productCat = products.find((item) => item.id === Number(id));
-  const categoryObj = productCat?.category;
-  const categoryName = categoryObj?.name;
-
+  const { theme } = useTheme();
+  const [selectedImage, setSelectedImage] = useState(0);
+  const [isWishlisted, setIsWishlisted] = useState(false);
+  
   const numericId = Number(id);
   const product = products.find((p) => p.id === numericId);
+  
   if (!product) {
-    return <p className="p-6">Product not found.</p>;
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-white/5 to-gray-100/10 dark:from-black/10 dark:to-gray-900/20 transition-all duration-500 flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">Product Not Found</h1>
+          <Link to="/store" className="text-blue-600 dark:text-blue-400 hover:underline">
+            ← Back to Store
+          </Link>
+        </div>
+      </div>
+    );
   }
-  const imageSrc = product.images?.[0] || product.image || product.url;
+
+  const productImages = product.images || [product.image || product.url].filter(Boolean);
+  const categoryName = product.category?.name;
 
   const relatedProducts = products
     .filter((p) => p.id !== product.id)
@@ -23,87 +37,163 @@ const Detail = () => {
       const name = p.category?.name;
       return categoryName && name === categoryName;
     })
-    .slice(0, 5);
+    .slice(0, 4);
 
   return (
-    <div className="container mx-auto px-6 py-8">
-      <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-        {/* Product Image Section */}
-        <div className="h-96 bg-gray-50 flex items-center justify-center p-6">
-          <div className="max-w-md">
-            {products
-              .filter((item) => item.id === Number(id))
-              .map((item) => {
-                const img = item.images?.[0] || item.image || item.url;
-                return (
-                  <img
-                    key={item.id}
-                    src={img}
-                    alt={item.title || "Product"}
-                    className="w-full h-80 object-cover rounded-lg shadow-md"
-                  />
-                );
-              })}
-          </div>
-        </div>
+    <div className="min-h-screen bg-gradient-to-br from-white/5 to-gray-100/10 dark:from-black/10 dark:to-gray-900/20 transition-all duration-500">
+      {/* Navigation */}
+      <div className="max-w-7xl mx-auto px-4 md:px-8 py-6">
+        <Link 
+          to="/store" 
+          className="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 mb-8"
+        >
+          <FaArrowLeft className="w-4 h-4" />
+          Back to Store
+        </Link>
 
-        <div className="p-8">
-          <div className="mb-8">
-            {products
-              .filter((item) => item.id === Number(id))
-              .map((item) => (
-                <div key={item.id} className="space-y-4">
-                  <div className="flex items-start gap-6">
-                    <img
-                      src={item.images?.[0] || item.image || item.url}
-                      alt={item.title}
-                      className="w-24 h-24 object-cover rounded-lg border shadow-sm"
+        {/* Main Product Section */}
+        <div className="grid lg:grid-cols-2 gap-12 mb-16">
+          {/* Product Images */}
+          <div className="space-y-4">
+            {/* Main Image */}
+            <div className="relative group bg-white/10 dark:bg-black/20 backdrop-blur-sm border border-white/20 dark:border-gray-800/30 rounded-2xl overflow-hidden shadow-xl">
+              <img
+                src={productImages[selectedImage]}
+                alt={product.title}
+                className="w-full h-96 md:h-[500px] object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+              
+              {/* Image Navigation */}
+              {productImages.length > 1 && (
+                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
+                  {productImages.map((img, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setSelectedImage(index)}
+                      className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                        selectedImage === index
+                          ? "bg-white shadow-lg scale-125"
+                          : "bg-white/50 hover:bg-white/80"
+                      }`}
                     />
-                    <div className="flex-1">
-                      <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                        {item.title}
-                      </h1>
-                      <p className="text-gray-600 leading-relaxed mb-4">
-                        {item.description}
-                      </p>
-                      <div className="flex items-center gap-4 mb-4">
-                        <span className="text-3xl font-bold text-blue-600">
-                          ${item.price}
-                        </span>
-                        <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">
-                          {item.category?.name || "Uncategorized"}
-                        </span>
-                        <AddToCartButton product={item} />
-                      </div>
-                    </div>
-                  </div>
+                  ))}
                 </div>
-              ))}
-          </div>
+              )}
 
-          <div className="border-t pt-8">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-              Related Products
-            </h2>
-            {relatedProducts.length === 0 && (
-              <p className="text-gray-500">No related products found.</p>
-            )}
-            {relatedProducts.length > 0 && (
-              <div className="grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
-                {relatedProducts.map((rp) => (
-                  <ProductCard
-                    key={rp.id}
-                    id={rp.id}
-                    price={rp.price}
-                    title={rp.title}
-                    url={rp.images?.[0] || rp.image || rp.url}
-                    category={rp.category?.name || "Uncategorized"}
-                  />
+              {/* Wishlist Button */}
+              <button
+                onClick={() => setIsWishlisted(!isWishlisted)}
+                className="absolute top-4 right-4 w-10 h-10 bg-white/20 dark:bg-black/20 backdrop-blur-sm border border-white/30 dark:border-gray-700/50 rounded-full flex items-center justify-center text-gray-700 dark:text-gray-300 hover:bg-white/30 dark:hover:bg-black/30 transition-all duration-300"
+              >
+                <FaHeart className={`w-5 h-5 ${isWishlisted ? 'text-red-500 fill-current' : ''}`} />
+              </button>
+            </div>
+
+            {/* Thumbnail Images */}
+            {productImages.length > 1 && (
+              <div className="flex gap-3 overflow-x-auto pb-2">
+                {productImages.map((img, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setSelectedImage(index)}
+                    className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all duration-300 ${
+                      selectedImage === index
+                        ? "border-blue-500 shadow-lg"
+                        : "border-white/20 dark:border-gray-700/50 hover:border-blue-300"
+                    }`}
+                  >
+                    <img
+                      src={img}
+                      alt={`${product.title} ${index + 1}`}
+                      className="w-full h-full object-cover"
+                    />
+                  </button>
                 ))}
               </div>
             )}
           </div>
+
+          {/* Product Info */}
+          <div className="space-y-6">
+            {/* Category Badge */}
+            <div className="inline-block px-4 py-2 bg-gradient-to-r from-blue-600 to-slate-800 text-white rounded-full text-sm font-medium shadow-lg">
+              {categoryName || "Uncategorized"}
+            </div>
+
+            {/* Product Title */}
+            <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent leading-tight">
+              {product.title}
+            </h1>
+
+            {/* Price */}
+            <div className="flex items-center gap-4">
+              <span className="text-4xl font-bold text-blue-600 dark:text-blue-400">
+                ${product.price}
+              </span>
+              <span className="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 rounded-full text-sm font-medium">
+                In Stock
+              </span>
+            </div>
+
+            {/* Description */}
+            {product.description && (
+              <div className="prose prose-gray dark:prose-invert max-w-none">
+                <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-lg">
+                  {product.description}
+                </p>
+              </div>
+            )}
+
+            {/* Actions */}
+            <div className="flex flex-col sm:flex-row gap-4">
+              <AddToCartButton product={product} />
+              <button className="flex-1 px-6 py-4 bg-white/20 dark:bg-black/20 backdrop-blur-sm border border-white/30 dark:border-gray-700/50 text-gray-900 dark:text-white font-semibold hover:bg-white/30 dark:hover:bg-black/30 transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center gap-2">
+                <FaShare className="w-4 h-4" />
+                Share
+              </button>
+            </div>
+
+            {/* Features */}
+            <div className="grid grid-cols-2 gap-4 pt-6 border-t border-white/20 dark:border-gray-700/50">
+              <div className="text-center p-4 bg-white/5 dark:bg-black/10 rounded-lg">
+                <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">Free</div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">Shipping</div>
+              </div>
+              <div className="text-center p-4 bg-white/5 dark:bg-black/10 rounded-lg">
+                <div className="text-2xl font-bold text-green-600 dark:text-green-400">30</div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">Day Returns</div>
+              </div>
+            </div>
+          </div>
         </div>
+
+        {/* Related Products */}
+        {relatedProducts.length > 0 && (
+          <section className="py-16">
+            <div className="text-center mb-12">
+              <div className="inline-block px-4 py-2 bg-gradient-to-r from-slate-700 to-blue-900 text-white rounded-full text-sm font-medium mb-4 shadow-lg">
+                RELATED PRODUCTS
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent mb-4">
+                You Might Also Like
+              </h2>
+              <div className="w-24 h-1 bg-gradient-to-r from-slate-700 to-blue-900 mx-auto"></div>
+            </div>
+            
+            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+              {relatedProducts.map((rp) => (
+                <ProductCard
+                  key={rp.id}
+                  id={rp.id}
+                  price={rp.price}
+                  title={rp.title}
+                  url={rp.images?.[0] || rp.image || rp.url}
+                  category={rp.category?.name || "Uncategorized"}
+                />
+              ))}
+            </div>
+          </section>
+        )}
       </div>
     </div>
   );
@@ -113,7 +203,7 @@ export default Detail;
 
 const AddToCartButton = ({ product }) => {
   const { addToCart } = useContext(ProductContext);
-  const [added, setAdded] = React.useState(false);
+  const [added, setAdded] = useState(false);
   if (!addToCart || !product) return null;
 
   const handleAdd = () => {
@@ -127,27 +217,21 @@ const AddToCartButton = ({ product }) => {
       quantity: 1,
     });
     setAdded(true);
-    setTimeout(() => setAdded(false), 1600);
+    setTimeout(() => setAdded(false), 2000);
   };
 
   return (
-    <div className="flex items-center gap-2">
-      <button
-        onClick={handleAdd}
-        disabled={added}
-        className={`px-4 py-2 rounded-md text-sm font-medium shadow transition-colors focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-green-400 disabled:cursor-not-allowed ${
-          added
-            ? "bg-green-400 text-white"
-            : "bg-green-500 hover:bg-green-600 text-white"
-        }`}
-      >
-        {added ? "Added" : "Add to Cart"}
-      </button>
-      {added && (
-        <span className="text-green-600 text-xs font-semibold animate-fade-in">
-          ✓ Added!
-        </span>
-      )}
-    </div>
+    <button
+      onClick={handleAdd}
+      disabled={added}
+      className={`flex-1 px-6 py-4 font-semibold transition-all duration-300 transform shadow-md hover:shadow-lg flex items-center justify-center gap-2 ${
+        added
+          ? "bg-green-500 text-white shadow-lg scale-105"
+          : "bg-gradient-to-r from-blue-600 to-slate-800 text-white hover:from-blue-700 hover:to-slate-900 hover:scale-105"
+      }`}
+    >
+      <FaShoppingCart className="w-4 h-4" />
+      {added ? "✓ Added to Cart" : "Add to Cart"}
+    </button>
   );
 };
