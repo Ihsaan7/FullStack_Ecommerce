@@ -4,7 +4,7 @@ A modern, responsive e-commerce application built with React 19 and Vite, featur
 
 ## 🚀 Live Demo
 
-[View Live Demo](https://react-mini-ecommerce-rc38ha4le-egzziwd-8640s-projects.vercel.app)
+[View Live Demo](https://react-mini-ecommerce-3x48med4x-egzziwd-8640s-projects.vercel.app)
 
 ## ✨ Features
 
