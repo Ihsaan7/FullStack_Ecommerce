@@ -1,5 +1,6 @@
 // Carousel.jsx
 import React, { useState, useEffect } from 'react';
+import Container from '../../layout/Container';
 
 const items = [
   {
@@ -70,7 +71,7 @@ const Carousel = () => {
 
       {/* Glass Content Panel */}
       <div className="absolute inset-0 flex items-center">
-        <div className="max-w-7xl mx-auto px-4 lg:px-6 w-full">
+        <Container className="w-full">
           <div className="max-w-2xl">
             
             {/* Glass Panel */}
@@ -101,7 +102,7 @@ const Carousel = () => {
               </div>
             </div>
           </div>
-        </div>
+        </Container>
       </div>
 
       {/* Navigation Arrows */}

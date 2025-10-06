@@ -7,6 +7,7 @@ import {
 import ProductCard from "../component/home/ProductCard";
 import { useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
+import Container from "../layout/Container";
 
 export function Store() {
   const [searchParams] = useSearchParams();
@@ -28,7 +29,7 @@ export function Store() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-white/5 to-gray-100/10 dark:from-black/10 dark:to-gray-900/20 transition-all duration-500">
-      <div className="max-w-7xl mx-auto px-4 md:px-8 py-6">
+      <Container className="py-6">
         {/* Mobile Header */}
         <div className="flex items-center justify-between mb-6 lg:hidden">
           <h1 className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
@@ -58,7 +59,7 @@ export function Store() {
                     `block px-4 py-3 transition-all duration-300 ${
                       !selectCategory || selectCategory === "All"
                         ? "bg-gradient-to-r from-blue-600 to-slate-800 text-white font-semibold shadow-lg"
-                        : "text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-gray-800/50 hover:text-blue-600 dark:hover:text-blue-400"
+                        : "text-gray-900 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-gray-800/50 hover:text-blue-600 dark:hover:text-blue-400"
                     }`}
                 >
                   All Products
@@ -73,7 +74,7 @@ export function Store() {
                       `block px-4 py-3 transition-all duration-300 ${
                         selectCategory === catName
                           ? "bg-gradient-to-r from-blue-600 to-slate-800 text-white font-semibold shadow-lg"
-                          : "text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-gray-800/50 hover:text-blue-600 dark:hover:text-blue-400"
+                          : "text-gray-900 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-gray-800/50 hover:text-blue-600 dark:hover:text-blue-400"
                       }`}
                   >
                     {catName}
@@ -109,7 +110,7 @@ export function Store() {
                       `block px-4 py-3 transition-all duration-300 ${
                         !selectCategory || selectCategory === "All"
                           ? "bg-gradient-to-r from-blue-600 to-slate-800 text-white font-semibold shadow-lg"
-                          : "text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-gray-800/50 hover:text-blue-600 dark:hover:text-blue-400"
+                          : "text-gray-900 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-gray-800/50 hover:text-blue-600 dark:hover:text-blue-400"
                       }`}
                   >
                     All Products
@@ -125,7 +126,7 @@ export function Store() {
                         `block px-4 py-3 transition-all duration-300 ${
                           selectCategory === catName
                             ? "bg-gradient-to-r from-blue-600 to-slate-800 text-white font-semibold shadow-lg"
-                            : "text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-gray-800/50 hover:text-blue-600 dark:hover:text-blue-400"
+                            : "text-gray-900 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-gray-800/50 hover:text-blue-600 dark:hover:text-blue-400"
                         }`}
                     >
                       {catName}
@@ -173,7 +174,7 @@ export function Store() {
             </div>
           </div>
         </div>
-      </div>
+      </Container>
     </div>
   );
 }

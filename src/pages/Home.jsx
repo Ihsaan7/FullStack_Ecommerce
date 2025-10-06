@@ -2,6 +2,7 @@ import React from "react";
 import Carousel from "../component/home/Crousel";
 import { Outlet, useLoaderData } from "react-router-dom";
 import ProductCard from "../component/home/ProductCard";
+import Container from "../layout/Container";
 
 const Home = () => {
   const products = useLoaderData();
@@ -14,8 +15,8 @@ const Home = () => {
       </section>
 
       {/* New Arrivals Section */}
-      <section className="py-20 px-4 md:px-8">
-        <div className="max-w-7xl mx-auto">
+      <section className="py-20">
+        <Container>
           <div className="text-center mb-16">
             <div className="inline-block px-4 py-2 bg-gradient-to-r from-blue-600 to-slate-800 text-white rounded-full text-sm font-medium mb-4 shadow-lg">
               NEW ARRIVALS
@@ -39,12 +40,12 @@ const Home = () => {
               </div>
             ))}
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* Featured Collection */}
-      <section className="py-20 px-4 md:px-8 bg-white/5 dark:bg-black/10 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto">
+      <section className="py-20 bg-white/5 dark:bg-black/10 backdrop-blur-sm">
+        <Container>
           <div className="text-center mb-16">
             <div className="inline-block px-4 py-2 bg-gradient-to-r from-slate-700 to-blue-900 text-white rounded-full text-sm font-medium mb-4 shadow-lg">
               FEATURED
@@ -68,12 +69,12 @@ const Home = () => {
               </div>
             ))}
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* Call to Action */}
-      <section className="py-20 px-4 md:px-8 bg-gradient-to-r from-gray-900 via-slate-800 to-gray-900 dark:from-white dark:via-gray-100 dark:to-white">
-        <div className="max-w-4xl mx-auto text-center">
+      <section className="py-20 bg-gradient-to-r from-gray-900 via-slate-800 to-gray-900 dark:from-white dark:via-gray-100 dark:to-white">
+        <Container className="max-w-4xl text-center">
           <h2 className="text-4xl md:text-5xl font-bold mb-8 text-white dark:text-gray-900">
             Ready to Experience Luxury?
           </h2>
@@ -88,7 +89,7 @@ const Home = () => {
               Learn More
             </button>
           </div>
-        </div>
+        </Container>
       </section>
     </div>
   );

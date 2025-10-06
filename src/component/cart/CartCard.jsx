@@ -37,7 +37,7 @@ const CartCard = ({ product, onDecrease, onIncrease, onRemove }) => {
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1 line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
                 {title}
               </h3>
-              <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
+              <p className="text-sm text-gray-800 dark:text-gray-400 mb-2">
                 {category || "Uncategorized"}
               </p>
             </div>
@@ -54,7 +54,7 @@ const CartCard = ({ product, onDecrease, onIncrease, onRemove }) => {
           {/* Price Info */}
           <div className="space-y-2 mb-4">
             <div className="flex items-center gap-2">
-              <span className="text-sm text-gray-600 dark:text-gray-400">Price:</span>
+              <span className="text-sm text-gray-800 dark:text-gray-400">Price:</span>
               <span className="text-lg font-bold text-blue-600 dark:text-blue-400">
                 ${price.toFixed(2)}
               </span>
@@ -62,7 +62,7 @@ const CartCard = ({ product, onDecrease, onIncrease, onRemove }) => {
             
             {quantity > 1 && (
               <div className="flex items-center gap-2">
-                <span className="text-sm text-gray-600 dark:text-gray-400">Total:</span>
+                <span className="text-sm text-gray-800 dark:text-gray-400">Total:</span>
                 <span className="text-lg font-bold text-gray-900 dark:text-white">
                   ${totalPrice.toFixed(2)}
                 </span>
@@ -94,7 +94,7 @@ const CartCard = ({ product, onDecrease, onIncrease, onRemove }) => {
 
             {/* Total Price */}
             <div className="text-right min-w-0 flex-shrink-0">
-              <div className="text-sm text-gray-500 dark:text-gray-400">Total</div>
+              <div className="text-sm text-gray-800 dark:text-gray-400">Total</div>
               <div className="text-xl font-bold text-gray-900 dark:text-white">
                 ${totalPrice.toFixed(2)}
               </div>

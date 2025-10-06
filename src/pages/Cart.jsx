@@ -4,6 +4,7 @@ import { useLoaderData, useParams, Link } from "react-router-dom";
 import CartCard from "../component/cart/CartCard";
 import { useTheme } from "../context/ThemeContext";
 import { FaShoppingCart, FaArrowLeft, FaTrash, FaCreditCard, FaTruck } from "react-icons/fa";
+import Container from "../layout/Container";
 
 const Cart = () => {
   const { cartItem, removeFromCart, updateQuantity, clearCart } =
@@ -39,7 +40,7 @@ const Cart = () => {
   if (!cartItem || cartItem.length === 0) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-white/5 to-gray-100/10 dark:from-black/10 dark:to-gray-900/20 transition-all duration-500">
-        <div className="max-w-7xl mx-auto px-4 md:px-8 py-6">
+        <Container className="py-6">
           {/* Navigation */}
           <Link 
             to="/store" 
@@ -67,14 +68,14 @@ const Cart = () => {
               Start Shopping
             </Link>
           </div>
-        </div>
+        </Container>
       </div>
     );
   }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-white/5 to-gray-100/10 dark:from-black/10 dark:to-gray-900/20 transition-all duration-500">
-      <div className="max-w-7xl mx-auto px-4 md:px-8 py-6">
+      <Container className="py-6">
         {/* Navigation */}
         <div className="flex flex-col md:flex-row items-center justify-between mb-8">
           <Link 
@@ -135,12 +136,12 @@ const Cart = () => {
 
               {/* Summary Details */}
               <div className="space-y-4 mb-6">
-                <div className="flex justify-between text-gray-700 dark:text-gray-300">
+                <div className="flex justify-between text-gray-900 dark:text-gray-300">
                   <span>Subtotal ({cartItem.length} items)</span>
                   <span>${subtotal.toFixed(2)}</span>
                 </div>
                 
-                <div className="flex justify-between text-gray-700 dark:text-gray-300">
+                <div className="flex justify-between text-gray-900 dark:text-gray-300">
                   <span className="flex items-center gap-2">
                     <FaTruck className="w-4 h-4" />
                     Shipping
@@ -150,7 +151,7 @@ const Cart = () => {
                   </span>
                 </div>
 
-                <div className="flex justify-between text-gray-700 dark:text-gray-300">
+                <div className="flex justify-between text-gray-900 dark:text-gray-300">
                   <span>Tax</span>
                   <span>${tax.toFixed(2)}</span>
                 </div>
@@ -187,7 +188,7 @@ const Cart = () => {
             </div>
           </div>
         </div>
-      </div>
+      </Container>
     </div>
   );
 };

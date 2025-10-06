@@ -4,6 +4,7 @@ import { ProductContext } from "../context/ProductContext";
 import ProductCard from "../component/home/ProductCard";
 import { useTheme } from "../context/ThemeContext";
 import { FaArrowLeft, FaShare, FaShoppingCart } from "react-icons/fa";
+import Container from "../layout/Container";
 
 const Detail = () => {
   const { id } = useParams();
@@ -41,7 +42,7 @@ const Detail = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-white/5 to-gray-100/10 dark:from-black/10 dark:to-gray-900/20 transition-all duration-500">
       {/* Navigation */}
-      <div className="max-w-7xl mx-auto px-4 md:px-8 py-6">
+      <Container className="py-6">
         <Link 
           to="/store" 
           className="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 mb-8"
@@ -185,7 +186,7 @@ const Detail = () => {
             </div>
           </section>
         )}
-      </div>
+      </Container>
     </div>
   );
 };

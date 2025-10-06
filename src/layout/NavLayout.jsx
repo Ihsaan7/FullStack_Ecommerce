@@ -67,7 +67,7 @@ const Navbar = () => {
                 <div className="text-lg font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent tracking-tight">
                   LUXURY
                 </div>
-                <div className="text-xs text-gray-500 dark:text-gray-400 font-medium tracking-wider uppercase">
+                <div className="text-xs text-gray-800 dark:text-gray-400 font-medium tracking-wider uppercase">
                   COLLECTION
                 </div>
               </div>
@@ -86,7 +86,7 @@ const Navbar = () => {
                   />
                   <button
                     type="submit"
-                    className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-slate-400 transition-colors duration-300"
+                    className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-800 dark:text-gray-400 hover:text-blue-500 dark:hover:text-slate-400 transition-colors duration-300"
                     aria-label="Search"
                   >
                     <FaSearch className="w-4 h-4" />
@@ -103,7 +103,7 @@ const Navbar = () => {
                 to="/store" 
                 className="hidden sm:flex items-center space-x-1.5 px-3 py-2 hover:bg-white/10 dark:hover:bg-gray-800/20 transition-all duration-300 group"
               >
-                <FaStore className="w-4 h-4 text-gray-800 dark:text-gray-400 group-hover:text-blue-500 dark:group-hover:text-slate-400 transition-colors duration-300" />
+                <FaStore className="w-4 h-4 text-gray-900 dark:text-gray-400 group-hover:text-blue-500 dark:group-hover:text-slate-400 transition-colors duration-300" />
                 <span className="text-gray-900 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white font-medium text-sm">Store</span>
               </Link>
 
@@ -112,7 +112,7 @@ const Navbar = () => {
                 to="/cart" 
                 className="relative flex items-center space-x-1.5 px-3 py-2 hover:bg-white/10 dark:hover:bg-gray-800/20 transition-all duration-300 group mr-2"
               >
-                <FaShoppingCart className="w-4 h-4 text-gray-800 dark:text-gray-400 group-hover:text-blue-500 dark:group-hover:text-slate-400 transition-colors duration-300" />
+                <FaShoppingCart className="w-4 h-4 text-gray-900 dark:text-gray-400 group-hover:text-blue-500 dark:group-hover:text-slate-400 transition-colors duration-300" />
                 <span className="hidden sm:block text-gray-900 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white font-medium text-sm">Cart</span>
                 {/* Cart Badge */}
                 <div className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-gradient-to-r from-blue-500 to-slate-700 flex items-center justify-center shadow-lg">
@@ -124,7 +124,7 @@ const Navbar = () => {
               <button
                 type="button"
                 onClick={toggleTheme}
-                className="w-10 h-10 flex items-center justify-center border border-white/20 dark:border-gray-700/50 bg-white/10 dark:bg-gray-900/30 backdrop-blur-sm text-gray-800 dark:text-gray-400 hover:bg-white/20 dark:hover:bg-gray-800/40 hover:text-blue-500 dark:hover:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 dark:focus:ring-slate-500/50 transition-all duration-300 shadow-lg"
+                className="w-10 h-10 flex items-center justify-center border border-white/20 dark:border-gray-700/50 bg-white/10 dark:bg-gray-900/30 backdrop-blur-sm text-gray-900 dark:text-gray-400 hover:bg-white/20 dark:hover:bg-gray-800/40 hover:text-blue-500 dark:hover:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 dark:focus:ring-slate-500/50 transition-all duration-300 shadow-lg"
                 aria-label="Toggle theme"
               >
                 {theme === "dark" ? (
@@ -137,7 +137,7 @@ const Navbar = () => {
               {/* Mobile Menu Button */}
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="md:hidden w-10 h-10 flex items-center justify-center border border-white/20 dark:border-gray-700/50 bg-white/10 dark:bg-gray-900/30 backdrop-blur-sm text-gray-600 dark:text-gray-400 hover:bg-white/20 dark:hover:bg-gray-800/40 hover:text-blue-500 dark:hover:text-slate-400 transition-all duration-300 shadow-lg"
+                className="md:hidden w-10 h-10 flex items-center justify-center border border-white/20 dark:border-gray-700/50 bg-white/10 dark:bg-gray-900/30 backdrop-blur-sm text-gray-900 dark:text-gray-400 hover:bg-white/20 dark:hover:bg-gray-800/40 hover:text-blue-500 dark:hover:text-slate-400 transition-all duration-300 shadow-lg"
                 aria-label="Toggle menu"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -165,7 +165,7 @@ const Navbar = () => {
                 />
                 <button
                   type="submit"
-                  className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-slate-400 transition-colors duration-300"
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-800 dark:text-gray-400 hover:text-blue-500 dark:hover:text-slate-400 transition-colors duration-300"
                 >
                   <FaSearch className="w-4 h-4" />
                 </button>
@@ -176,7 +176,7 @@ const Navbar = () => {
             <div className="space-y-1">
               <Link 
                 to="/store" 
-                className="flex items-center space-x-2 px-3 py-2 hover:bg-white/10 dark:hover:bg-gray-800/20 transition-all duration-300 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
+                className="flex items-center space-x-2 px-3 py-2 hover:bg-white/10 dark:hover:bg-gray-800/20 transition-all duration-300 text-gray-900 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
                 onClick={() => setIsMenuOpen(false)}
               >
                 <FaStore className="w-4 h-4" />
@@ -184,7 +184,7 @@ const Navbar = () => {
               </Link>
               <Link 
                 to="/cart" 
-                className="flex items-center space-x-2 px-3 py-2 hover:bg-white/10 dark:hover:bg-gray-800/20 transition-all duration-300 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
+                className="flex items-center space-x-2 px-3 py-2 hover:bg-white/10 dark:hover:bg-gray-800/20 transition-all duration-300 text-gray-900 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
                 onClick={() => setIsMenuOpen(false)}
               >
                 <FaShoppingCart className="w-4 h-4" />

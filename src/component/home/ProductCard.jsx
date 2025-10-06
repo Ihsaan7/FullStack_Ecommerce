@@ -77,7 +77,7 @@ const ProductCard = ({ price, title, url, category, id, size = 'md' }) => {
           <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2 line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
             {title}
           </h3>
-          <p className="text-sm text-gray-500 dark:text-gray-400">{category}</p>
+          <p className="text-sm text-gray-800 dark:text-gray-400">{category}</p>
         </div>
 
         {/* Actions */}
