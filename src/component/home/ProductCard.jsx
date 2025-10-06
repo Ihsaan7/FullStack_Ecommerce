@@ -42,7 +42,9 @@ const ProductCard = ({ price, title, url, category, id, size = 'md' }) => {
 
         {/* Overlay */}
         <div
-          className={`absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
+          className={`absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent transition-opacity duration-300 ${
+            isHovered ? "opacity-100" : "opacity-100 sm:opacity-0"
+          }`}
         >
           <div className="absolute bottom-4 left-4 right-4">
             <button
