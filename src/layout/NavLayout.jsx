@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { FaSearch, FaStore, FaShoppingCart } from "react-icons/fa";
 import { MoonIcon, SunIcon } from "@heroicons/react/24/solid";
 import { useTheme } from "../context/ThemeContext.jsx";
+import { ProductContext } from "../context/ProductContext";
 import {
   Link,
   Outlet,
@@ -23,10 +24,14 @@ export function NavLayout() {
 const Navbar = () => {
   const navigate = useNavigate();
   const { theme, toggleTheme } = useTheme();
+  const { cartItem } = useContext(ProductContext);
   const matches = useMatches();
   const location = useLocation();
   const [query, setQuery] = useState("");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  // Calculate total cart items
+  const cartItemCount = cartItem ? cartItem.reduce((total, item) => total + (item.quantity || 1), 0) : 0;
 
   // Try to find a loader result that contains products (assumes recentLoader returns an array of products)
   const allProducts =
@@ -111,7 +116,7 @@ const Navbar = () => {
                 <span className="hidden sm:block text-gray-900 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white font-medium text-sm">Cart</span>
                 {/* Cart Badge */}
                 <div className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-gradient-to-r from-blue-500 to-slate-700 flex items-center justify-center shadow-lg">
-                  <span className="text-xs text-white font-bold">0</span>
+                  <span className="text-xs text-white font-bold">{cartItemCount}</span>
                 </div>
               </Link>
 
@@ -179,11 +184,16 @@ const Navbar = () => {
               </Link>
               <Link 
                 to="/cart" 
-                className="flex  items-center space-x-2 px-3 py-2 hover:bg-white/10 dark:hover:bg-gray-800/20 transition-all duration-300 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
+                className="flex items-center space-x-2 px-3 py-2 hover:bg-white/10 dark:hover:bg-gray-800/20 transition-all duration-300 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
                 onClick={() => setIsMenuOpen(false)}
               >
                 <FaShoppingCart className="w-4 h-4" />
                 <span className="text-sm">Cart</span>
+                {cartItemCount > 0 && (
+                  <span className="ml-auto px-2 py-0.5 bg-blue-500 text-white text-xs font-bold">
+                    {cartItemCount}
+                  </span>
+                )}
               </Link>
             </div>
           </div>
