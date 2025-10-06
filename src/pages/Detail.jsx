@@ -3,14 +3,13 @@ import { useLoaderData, useParams, Link } from "react-router-dom";
 import { ProductContext } from "../context/ProductContext";
 import ProductCard from "../component/home/ProductCard";
 import { useTheme } from "../context/ThemeContext";
-import { FaArrowLeft, FaHeart, FaShare, FaShoppingCart } from "react-icons/fa";
+import { FaArrowLeft, FaShare, FaShoppingCart } from "react-icons/fa";
 
 const Detail = () => {
   const { id } = useParams();
   const products = useLoaderData();
   const { theme } = useTheme();
   const [selectedImage, setSelectedImage] = useState(0);
-  const [isWishlisted, setIsWishlisted] = useState(false);
   
   const numericId = Number(id);
   const product = products.find((p) => p.id === numericId);
@@ -56,7 +55,7 @@ const Detail = () => {
           {/* Product Images */}
           <div className="space-y-4">
             {/* Main Image */}
-            <div className="relative group bg-white/10 dark:bg-black/20 backdrop-blur-sm border border-white/20 dark:border-gray-800/30 rounded-2xl overflow-hidden shadow-xl">
+            <div className="group bg-white/10 dark:bg-black/20 backdrop-blur-sm border border-white/20 dark:border-gray-800/30 overflow-hidden shadow-xl">
               <img
                 src={productImages[selectedImage]}
                 alt={product.title}
@@ -70,7 +69,7 @@ const Detail = () => {
                     <button
                       key={index}
                       onClick={() => setSelectedImage(index)}
-                      className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                      className={`w-3 h-3 transition-all duration-300 ${
                         selectedImage === index
                           ? "bg-white shadow-lg scale-125"
                           : "bg-white/50 hover:bg-white/80"
@@ -79,14 +78,6 @@ const Detail = () => {
                   ))}
                 </div>
               )}
-
-              {/* Wishlist Button */}
-              <button
-                onClick={() => setIsWishlisted(!isWishlisted)}
-                className="absolute top-4 right-4 w-10 h-10 bg-white/20 dark:bg-black/20 backdrop-blur-sm border border-white/30 dark:border-gray-700/50 rounded-full flex items-center justify-center text-gray-700 dark:text-gray-300 hover:bg-white/30 dark:hover:bg-black/30 transition-all duration-300"
-              >
-                <FaHeart className={`w-5 h-5 ${isWishlisted ? 'text-red-500 fill-current' : ''}`} />
-              </button>
             </div>
 
             {/* Thumbnail Images */}

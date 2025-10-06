@@ -1,12 +1,15 @@
 import React, { useContext, useState } from "react";
 import { ProductContext } from "../context/ProductContext";
-import { useLoaderData, useParams } from "react-router-dom";
+import { useLoaderData, useParams, Link } from "react-router-dom";
 import CartCard from "../component/cart/CartCard";
+import { useTheme } from "../context/ThemeContext";
+import { FaShoppingCart, FaArrowLeft, FaTrash, FaCreditCard, FaTruck } from "react-icons/fa";
 
 const Cart = () => {
-  const { cartItem, removeFromCart, updateQuantity } =
+  const { cartItem, removeFromCart, updateQuantity, clearCart } =
     useContext(ProductContext);
   const products = useLoaderData();
+  const { theme } = useTheme();
   const { id: routeId } = useParams();
 
   // Define handlers at component level so they're available everywhere
@@ -26,95 +29,91 @@ const Cart = () => {
     }
   };
 
-  // If we have a route ID, show that specific product
-  if (routeId) {
-    const productId = parseInt(routeId);
+  // Calculate totals
+  const subtotal = cartItem.reduce((total, item) => total + (item.price * item.quantity), 0);
+  const shipping = subtotal > 50 ? 0 : 9.99; // Free shipping over $50
+  const tax = subtotal * 0.08; // 8% tax
+  const total = subtotal + shipping + tax;
 
-    if (!products) return <p className="p-6 text-gray-600 dark:text-gray-400">Loading products...</p>;
-
-    const filteredProducts = products.filter((prod) => prod.id === productId);
-
-    if (filteredProducts.length === 0) {
-      return <p className="p-6 text-gray-600 dark:text-gray-400">Product not found!</p>;
-    }
-
-    const product = filteredProducts[0];
-
+  // Empty cart state
+  if (!cartItem || cartItem.length === 0) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50/80 via-white to-gray-100/60 dark:from-black dark:to-gray-900 transition-all duration-500">
-        <div className="h-screen flex items-center w-full">
-          <div className="h-[70%] w-full flex">
-            <div className="left bg-white/80 dark:bg-gray-900/90 backdrop-blur-sm border-r border-gray-200/50 dark:border-gray-700/70 w-1/2 flex">
-              <div className="p-6">
-                <CartCard
-                  key={product.id}
-                  product={product}
-                  onRemove={() => removeFromCart(product.id)}
-                  onIncrease={() => handleIncrease(product.id)}
-                  onDecrease={() => handleDecrease(product.id)}
-                />
-              </div>
+      <div className="min-h-screen bg-gradient-to-br from-white/5 to-gray-100/10 dark:from-black/10 dark:to-gray-900/20 transition-all duration-500">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 py-6">
+          {/* Navigation */}
+          <Link 
+            to="/store" 
+            className="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 mb-8"
+          >
+            <FaArrowLeft className="w-4 h-4" />
+            Continue Shopping
+          </Link>
+
+          {/* Empty Cart */}
+          <div className="flex flex-col items-center justify-center min-h-[60vh] text-center">
+            <div className="w-32 h-32 bg-white/10 dark:bg-black/20 backdrop-blur-sm border border-white/20 dark:border-blue-500/30 flex items-center justify-center mb-8">
+              <FaShoppingCart className="w-16 h-16 text-gray-400 dark:text-gray-600" />
             </div>
-            <div className="right bg-white/80 dark:bg-gray-900/90 backdrop-blur-sm border-l border-gray-200/50 dark:border-gray-700/70 w-1/2 p-6">
-              <h2 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">Order Summary</h2>
-              <div className="space-y-2 mb-4">
-                <div className="flex justify-between text-gray-700 dark:text-gray-300">
-                  <p>Subtotal:</p>
-                  <p>${product.price}</p>
-                </div>
-                <div className="flex justify-between text-gray-700 dark:text-gray-300">
-                  <p>Discount:</p>
-                  <p>$0.00</p>
-                </div>
-                <div className="flex justify-between text-gray-700 dark:text-gray-300">
-                  <p>Shipping Fee:</p>
-                  <p>$0.00</p>
-                </div>
-                <hr className="my-2 border-gray-200 dark:border-gray-700" />
-                <div className="flex justify-between font-bold text-lg text-gray-900 dark:text-white">
-                  <h3>Total Amount:</h3>
-                  <p>${product.price}</p>
-                </div>
-              </div>
-              <button className="w-full bg-gradient-to-r from-blue-600 to-slate-800 text-white py-3 font-semibold hover:from-blue-700 hover:to-slate-900 transition-all duration-300 shadow-lg mb-2">
-                Proceed To Checkout
-              </button>
-              <p className="text-center text-blue-600 dark:text-blue-400 cursor-pointer hover:underline">
-                Continue Shopping
-              </p>
-            </div>
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent mb-4">
+              Your Cart is Empty
+            </h1>
+            <p className="text-gray-600 dark:text-gray-400 mb-8 text-lg max-w-md">
+              Looks like you haven't added any items to your cart yet. Start shopping to fill it up!
+            </p>
+            <Link 
+              to="/store"
+              className="px-8 py-4 bg-gradient-to-r from-blue-600 to-slate-800 text-white font-semibold hover:from-blue-700 hover:to-slate-900 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+            >
+              Start Shopping
+            </Link>
           </div>
         </div>
       </div>
     );
   }
 
-  // If no route ID, show cart items
-  if (!cartItem || cartItem.length === 0) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50/80 via-white to-gray-100/60 dark:from-black dark:to-gray-900 transition-all duration-500 flex items-center justify-center">
-        <div className="text-center">
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Your Cart is Empty</h2>
-          <p className="text-gray-600 dark:text-gray-400 mb-6">No items in cart</p>
-          <button className="px-6 py-3 bg-gradient-to-r from-blue-600 to-slate-800 text-white font-semibold hover:from-blue-700 hover:to-slate-900 transition-all duration-300 shadow-lg">
-            Continue Shopping
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  // Calculate total price
-  const totalAmount = cartItem.reduce((total, item) => {
-    return total + item.price * item.quantity;
-  }, 0);
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50/80 via-white to-gray-100/60 dark:from-black dark:to-gray-900 transition-all duration-500">
-      <div className="h-screen flex items-center w-full">
-        <div className="h-[70%] w-full flex">
-          <div className="left bg-white/80 dark:bg-gray-900/90 backdrop-blur-sm border-r border-gray-200/50 dark:border-gray-700/70 w-1/2 flex">
-            <div className="p-6">
+    <div className="min-h-screen bg-gradient-to-br from-white/5 to-gray-100/10 dark:from-black/10 dark:to-gray-900/20 transition-all duration-500">
+      <div className="max-w-7xl mx-auto px-4 md:px-8 py-6">
+        {/* Navigation */}
+        <div className="flex items-center justify-between mb-8">
+          <Link 
+            to="/store" 
+            className="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300"
+          >
+            <FaArrowLeft className="w-4 h-4" />
+            Continue Shopping
+          </Link>
+          
+          <div className="flex items-center gap-4">
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
+              Shopping Cart
+            </h1>
+            <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-400 text-sm font-medium">
+              {cartItem.length} {cartItem.length === 1 ? 'item' : 'items'}
+            </span>
+          </div>
+        </div>
+
+        <div className="grid lg:grid-cols-3 gap-8">
+          {/* Cart Items */}
+          <div className="lg:col-span-2 space-y-6">
+            {/* Cart Header */}
+            <div className="flex items-center justify-between">
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+                Cart Items
+              </h2>
+              <button
+                onClick={clearCart}
+                className="flex items-center gap-2 px-4 py-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors duration-300"
+              >
+                <FaTrash className="w-4 h-4" />
+                Clear Cart
+              </button>
+            </div>
+
+            {/* Cart Items List */}
+            <div className="space-y-4">
               {cartItem.map((item) => (
                 <CartCard
                   key={item.id}
@@ -126,33 +125,66 @@ const Cart = () => {
               ))}
             </div>
           </div>
-          <div className="right bg-white/80 dark:bg-gray-900/90 backdrop-blur-sm border-l border-gray-200/50 dark:border-gray-700/70 w-1/2 p-6">
-            <h2 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">Order Summary</h2>
-            <div className="space-y-2 mb-4">
-              <div className="flex justify-between text-gray-700 dark:text-gray-300">
-                <p>Subtotal:</p>
-                <p>${totalAmount.toFixed(2)}</p>
+
+          {/* Order Summary */}
+          <div className="lg:col-span-1">
+            <div className="bg-white/10 dark:bg-black/20 backdrop-blur-sm border border-white/20 dark:border-blue-500/30 p-6 shadow-xl sticky top-6">
+              <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-6">
+                Order Summary
+              </h2>
+
+              {/* Summary Details */}
+              <div className="space-y-4 mb-6">
+                <div className="flex justify-between text-gray-700 dark:text-gray-300">
+                  <span>Subtotal ({cartItem.length} items)</span>
+                  <span>${subtotal.toFixed(2)}</span>
+                </div>
+                
+                <div className="flex justify-between text-gray-700 dark:text-gray-300">
+                  <span className="flex items-center gap-2">
+                    <FaTruck className="w-4 h-4" />
+                    Shipping
+                  </span>
+                  <span className={shipping === 0 ? "text-green-600 dark:text-green-400" : ""}>
+                    {shipping === 0 ? "FREE" : `$${shipping.toFixed(2)}`}
+                  </span>
+                </div>
+
+                <div className="flex justify-between text-gray-700 dark:text-gray-300">
+                  <span>Tax</span>
+                  <span>${tax.toFixed(2)}</span>
+                </div>
+
+                <div className="border-t border-white/20 dark:border-gray-700/50 pt-4">
+                  <div className="flex justify-between text-lg font-bold text-gray-900 dark:text-white">
+                    <span>Total</span>
+                    <span>${total.toFixed(2)}</span>
+                  </div>
+                </div>
               </div>
-              <div className="flex justify-between text-gray-700 dark:text-gray-300">
-                <p>Discount:</p>
-                <p>$0.00</p>
+
+              {/* Checkout Button */}
+              <button className="w-full px-6 py-4 bg-gradient-to-r from-blue-600 to-slate-800 text-white font-semibold hover:from-blue-700 hover:to-slate-900 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center gap-2 mb-4">
+                <FaCreditCard className="w-5 h-5" />
+                Proceed to Checkout
+              </button>
+
+              {/* Security Notice */}
+              <div className="text-center">
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  🔒 Secure checkout with SSL encryption
+                </p>
               </div>
-              <div className="flex justify-between text-gray-700 dark:text-gray-300">
-                <p>Shipping Fee:</p>
-                <p>$0.00</p>
-              </div>
-              <hr className="my-2 border-gray-200 dark:border-gray-700" />
-              <div className="flex justify-between font-bold text-lg text-gray-900 dark:text-white">
-                <h3>Total Amount:</h3>
-                <p>${totalAmount.toFixed(2)}</p>
-              </div>
+
+              {/* Shipping Info */}
+              {subtotal < 50 && (
+                <div className="mt-4 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-400/40">
+                  <p className="text-sm text-blue-800 dark:text-blue-300">
+                    <strong>Free shipping</strong> on orders over $50. Add ${(50 - subtotal).toFixed(2)} more to qualify!
+                  </p>
+                </div>
+              )}
             </div>
-            <button className="w-full bg-gradient-to-r from-blue-600 to-slate-800 text-white py-3 font-semibold hover:from-blue-700 hover:to-slate-900 transition-all duration-300 shadow-lg mb-2">
-              Proceed To Checkout
-            </button>
-            <p className="text-center text-blue-600 dark:text-blue-400 cursor-pointer hover:underline">
-              Continue Shopping
-            </p>
           </div>
         </div>
       </div>
