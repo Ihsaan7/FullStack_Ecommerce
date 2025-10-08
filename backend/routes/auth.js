@@ -21,7 +21,7 @@ router.post(
       .isEmail()
       .withMessage("Please enter a valid email address"),
 
-    body("name").notEmpty().withMessage("Name is required"),
+    body("fullName").notEmpty().withMessage("Name is required"),
 
     body("password")
       .notEmpty()
@@ -31,7 +31,7 @@ router.post(
   ],
 
   async (req, res) => {
-    const { name, email, password } = req.body;
+    const { fullName, email, password } = req.body;
 
     const existing = await userModel.findOne({ email });
     if (existing)
@@ -40,7 +40,7 @@ router.post(
     const hashPass = await bcrypt.hash(password, 10);
 
     const user = await userModel.create({
-      name,
+      fullName,
       email,
       password: hashPass,
     });
@@ -66,7 +66,12 @@ router.post("/login", async (req, res) => {
 
   res.json({
     token,
-    user: { id: user._id, name: user.name, email: user.email, role: user.role },
+    user: {
+      id: user._id,
+      fullName: user.fullName,
+      email: user.email,
+      role: user.role,
+    },
   });
 });
 

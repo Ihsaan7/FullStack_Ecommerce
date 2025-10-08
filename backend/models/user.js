@@ -1,5 +1,11 @@
 import mongoose from "mongoose";
 
+const cartItemSchema = new mongoose.Schema({
+  productId: { type: String, required: true }, // from external API
+  quantity: { type: Number, default: 1 },
+  addedAt: { type: Date, default: Date.now },
+});
+
 const addressSchema = new mongoose.Schema({
   city: { type: String, required: true },
   country: { type: String, required: true },
@@ -24,6 +30,10 @@ const userSchema = new mongoose.Schema(
       default: "user",
     },
     isActive: { type: Boolean, default: true },
+    cart: [cartItemSchema],
+
+    // Optional: legacy or wishlist product IDs
+    favourite: [String],
   },
   {
     timestamps: true,
