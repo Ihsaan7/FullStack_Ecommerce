@@ -1,8 +1,8 @@
 import express from "express";
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
-const { body, validationResult } = require("express-validator");
-import { user as userModel } from "../models/user";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
+import { body, validationResult } from "express-validator";
+const userModel = "../models/user";
 
 const router = express.Router();
 
@@ -75,4 +75,4 @@ router.get("/me", (req, res) => {
   res.json({ user: req.user });
 });
 
-module.exports = router;
+export default router;

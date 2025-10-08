@@ -16,6 +16,45 @@ export function Store() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const products = useLoaderData();
 
+  const handleAddToCart = async (productId) => {
+    try {
+      console.log('Adding product to cart:', productId);
+      
+      const response = await fetch("http://localhost:8000/cart/add", {
+        method: "POST",
+        body: JSON.stringify({ productId }),
+        headers: { "Content-Type": "application/json" },
+      });
+
+      console.log("Response status:", response.status, response.statusText);
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Server error:", errorData);
+        alert(`Error: ${errorData.message || 'Failed to add product to cart'}`);
+        return;
+      }
+
+      const result = await response.json();
+      console.log("Success response:", result);
+      
+      if (result.success) {
+        console.log('✅ Product added to cart successfully!');
+        alert('Product added to cart successfully!');
+        
+        // Update local cart state if needed
+        setCartProducts(prev => [...prev, { productId, addedAt: new Date() }]);
+      } else {
+        console.error('❌ Failed to add product to cart:', result.message);
+        alert(`Failed to add product to cart: ${result.message}`);
+      }
+      
+    } catch (error) {
+      console.error("❌ Network/Fetch error:", error);
+      alert(`Network error: ${error.message}`);
+    }
+  };
+
   // Extract unique category names from products
   const uniqueCategories = [
     ...new Set(products.map((prod) => prod.category?.name).filter(Boolean)),
@@ -39,7 +78,11 @@ export function Store() {
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
             className="p-2 bg-white/10 dark:bg-black/20 backdrop-blur-sm border border-white/20 dark:border-gray-800/30 text-gray-700 dark:text-gray-300 hover:bg-white/20 dark:hover:bg-black/30 transition-all duration-300"
           >
-            {isSidebarOpen ? <FaTimes className="w-5 h-5" /> : <FaBars className="w-5 h-5" />}
+            {isSidebarOpen ? (
+              <FaTimes className="w-5 h-5" />
+            ) : (
+              <FaBars className="w-5 h-5" />
+            )}
           </button>
         </div>
 
@@ -60,7 +103,8 @@ export function Store() {
                       !selectCategory || selectCategory === "All"
                         ? "bg-gradient-to-r from-blue-600 to-slate-800 text-white font-semibold shadow-lg"
                         : "text-gray-900 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-gray-800/50 hover:text-blue-600 dark:hover:text-blue-400"
-                    }`}
+                    }`
+                  }
                 >
                   All Products
                 </NavLink>
@@ -75,7 +119,8 @@ export function Store() {
                         selectCategory === catName
                           ? "bg-gradient-to-r from-blue-600 to-slate-800 text-white font-semibold shadow-lg"
                           : "text-gray-900 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-gray-800/50 hover:text-blue-600 dark:hover:text-blue-400"
-                      }`}
+                      }`
+                    }
                   >
                     {catName}
                   </NavLink>
@@ -87,7 +132,10 @@ export function Store() {
           {/* Mobile Sidebar Overlay */}
           {isSidebarOpen && (
             <div className="fixed inset-0 z-50 lg:hidden">
-              <div className="fixed inset-0 bg-black/50" onClick={() => setIsSidebarOpen(false)}></div>
+              <div
+                className="fixed inset-0 bg-black/50"
+                onClick={() => setIsSidebarOpen(false)}
+              ></div>
               <div className="fixed left-0 top-0 h-full w-80 bg-white/10 dark:bg-black/20 backdrop-blur-sm border-r border-white/20 dark:border-gray-800/30 p-6">
                 <div className="flex items-center justify-between mb-6">
                   <h2 className="text-xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
@@ -111,7 +159,8 @@ export function Store() {
                         !selectCategory || selectCategory === "All"
                           ? "bg-gradient-to-r from-blue-600 to-slate-800 text-white font-semibold shadow-lg"
                           : "text-gray-900 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-gray-800/50 hover:text-blue-600 dark:hover:text-blue-400"
-                      }`}
+                      }`
+                    }
                   >
                     All Products
                   </NavLink>
@@ -127,7 +176,8 @@ export function Store() {
                           selectCategory === catName
                             ? "bg-gradient-to-r from-blue-600 to-slate-800 text-white font-semibold shadow-lg"
                             : "text-gray-900 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-gray-800/50 hover:text-blue-600 dark:hover:text-blue-400"
-                        }`}
+                        }`
+                      }
                     >
                       {catName}
                     </NavLink>
@@ -150,7 +200,7 @@ export function Store() {
                 {filteredProducts.length !== 1 ? "s" : ""}
               </p>
             </div>
-            
+
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {filteredProducts.length > 0 ? (
                 filteredProducts.map((prod) => (
@@ -162,6 +212,8 @@ export function Store() {
                     url={prod.images[0]}
                     category={prod.category?.name || "Uncategorized"}
                     size="lg"
+                    onAddToCart={handleAddToCart}
+                    productId={prod.id}
                   />
                 ))
               ) : (

@@ -4,6 +4,8 @@ import cors from "cors";
 import morgan from "morgan";
 import dotenv from "dotenv";
 import startDB from "./db/db.js";
+import authRoutes from "./routes/auth.js";
+import cartRoutes from "./routes/cart.js";
 
 dotenv.config({
   path: "../.env.development",
@@ -15,9 +17,8 @@ app.use(morgan("dev"));
 
 startDB();
 
-app.get("/", (req, res) => {
-  res.send("WORKING");
-});
+app.use("/auth", authRoutes);
+app.use("/cart", cartRoutes);
 
 app.listen(process.env.PORT, () =>
   console.log(`Server is running at ${process.env.PORT}`)

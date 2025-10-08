@@ -2,17 +2,26 @@ import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ProductContext } from "../../context/ProductContext";
 
-const ProductCard = ({ price, title, url, category, id, size = 'md' }) => {
+const ProductCard = ({
+  price,
+  title,
+  url,
+  category,
+  id,
+  size = "md",
+  onAddToCart,
+  productId,
+}) => {
   const { addToCart } = useContext(ProductContext);
   const navigate = useNavigate();
   const [added, setAdded] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
-  const imageHeight = size === 'lg' ? 'h-80' : 'h-64';
+  const imageHeight = size === "lg" ? "h-80" : "h-64";
 
   const handleAdd = (e) => {
     e.preventDefault(); // Prevent navigation
-    addToCart({ price, title, url, category, id, quantity: 1 });
+    onAddToCart(productId);
     setAdded(true);
     setTimeout(() => setAdded(false), 2000); // Reset after 2 seconds
   };
