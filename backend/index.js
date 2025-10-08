@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 import startDB from "./db/db.js";
 import authRoutes from "./routes/auth.js";
 import cartRoutes from "./routes/cart.js";
+import auth from "./middleware/auth.js";
 
 dotenv.config({
   path: "../.env.development",
@@ -13,10 +14,13 @@ dotenv.config({
 const app = express();
 app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 app.use(express.json());
+// attach auth middleware to populate req.user when a valid token is present
+app.use(auth);
 app.use(morgan("dev"));
 
 startDB();
 
+app.use("/", authRoutes);
 app.use("/auth", authRoutes);
 app.use("/cart", cartRoutes);
 
