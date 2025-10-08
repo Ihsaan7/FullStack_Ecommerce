@@ -2,24 +2,8 @@ import { useEffect, useState } from "react";
 import { ProductContext } from "./ProductContext";
 
 export const ProductProvider = ({ children }) => {
-  const [cartItem, setCartItems] = useState(() => {
-    try {
-      const storage = localStorage.getItem("cart");
-      return storage ? JSON.parse(storage) : [];
-    } catch (error) {
-      console.error("Error reading cart from localStorage:", error);
-      return [];
-    }
-  });
-
-  useEffect(() => {
-    try {
-      localStorage.setItem("cart", JSON.stringify(cartItem));
-      console.log("Cart saved to localStorage:", cartItem);
-    } catch (error) {
-      console.error("Error saving cart to localStorage:", error);
-    }
-  }, [cartItem]);
+  // keep cart in memory only (no localStorage)
+  const [cartItem, setCartItems] = useState([]);
 
   const addToCart = (product) => {
     setCartItems((prev) => {

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function Signup() {
   const [fullName, setName] = useState("");
@@ -8,6 +9,7 @@ export default function Signup() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const nav = useNavigate();
+  const { signup } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -15,38 +17,14 @@ export default function Signup() {
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:8000/auth/signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ fullName, email, password }),
-      });
-
-      const data = await (async () => {
-        const text = await res.text();
-        try {
-          return JSON.parse(text);
-        } catch {
-          return { rawText: text };
-        }
-      })();
-
-      if (!res.ok) {
-        // backend may return { message } or validation errors
-        const msg =
-          data?.message ||
-          (data?.errors && data.errors[0]?.msg) ||
-          "Signup failed";
-        throw new Error(msg);
+      const result = await signup(fullName, email, password);
+      
+      if (result.success) {
+        // Redirect to store after successful signup
+        nav("/store");
+      } else {
+        setError(result.error);
       }
-
-      // Expect backend to return { token, user } — adjust if different
-      if (data.token) {
-        localStorage.setItem("token", data.token);
-        if (data.user) localStorage.setItem("user", JSON.stringify(data.user));
-      }
-
-      // Redirect to store or dashboard
-      nav("/store");
     } catch (err) {
       setError(err.message || "Signup error");
     } finally {

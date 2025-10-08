@@ -22,6 +22,7 @@ export function Store() {
         method: "POST",
         body: JSON.stringify({ productId }),
         headers: { "Content-Type": "application/json" },
+        credentials: "include", // Include cookies for authentication
       });
 
       const result = await response.json();

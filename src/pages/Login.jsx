@@ -1,36 +1,37 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
   const nav = useNavigate();
+  const location = useLocation();
+  const { login } = useAuth();
+
+  // Redirect to the page they were trying to visit, or /store
+  const from = location.state?.from?.pathname || "/store";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
+    setLoading(true);
+    
     try {
-      const res = await fetch("http://localhost:8000/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
-
-      if (!res.ok) {
-        const err = await res.json().catch(() => ({}));
-        throw new Error(err.message || "Login failed");
+      const result = await login(email, password);
+      
+      if (result.success) {
+        // Navigate to the page they were trying to visit, or /store
+        nav(from, { replace: true });
+      } else {
+        setError(result.error);
       }
-
-      const data = await res.json();
-      // store token (or use context)
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user || {}));
-
-      // redirect to store or dashboard
-      nav("/store");
     } catch (err) {
-      setError(err.message);
+      setError(err.message || "Login failed");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -53,7 +54,9 @@ export default function Login() {
           type="password"
           required
         />
-        <button type="submit">Login</button>
+        <button type="submit" disabled={loading}>
+          {loading ? "Logging in..." : "Login"}
+        </button>
       </form>
     </div>
   );
