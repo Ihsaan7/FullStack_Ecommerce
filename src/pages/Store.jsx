@@ -18,40 +18,16 @@ export function Store() {
 
   const handleAddToCart = async (productId) => {
     try {
-      console.log('Adding product to cart:', productId);
-      
       const response = await fetch("http://localhost:8000/cart/add", {
         method: "POST",
         body: JSON.stringify({ productId }),
         headers: { "Content-Type": "application/json" },
       });
 
-      console.log("Response status:", response.status, response.statusText);
-      
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.error("Server error:", errorData);
-        alert(`Error: ${errorData.message || 'Failed to add product to cart'}`);
-        return;
-      }
-
       const result = await response.json();
-      console.log("Success response:", result);
-      
-      if (result.success) {
-        console.log('✅ Product added to cart successfully!');
-        alert('Product added to cart successfully!');
-        
-        // Update local cart state if needed
-        setCartProducts(prev => [...prev, { productId, addedAt: new Date() }]);
-      } else {
-        console.error('❌ Failed to add product to cart:', result.message);
-        alert(`Failed to add product to cart: ${result.message}`);
-      }
-      
+      console.log("Frontend: addToCart response:", result);
     } catch (error) {
-      console.error("❌ Network/Fetch error:", error);
-      alert(`Network error: ${error.message}`);
+      console.error("Error:", error);
     }
   };
 

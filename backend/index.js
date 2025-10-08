@@ -20,6 +20,6 @@ startDB();
 app.use("/auth", authRoutes);
 app.use("/cart", cartRoutes);
 
-app.listen(process.env.PORT, () =>
-  console.log(`Server is running at ${process.env.PORT}`)
+app.listen(process.env.PORT || 8000, () =>
+  console.log(`Server running on ${process.env.PORT || 8000}`)
 );

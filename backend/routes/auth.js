@@ -2,13 +2,13 @@ import express from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { body, validationResult } from "express-validator";
-const userModel = "../models/user";
+import userModel from "../models/user.js";
 
 const router = express.Router();
 
 function signToken(user) {
   return jwt.sign({ sub: user._id, role: user.role }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_SECRETJWT_SECRET_EXPIRY,
+    expiresIn: process.env.JWT_SECRET_EXPIRY,
   });
 }
 
@@ -55,11 +55,11 @@ router.post(
 
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
-  const user = userModel.findOne({ email });
+  const user = await userModel.findOne({ email });
 
   if (!user) return res.status(401).json({ message: "Invalid Credentials!" });
 
-  const valid = bcrypt.compare(password, user.password);
+  const valid = await bcrypt.compare(password, user.password);
   if (!valid) return res.status(401).json({ message: "Invalid Credentials!" });
 
   const token = signToken(user);
