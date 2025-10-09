@@ -1,8 +1,15 @@
-import React, { useState, useContext } from "react";
-import { FaSearch, FaStore, FaShoppingCart } from "react-icons/fa";
+import React, { useState, useContext, useEffect, useRef } from "react";
+import {
+  FaSearch,
+  FaStore,
+  FaShoppingCart,
+  FaUser,
+  FaSignOutAlt,
+} from "react-icons/fa";
 import { MoonIcon, SunIcon } from "@heroicons/react/24/solid";
 import { useTheme } from "../context/ThemeContext.jsx";
 import { ProductContext } from "../context/ProductContext";
+import { useAuth } from "../contexts/AuthContext";
 import {
   Link,
   Outlet,
@@ -25,10 +32,13 @@ const Navbar = () => {
   const navigate = useNavigate();
   const { theme, toggleTheme } = useTheme();
   const { cartItem } = useContext(ProductContext);
+  const { user, logout } = useAuth();
   const matches = useMatches();
   const location = useLocation();
   const [query, setQuery] = useState("");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const profileMenuRef = useRef(null);
 
   // Calculate total cart items
   const cartItemCount = cartItem
@@ -39,6 +49,26 @@ const Navbar = () => {
   const allProducts =
     matches.map((m) => m.loaderData).find((data) => Array.isArray(data)) || [];
 
+  // Close profile dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        profileMenuRef.current &&
+        !profileMenuRef.current.contains(event.target)
+      ) {
+        setShowProfileMenu(false);
+      }
+    };
+
+    if (showProfileMenu) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showProfileMenu]);
+
   const onSubmit = (e) => {
     e.preventDefault();
     const q = query.trim().toLowerCase();
@@ -48,6 +78,11 @@ const Navbar = () => {
       navigate(`/store/${found.id}`);
       setQuery("");
     }
+  };
+
+  const handleLogout = async () => {
+    await logout();
+    navigate("/");
   };
 
   return (
@@ -83,11 +118,11 @@ const Navbar = () => {
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     placeholder="Search luxury products..."
-                    className="w-full px-4 py-2 bg-white/20 dark:bg-gray-900/30 border border-white/30 dark:border-gray-700/50 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 dark:focus:ring-slate-500/50 focus:border-blue-500/50 dark:focus:border-slate-500/50 transition-all duration-300 backdrop-blur-sm shadow-lg"
+                    className="w-full px-4 py-2 bg-white/30 dark:bg-gray-900/30 border border-gray-300 dark:border-gray-700/50 text-gray-900 dark:text-white placeholder-gray-600 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-slate-500/50 focus:border-blue-500 dark:focus:border-slate-500/50 transition-all duration-300 backdrop-blur-sm shadow-lg"
                   />
                   <button
                     type="submit"
-                    className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-800 dark:text-gray-400 hover:text-blue-500 dark:hover:text-slate-400 transition-colors duration-300"
+                    className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-700 dark:text-gray-400 hover:text-blue-600 dark:hover:text-slate-400 transition-colors duration-300"
                     aria-label="Search"
                   >
                     <FaSearch className="w-4 h-4" />
@@ -101,10 +136,10 @@ const Navbar = () => {
               {/* Store Link */}
               <Link
                 to="/store"
-                className="hidden sm:flex items-center space-x-1.5 px-3 py-2 hover:bg-white/10 dark:hover:bg-gray-800/20 transition-all duration-300 group"
+                className="hidden sm:flex items-center space-x-1.5 px-3 py-2 hover:bg-white/20 dark:hover:bg-gray-800/20 transition-all duration-300 group"
               >
-                <FaStore className="w-4 h-4 text-gray-900 dark:text-gray-400 group-hover:text-blue-500 dark:group-hover:text-slate-400 transition-colors duration-300" />
-                <span className="text-gray-900 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white font-medium text-sm">
+                <FaStore className="w-4 h-4 text-gray-800 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-slate-400 transition-colors duration-300" />
+                <span className="text-gray-800 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-white font-medium text-sm">
                   Store
                 </span>
               </Link>
@@ -112,10 +147,10 @@ const Navbar = () => {
               {/* Cart Link */}
               <Link
                 to="/cart"
-                className="relative flex items-center space-x-1.5 px-3 py-2 hover:bg-white/10 dark:hover:bg-gray-800/20 transition-all duration-300 group mr-2"
+                className="relative flex items-center space-x-1.5 px-3 py-2 hover:bg-white/20 dark:hover:bg-gray-800/20 transition-all duration-300 group mr-2"
               >
-                <FaShoppingCart className="w-4 h-4 text-gray-900 dark:text-gray-400 group-hover:text-blue-500 dark:group-hover:text-slate-400 transition-colors duration-300" />
-                <span className="hidden sm:block text-gray-900 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white font-medium text-sm">
+                <FaShoppingCart className="w-4 h-4 text-gray-800 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-slate-400 transition-colors duration-300" />
+                <span className="hidden sm:block text-gray-800 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-white font-medium text-sm">
                   Cart
                 </span>
                 {/* Cart Badge */}
@@ -130,7 +165,7 @@ const Navbar = () => {
               <button
                 type="button"
                 onClick={toggleTheme}
-                className="w-10 h-10 flex items-center justify-center border border-white/20 dark:border-gray-700/50 bg-white/10 dark:bg-gray-900/30 backdrop-blur-sm text-gray-900 dark:text-gray-400 hover:bg-white/20 dark:hover:bg-gray-800/40 hover:text-blue-500 dark:hover:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 dark:focus:ring-slate-500/50 transition-all duration-300 shadow-lg"
+                className="w-10 h-10 flex items-center justify-center border border-gray-300 dark:border-gray-700/50 bg-white/30 dark:bg-gray-900/30 backdrop-blur-sm text-gray-800 dark:text-gray-400 hover:bg-white/50 dark:hover:bg-gray-800/40 hover:text-blue-600 dark:hover:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-slate-500/50 transition-all duration-300 shadow-lg"
                 aria-label="Toggle theme"
               >
                 {theme === "dark" ? (
@@ -140,10 +175,45 @@ const Navbar = () => {
                 )}
               </button>
 
+              {/* User Profile Dropdown */}
+              <div className="relative ml-2" ref={profileMenuRef}>
+                <button
+                  onClick={() => setShowProfileMenu(!showProfileMenu)}
+                  className="w-10 h-10 flex items-center justify-center border border-white/20 dark:border-gray-700/50 bg-gradient-to-r from-blue-600 to-slate-800 backdrop-blur-sm text-white hover:from-blue-700 hover:to-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/50 dark:focus:ring-slate-500/50 transition-all duration-300 shadow-lg"
+                  aria-label="User menu"
+                >
+                  <FaUser className="w-4 h-4" />
+                </button>
+
+                {/* Dropdown Menu */}
+                {showProfileMenu && (
+                  <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-gray-900 backdrop-blur-xl border border-white/20 dark:border-gray-700/50 shadow-2xl z-50">
+                    <div className="p-4 border-b border-gray-200 dark:border-gray-700">
+                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                        Signed in as
+                      </p>
+                      <p className="font-semibold text-gray-900 dark:text-white truncate">
+                        {user?.fullName || "User"}
+                      </p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
+                        {user?.email || ""}
+                      </p>
+                    </div>
+                    <button
+                      onClick={handleLogout}
+                      className="w-full flex items-center gap-2 px-4 py-3 text-left text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors duration-200"
+                    >
+                      <FaSignOutAlt className="w-4 h-4" />
+                      <span>Logout</span>
+                    </button>
+                  </div>
+                )}
+              </div>
+
               {/* Mobile Menu Button */}
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="md:hidden w-10 h-10 flex items-center justify-center border border-white/20 dark:border-gray-700/50 bg-white/10 dark:bg-gray-900/30 backdrop-blur-sm text-gray-900 dark:text-gray-400 hover:bg-white/20 dark:hover:bg-gray-800/40 hover:text-blue-500 dark:hover:text-slate-400 transition-all duration-300 shadow-lg"
+                className="md:hidden w-10 h-10 flex items-center justify-center border border-gray-300 dark:border-gray-700/50 bg-white/30 dark:bg-gray-900/30 backdrop-blur-sm text-gray-800 dark:text-gray-400 hover:bg-white/50 dark:hover:bg-gray-800/40 hover:text-blue-600 dark:hover:text-slate-400 transition-all duration-300 shadow-lg"
                 aria-label="Toggle menu"
               >
                 <svg
@@ -167,7 +237,7 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="fixed top-16 left-0 right-0 z-40 bg-white/10 dark:bg-black/20 backdrop-blur-2xl border-b border-white/20 dark:border-gray-800/30 shadow-xl md:hidden">
+        <div className="fixed top-16 left-0 right-0 z-40 bg-white/95 dark:bg-black/20 backdrop-blur-2xl border-b border-gray-300 dark:border-gray-800/30 shadow-xl md:hidden">
           <div className="px-4 py-4 space-y-3">
             {/* Mobile Search */}
             <form onSubmit={onSubmit} className="mb-4">
@@ -177,11 +247,11 @@ const Navbar = () => {
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   placeholder="Search luxury products..."
-                  className="w-full px-3 py-2 bg-white/20 dark:bg-gray-900/30 border border-white/30 dark:border-gray-700/50 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 dark:focus:ring-slate-500/50 focus:border-blue-500/50 dark:focus:border-slate-500/50 transition-all duration-300 backdrop-blur-sm shadow-lg"
+                  className="w-full px-3 py-2 bg-white/50 dark:bg-gray-900/30 border border-gray-300 dark:border-gray-700/50 text-gray-900 dark:text-white placeholder-gray-600 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-slate-500/50 focus:border-blue-500 dark:focus:border-slate-500/50 transition-all duration-300 backdrop-blur-sm shadow-lg"
                 />
                 <button
                   type="submit"
-                  className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-800 dark:text-gray-400 hover:text-blue-500 dark:hover:text-slate-400 transition-colors duration-300"
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-700 dark:text-gray-400 hover:text-blue-600 dark:hover:text-slate-400 transition-colors duration-300"
                 >
                   <FaSearch className="w-4 h-4" />
                 </button>
@@ -192,7 +262,7 @@ const Navbar = () => {
             <div className="space-y-1">
               <Link
                 to="/store"
-                className="flex items-center space-x-2 px-3 py-2 hover:bg-white/10 dark:hover:bg-gray-800/20 transition-all duration-300 text-gray-900 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
+                className="flex items-center space-x-2 px-3 py-2 hover:bg-white/50 dark:hover:bg-gray-800/20 transition-all duration-300 text-gray-800 dark:text-gray-300 hover:text-blue-600 dark:hover:text-white border border-gray-200 dark:border-transparent"
                 onClick={() => setIsMenuOpen(false)}
               >
                 <FaStore className="w-4 h-4" />
@@ -200,7 +270,7 @@ const Navbar = () => {
               </Link>
               <Link
                 to="/cart"
-                className="flex items-center space-x-2 px-3 py-2 hover:bg-white/10 dark:hover:bg-gray-800/20 transition-all duration-300 text-gray-900 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
+                className="flex items-center space-x-2 px-3 py-2 hover:bg-white/50 dark:hover:bg-gray-800/20 transition-all duration-300 text-gray-800 dark:text-gray-300 hover:text-blue-600 dark:hover:text-white border border-gray-200 dark:border-transparent"
                 onClick={() => setIsMenuOpen(false)}
               >
                 <FaShoppingCart className="w-4 h-4" />

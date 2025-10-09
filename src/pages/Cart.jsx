@@ -26,6 +26,7 @@ const Cart = () => {
   const { id: routeId } = useParams();
   const [cartWithDetails, setCartWithDetails] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [showCheckoutPopup, setShowCheckoutPopup] = useState(false);
 
   // Fetch cart from DB on mount
   useEffect(() => {
@@ -219,19 +220,19 @@ const Cart = () => {
 
           {/* Order Summary */}
           <div className="lg:col-span-1 mt-6 lg:mt-0">
-            <div className="bg-white/10 dark:bg-black/20 backdrop-blur-sm border border-white/20 dark:border-blue-500/30 p-4 sm:p-6 shadow-xl sticky top-6">
+            <div className="bg-white/80 dark:bg-black/20 backdrop-blur-sm border border-gray-200 dark:border-blue-500/30 p-4 sm:p-6 shadow-xl sticky top-6">
               <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-6">
                 Order Summary
               </h2>
 
               {/* Summary Details */}
               <div className="space-y-4 mb-6">
-                <div className="flex justify-between text-gray-900 dark:text-gray-300">
+                <div className="flex justify-between text-gray-800 dark:text-gray-300">
                   <span>Subtotal ({cartWithDetails.length} items)</span>
                   <span>${subtotal.toFixed(2)}</span>
                 </div>
 
-                <div className="flex justify-between text-gray-900 dark:text-gray-300">
+                <div className="flex justify-between text-gray-800 dark:text-gray-300">
                   <span className="flex items-center gap-2">
                     <FaTruck className="w-4 h-4" />
                     Shipping
@@ -245,12 +246,12 @@ const Cart = () => {
                   </span>
                 </div>
 
-                <div className="flex justify-between text-gray-900 dark:text-gray-300">
+                <div className="flex justify-between text-gray-800 dark:text-gray-300">
                   <span>Tax</span>
                   <span>${tax.toFixed(2)}</span>
                 </div>
 
-                <div className="border-t border-white/20 dark:border-gray-700/50 pt-4">
+                <div className="border-t border-gray-300 dark:border-gray-700/50 pt-4">
                   <div className="flex justify-between text-lg font-bold text-gray-900 dark:text-white">
                     <span>Total</span>
                     <span>${total.toFixed(2)}</span>
@@ -259,7 +260,10 @@ const Cart = () => {
               </div>
 
               {/* Checkout Button */}
-              <button className="w-full px-6 py-4 bg-gradient-to-r from-blue-600 to-slate-800 text-white font-semibold hover:from-blue-700 hover:to-slate-900 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center gap-2 mb-4">
+              <button
+                onClick={() => setShowCheckoutPopup(true)}
+                className="w-full px-6 py-4 bg-gradient-to-r from-blue-600 to-slate-800 text-white font-semibold hover:from-blue-700 hover:to-slate-900 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center gap-2 mb-4"
+              >
                 <FaCreditCard className="w-5 h-5" />
                 Proceed to Checkout
               </button>
@@ -284,6 +288,40 @@ const Cart = () => {
           </div>
         </div>
       </Container>
+
+      {/* Checkout Coming Soon Popup */}
+      {showCheckoutPopup && (
+        <div
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+          onClick={() => setShowCheckoutPopup(false)}
+        >
+          <div
+            className="bg-white dark:bg-gray-800 border border-blue-500/50 p-8 max-w-md w-full shadow-2xl transform animate-bounce-in"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="text-center">
+              <div className="text-6xl mb-4">🚧</div>
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">
+                Feature Coming Soon!
+              </h3>
+              <p className="text-gray-600 dark:text-gray-300 mb-6">
+                This is a{" "}
+                <span className="font-semibold text-blue-600 dark:text-blue-400">
+                  portfolio showcase project
+                </span>
+                . Checkout functionality will be added in the production
+                version.
+              </p>
+              <button
+                onClick={() => setShowCheckoutPopup(false)}
+                className="px-6 py-3 bg-gradient-to-r from-blue-600 to-slate-800 text-white font-semibold hover:from-blue-700 hover:to-slate-900 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+              >
+                Got it!
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

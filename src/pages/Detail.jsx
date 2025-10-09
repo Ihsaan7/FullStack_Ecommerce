@@ -11,9 +11,31 @@ const Detail = () => {
   const products = useLoaderData();
   const { theme } = useTheme();
   const [selectedImage, setSelectedImage] = useState(0);
+  const [showShareToast, setShowShareToast] = useState(false);
 
   const numericId = Number(id);
   const product = products.find((p) => p.id === numericId);
+
+  const handleShare = async () => {
+    const shareData = {
+      title: product.title,
+      text: `Check out this ${product.title} - $${product.price}`,
+      url: window.location.href,
+    };
+
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData);
+      } else {
+        // Fallback: Copy to clipboard
+        await navigator.clipboard.writeText(window.location.href);
+        setShowShareToast(true);
+        setTimeout(() => setShowShareToast(false), 3000);
+      }
+    } catch (err) {
+      console.log("Error sharing:", err);
+    }
+  };
 
   if (!product) {
     return (
@@ -62,7 +84,7 @@ const Detail = () => {
           {/* Product Images */}
           <div className="space-y-4">
             {/* Main Image */}
-            <div className="group bg-white/10 dark:bg-black/20 backdrop-blur-sm border border-white/20 dark:border-gray-800/30 overflow-hidden shadow-xl">
+            <div className="group bg-white/80 dark:bg-black/20 backdrop-blur-sm border border-gray-200 dark:border-gray-800/30 overflow-hidden shadow-xl">
               <img
                 src={productImages[selectedImage]}
                 alt={product.title}
@@ -97,7 +119,7 @@ const Detail = () => {
                     className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all duration-300 ${
                       selectedImage === index
                         ? "border-blue-500 shadow-lg"
-                        : "border-white/20 dark:border-gray-700/50 hover:border-blue-300"
+                        : "border-gray-300 dark:border-gray-700/50 hover:border-blue-400"
                     }`}
                   >
                     <img
@@ -145,27 +167,37 @@ const Detail = () => {
             {/* Actions */}
             <div className="flex flex-col sm:flex-row gap-4">
               <AddToCartButton product={product} />
-              <button className="flex-1 px-6 py-4 bg-white/20 dark:bg-black/20 backdrop-blur-sm border border-white/30 dark:border-gray-700/50 text-gray-900 dark:text-white font-semibold hover:bg-white/30 dark:hover:bg-black/30 transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center gap-2">
+              <button
+                onClick={handleShare}
+                className="flex-1 px-6 py-4 bg-white/50 dark:bg-black/20 backdrop-blur-sm border border-gray-300 dark:border-gray-700/50 text-gray-900 dark:text-white font-semibold hover:bg-white/70 dark:hover:bg-black/30 transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center gap-2"
+              >
                 <FaShare className="w-4 h-4" />
                 Share
               </button>
             </div>
 
+            {/* Share Toast */}
+            {showShareToast && (
+              <div className="fixed top-20 right-4 z-50 bg-green-500 text-white px-6 py-3 shadow-2xl animate-slide-in">
+                ✓ Link copied to clipboard!
+              </div>
+            )}
+
             {/* Features */}
-            <div className="grid grid-cols-2 gap-4 pt-6 border-t border-white/20 dark:border-gray-700/50">
-              <div className="text-center p-4 bg-white/5 dark:bg-black/10 rounded-lg">
+            <div className="grid grid-cols-2 gap-4 pt-6 border-t border-gray-300 dark:border-gray-700/50">
+              <div className="text-center p-4 bg-blue-50 dark:bg-black/10 rounded-lg border border-gray-200 dark:border-transparent">
                 <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
                   Free
                 </div>
-                <div className="text-sm text-gray-600 dark:text-gray-400">
+                <div className="text-sm text-gray-700 dark:text-gray-400">
                   Shipping
                 </div>
               </div>
-              <div className="text-center p-4 bg-white/5 dark:bg-black/10 rounded-lg">
+              <div className="text-center p-4 bg-green-50 dark:bg-black/10 rounded-lg border border-gray-200 dark:border-transparent">
                 <div className="text-2xl font-bold text-green-600 dark:text-green-400">
                   30
                 </div>
-                <div className="text-sm text-gray-600 dark:text-gray-400">
+                <div className="text-sm text-gray-700 dark:text-gray-400">
                   Day Returns
                 </div>
               </div>

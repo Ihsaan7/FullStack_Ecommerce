@@ -30,7 +30,7 @@ const ProductCard = ({
 
   return (
     <div
-      className="group relative bg-white/10 dark:bg-black/20 backdrop-blur-sm border border-white/20 dark:border-gray-800/30 shadow-lg hover:shadow-xl transition-all duration-500 transform hover:-translate-y-1"
+      className="group relative bg-white/80 dark:bg-black/20 backdrop-blur-sm border border-gray-200 dark:border-gray-800/30 shadow-lg hover:shadow-xl transition-all duration-500 transform hover:-translate-y-1"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -83,7 +83,7 @@ const ProductCard = ({
           <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2 line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
             {title}
           </h3>
-          <p className="text-sm text-gray-800 dark:text-gray-400">{category}</p>
+          <p className="text-sm text-gray-700 dark:text-gray-400">{category}</p>
         </div>
 
         {/* Actions */}
@@ -95,7 +95,7 @@ const ProductCard = ({
             Add to Cart
           </button>
           <Link to="/cart" className="flex-1">
-            <button className="w-full px-4 py-3 bg-white/20 dark:bg-black/20 backdrop-blur-sm border border-white/30 dark:border-gray-700/50 text-gray-900 dark:text-white font-semibold hover:bg-white/30 dark:hover:bg-black/30 transition-all duration-300 shadow-md hover:shadow-lg">
+            <button className="w-full px-4 py-3 bg-white/50 dark:bg-black/20 backdrop-blur-sm border border-gray-300 dark:border-gray-700/50 text-gray-900 dark:text-white font-semibold hover:bg-white/70 dark:hover:bg-black/30 transition-all duration-300 shadow-md hover:shadow-lg">
               View Cart
             </button>
           </Link>

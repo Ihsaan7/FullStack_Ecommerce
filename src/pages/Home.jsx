@@ -1,6 +1,6 @@
 import React from "react";
 import Carousel from "../component/home/Crousel";
-import { Outlet, useLoaderData } from "react-router-dom";
+import { Outlet, useLoaderData, Link } from "react-router-dom";
 import ProductCard from "../component/home/ProductCard";
 import Container from "../layout/Container";
 
@@ -26,7 +26,7 @@ const Home = () => {
             </h2>
             <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-slate-800 mx-auto"></div>
           </div>
-          
+
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {products.slice(0, 4).map((prod) => (
               <div key={prod.id} className="group">
@@ -55,7 +55,7 @@ const Home = () => {
             </h2>
             <div className="w-24 h-1 bg-gradient-to-r from-slate-700 to-blue-900 mx-auto"></div>
           </div>
-          
+
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {products.slice(4, 12).map((prod) => (
               <div key={prod.id} className="group">
@@ -79,15 +79,21 @@ const Home = () => {
             Ready to Experience Luxury?
           </h2>
           <p className="text-xl text-gray-300 dark:text-gray-600 mb-12 max-w-2xl mx-auto">
-            Join thousands of satisfied customers who have chosen quality and elegance.
+            Join thousands of satisfied customers who have chosen quality and
+            elegance.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="px-8 py-4 bg-gradient-to-r from-blue-600 to-slate-800 text-white font-semibold hover:from-blue-700 hover:to-slate-900 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
-              Explore Collection
-            </button>
-            <button className="px-8 py-4 border-2 border-white dark:border-gray-900 text-white dark:text-gray-900 font-semibold hover:bg-white hover:text-gray-900 dark:hover:bg-gray-900 dark:hover:text-white transition-all duration-300">
-              Learn More
-            </button>
+          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+            <Link to="/store">
+              <button className="px-8 py-4 bg-gradient-to-r from-blue-600 to-slate-800 text-white font-semibold hover:from-blue-700 hover:to-slate-900 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
+                Explore Collection
+              </button>
+            </Link>
+            <div className="text-white dark:text-gray-900">
+              <p className="text-lg font-bold">Premium Quality Guaranteed</p>
+              <p className="text-sm text-gray-300 dark:text-gray-600">
+                Free shipping on orders over $50
+              </p>
+            </div>
           </div>
         </Container>
       </section>

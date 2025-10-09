@@ -18,11 +18,11 @@ const CartCard = ({ product, onDecrease, onIncrease, onRemove }) => {
   const totalPrice = price * quantity;
 
   return (
-    <div className="bg-white/10 dark:bg-black/20 backdrop-blur-sm border border-white/20 dark:border-blue-500/30 p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 group">
+    <div className="bg-white/80 dark:bg-black/20 backdrop-blur-sm border border-gray-200 dark:border-blue-500/30 p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 group">
       <div className="flex gap-4 sm:gap-6">
         {/* Product Image */}
         <div className="flex-shrink-0">
-          <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 overflow-hidden bg-white/5 dark:bg-black/10 border border-white/10 dark:border-blue-400/20">
+          <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 overflow-hidden bg-gray-100 dark:bg-black/10 border border-gray-200 dark:border-blue-400/20">
             <img
               src={url}
               alt={title}
@@ -38,7 +38,7 @@ const CartCard = ({ product, onDecrease, onIncrease, onRemove }) => {
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1 line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
                 {title}
               </h3>
-              <p className="text-sm text-gray-800 dark:text-gray-400 mb-2">
+              <p className="text-sm text-gray-700 dark:text-gray-400 mb-2">
                 {categoryName || "Uncategorized"}
               </p>
             </div>
@@ -55,7 +55,7 @@ const CartCard = ({ product, onDecrease, onIncrease, onRemove }) => {
           {/* Price Info */}
           <div className="space-y-2 mb-4">
             <div className="flex items-center gap-2">
-              <span className="text-sm text-gray-800 dark:text-gray-400">
+              <span className="text-sm text-gray-700 dark:text-gray-400">
                 Price:
               </span>
               <span className="text-lg font-bold text-blue-600 dark:text-blue-400">
@@ -65,7 +65,7 @@ const CartCard = ({ product, onDecrease, onIncrease, onRemove }) => {
 
             {quantity > 1 && (
               <div className="flex items-center gap-2">
-                <span className="text-sm text-gray-800 dark:text-gray-400">
+                <span className="text-sm text-gray-700 dark:text-gray-400">
                   Total:
                 </span>
                 <span className="text-lg font-bold text-gray-900 dark:text-white">
@@ -80,7 +80,7 @@ const CartCard = ({ product, onDecrease, onIncrease, onRemove }) => {
             <div className="flex items-center gap-3">
               <button
                 onClick={() => onDecrease && onDecrease(id)}
-                className="w-8 h-8 bg-white/20 dark:bg-black/20 backdrop-blur-sm border border-white/30 dark:border-blue-400/40 flex items-center justify-center text-gray-700 dark:text-gray-300 hover:bg-white/30 dark:hover:bg-black/30 transition-all duration-300"
+                className="w-8 h-8 bg-white/50 dark:bg-black/20 backdrop-blur-sm border border-gray-300 dark:border-blue-400/40 flex items-center justify-center text-gray-800 dark:text-gray-300 hover:bg-white/70 dark:hover:bg-black/30 transition-all duration-300"
               >
                 <FaMinus className="w-3 h-3" />
               </button>
@@ -91,7 +91,7 @@ const CartCard = ({ product, onDecrease, onIncrease, onRemove }) => {
 
               <button
                 onClick={() => onIncrease && onIncrease(id)}
-                className="w-8 h-8 bg-white/20 dark:bg-black/20 backdrop-blur-sm border border-white/30 dark:border-blue-400/40 flex items-center justify-center text-gray-700 dark:text-gray-300 hover:bg-white/30 dark:hover:bg-black/30 transition-all duration-300"
+                className="w-8 h-8 bg-white/50 dark:bg-black/20 backdrop-blur-sm border border-gray-300 dark:border-blue-400/40 flex items-center justify-center text-gray-800 dark:text-gray-300 hover:bg-white/70 dark:hover:bg-black/30 transition-all duration-300"
               >
                 <FaPlus className="w-3 h-3" />
               </button>
@@ -99,7 +99,7 @@ const CartCard = ({ product, onDecrease, onIncrease, onRemove }) => {
 
             {/* Total Price */}
             <div className="text-right min-w-0 flex-shrink-0">
-              <div className="text-sm text-gray-800 dark:text-gray-400">
+              <div className="text-sm text-gray-700 dark:text-gray-400">
                 Total
               </div>
               <div className="text-xl font-bold text-gray-900 dark:text-white">
