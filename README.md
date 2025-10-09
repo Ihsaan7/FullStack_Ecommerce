@@ -263,10 +263,10 @@ npm run dev
 
 ### 📦 Products
 
-| Method | Endpoint        | Description        | Auth Required |
-| ------ | --------------- | ------------------ | ------------- |
-| `GET`  | `/products`     | Browse all products| Public 🌐     |
-| `GET`  | `/products/:id` | View product details| Public 🌐     |
+| Method | Endpoint        | Description          | Auth Required |
+| ------ | --------------- | -------------------- | ------------- |
+| `GET`  | `/products`     | Browse all products  | Public 🌐     |
+| `GET`  | `/products/:id` | View product details | Public 🌐     |
 
 > 💡 **Why are products public?** E-commerce sites allow browsing without login to encourage exploration and improve SEO!
 
@@ -281,6 +281,7 @@ npm run dev
 | `DELETE` | `/cart/clear`      | Clear entire cart     | Required 🔒   |
 
 **Legend:**
+
 - 🌐 **Public** - No authentication needed (anyone can access)
 - 🔒 **Required** - Must be logged in with valid JWT token
 
