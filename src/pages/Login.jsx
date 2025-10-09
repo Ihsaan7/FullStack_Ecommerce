@@ -11,8 +11,8 @@ export default function Login() {
   const location = useLocation();
   const { login } = useAuth();
 
-  // Redirect to the page they were trying to visit, or /store
-  const from = location.state?.from?.pathname || "/store";
+  // Redirect to the page they were trying to visit, or /home
+  const from = location.state?.from?.pathname || "/home";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,7 +23,7 @@ export default function Login() {
       const result = await login(email, password);
 
       if (result.success) {
-        // Navigate to the page they were trying to visit, or /store
+        // Navigate to the page they were trying to visit, or /home
         nav(from, { replace: true });
       } else {
         setError(result.error);

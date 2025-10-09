@@ -31,7 +31,9 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   // Calculate total cart items
-  const cartItemCount = cartItem ? cartItem.reduce((total, item) => total + (item.quantity || 1), 0) : 0;
+  const cartItemCount = cartItem
+    ? cartItem.reduce((total, item) => total + (item.quantity || 1), 0)
+    : 0;
 
   // Try to find a loader result that contains products (assumes recentLoader returns an array of products)
   const allProducts =
@@ -54,9 +56,8 @@ const Navbar = () => {
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white/10 dark:bg-black/20 backdrop-blur-2xl border-b border-white/20 dark:border-gray-800/30 shadow-xl">
         <div className="max-w-7xl mx-auto px-4 lg:px-6">
           <div className="flex items-center justify-between h-16">
-            
             {/* Logo Section */}
-            <Link to="/" className="flex items-center space-x-2 group">
+            <Link to="/home" className="flex items-center space-x-2 group">
               <div className="relative">
                 <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-slate-800 flex items-center justify-center shadow-lg group-hover:shadow-blue-500/25 dark:group-hover:shadow-slate-500/25 transition-all duration-300 transform group-hover:scale-105">
                   <span className="text-white font-bold text-sm">L</span>
@@ -97,26 +98,31 @@ const Navbar = () => {
 
             {/* Navigation Items */}
             <div className="flex items-center">
-              
               {/* Store Link */}
-              <Link 
-                to="/store" 
+              <Link
+                to="/store"
                 className="hidden sm:flex items-center space-x-1.5 px-3 py-2 hover:bg-white/10 dark:hover:bg-gray-800/20 transition-all duration-300 group"
               >
                 <FaStore className="w-4 h-4 text-gray-900 dark:text-gray-400 group-hover:text-blue-500 dark:group-hover:text-slate-400 transition-colors duration-300" />
-                <span className="text-gray-900 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white font-medium text-sm">Store</span>
+                <span className="text-gray-900 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white font-medium text-sm">
+                  Store
+                </span>
               </Link>
 
               {/* Cart Link */}
-              <Link 
-                to="/cart" 
+              <Link
+                to="/cart"
                 className="relative flex items-center space-x-1.5 px-3 py-2 hover:bg-white/10 dark:hover:bg-gray-800/20 transition-all duration-300 group mr-2"
               >
                 <FaShoppingCart className="w-4 h-4 text-gray-900 dark:text-gray-400 group-hover:text-blue-500 dark:group-hover:text-slate-400 transition-colors duration-300" />
-                <span className="hidden sm:block text-gray-900 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white font-medium text-sm">Cart</span>
+                <span className="hidden sm:block text-gray-900 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white font-medium text-sm">
+                  Cart
+                </span>
                 {/* Cart Badge */}
                 <div className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-gradient-to-r from-blue-500 to-slate-700 flex items-center justify-center shadow-lg">
-                  <span className="text-xs text-white font-bold">{cartItemCount}</span>
+                  <span className="text-xs text-white font-bold">
+                    {cartItemCount}
+                  </span>
                 </div>
               </Link>
 
@@ -140,8 +146,18 @@ const Navbar = () => {
                 className="md:hidden w-10 h-10 flex items-center justify-center border border-white/20 dark:border-gray-700/50 bg-white/10 dark:bg-gray-900/30 backdrop-blur-sm text-gray-900 dark:text-gray-400 hover:bg-white/20 dark:hover:bg-gray-800/40 hover:text-blue-500 dark:hover:text-slate-400 transition-all duration-300 shadow-lg"
                 aria-label="Toggle menu"
               >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
                 </svg>
               </button>
             </div>
@@ -174,16 +190,16 @@ const Navbar = () => {
 
             {/* Mobile Navigation Links */}
             <div className="space-y-1">
-              <Link 
-                to="/store" 
+              <Link
+                to="/store"
                 className="flex items-center space-x-2 px-3 py-2 hover:bg-white/10 dark:hover:bg-gray-800/20 transition-all duration-300 text-gray-900 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
                 onClick={() => setIsMenuOpen(false)}
               >
                 <FaStore className="w-4 h-4" />
                 <span className="text-sm">Store</span>
               </Link>
-              <Link 
-                to="/cart" 
+              <Link
+                to="/cart"
                 className="flex items-center space-x-2 px-3 py-2 hover:bg-white/10 dark:hover:bg-gray-800/20 transition-all duration-300 text-gray-900 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
                 onClick={() => setIsMenuOpen(false)}
               >

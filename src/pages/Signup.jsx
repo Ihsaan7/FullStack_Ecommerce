@@ -20,8 +20,8 @@ export default function Signup() {
       const result = await signup(fullName, email, password);
 
       if (result.success) {
-        // Redirect to store after successful signup
-        nav("/store");
+        // Redirect to home after successful signup
+        nav("/home");
       } else {
         setError(result.error);
       }
