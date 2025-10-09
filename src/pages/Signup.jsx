@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 
 export default function Signup() {
@@ -18,7 +18,7 @@ export default function Signup() {
 
     try {
       const result = await signup(fullName, email, password);
-      
+
       if (result.success) {
         // Redirect to store after successful signup
         nav("/store");
@@ -33,35 +33,129 @@ export default function Signup() {
   };
 
   return (
-    <div className="max-w-md mx-auto p-6">
-      <h2 className="text-2xl mb-4">Create account</h2>
-      {error && <div className="text-red-500 mb-2">{error}</div>}
-      <form onSubmit={handleSubmit} className="space-y-3">
-        <input
-          value={fullName}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Full name"
-          required
-        />
-        <input
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
-          type="email"
-          required
-        />
-        <input
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password (min 6 chars)"
-          type="password"
-          minLength={6}
-          required
-        />
-        <button type="submit" disabled={loading}>
-          {loading ? "Signing up…" : "Create account"}
-        </button>
-      </form>
+    <div className="min-h-screen flex items-center justify-center px-4 py-12 bg-gradient-to-br from-blue-50 via-slate-50 to-gray-100 dark:from-gray-900 dark:via-slate-900 dark:to-black">
+      <div className="max-w-md w-full">
+        {/* Logo/Brand */}
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center space-x-2 group">
+            <div className="relative">
+              <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-slate-800 flex items-center justify-center shadow-lg group-hover:shadow-blue-500/25 dark:group-hover:shadow-slate-500/25 transition-all duration-300">
+                <span className="text-white font-bold text-xl">L</span>
+              </div>
+              <div className="absolute -top-1 -right-1 w-3 h-3 bg-gradient-to-r from-blue-400 to-slate-600 animate-pulse"></div>
+            </div>
+            <div className="flex flex-col items-start">
+              <div className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent tracking-tight">
+                LUXURY
+              </div>
+              <div className="text-xs text-gray-800 dark:text-gray-400 font-medium tracking-wider uppercase">
+                COLLECTION
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Signup Card */}
+        <div className="bg-white/10 dark:bg-black/20 backdrop-blur-2xl border border-white/20 dark:border-gray-800/30 shadow-xl p-8">
+          <div className="mb-6">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+              Create Account
+            </h2>
+            <p className="text-gray-700 dark:text-gray-400">
+              Join our exclusive luxury collection
+            </p>
+          </div>
+
+          {error && (
+            <div className="mb-6 px-4 py-3 bg-red-500/10 border border-red-500/30 backdrop-blur-sm">
+              <p className="text-red-600 dark:text-red-400 text-sm">{error}</p>
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <div>
+              <label
+                htmlFor="fullName"
+                className="block text-sm font-medium text-gray-900 dark:text-gray-300 mb-2"
+              >
+                Full Name
+              </label>
+              <input
+                id="fullName"
+                value={fullName}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Enter your full name"
+                required
+                className="w-full px-4 py-3 bg-white/20 dark:bg-gray-900/30 border border-white/30 dark:border-gray-700/50 text-gray-900 dark:text-white placeholder-gray-600 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 dark:focus:ring-slate-500/50 focus:border-blue-500/50 dark:focus:border-slate-500/50 transition-all duration-300 backdrop-blur-sm shadow-lg"
+              />
+            </div>
+
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-900 dark:text-gray-300 mb-2"
+              >
+                Email Address
+              </label>
+              <input
+                id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email"
+                type="email"
+                required
+                className="w-full px-4 py-3 bg-white/20 dark:bg-gray-900/30 border border-white/30 dark:border-gray-700/50 text-gray-900 dark:text-white placeholder-gray-600 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 dark:focus:ring-slate-500/50 focus:border-blue-500/50 dark:focus:border-slate-500/50 transition-all duration-300 backdrop-blur-sm shadow-lg"
+              />
+            </div>
+
+            <div>
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-900 dark:text-gray-300 mb-2"
+              >
+                Password
+              </label>
+              <input
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Minimum 6 characters"
+                type="password"
+                minLength={6}
+                required
+                className="w-full px-4 py-3 bg-white/20 dark:bg-gray-900/30 border border-white/30 dark:border-gray-700/50 text-gray-900 dark:text-white placeholder-gray-600 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 dark:focus:ring-slate-500/50 focus:border-blue-500/50 dark:focus:border-slate-500/50 transition-all duration-300 backdrop-blur-sm shadow-lg"
+              />
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full px-6 py-3 bg-gradient-to-r from-blue-600 to-slate-800 text-white font-semibold hover:from-blue-700 hover:to-slate-900 disabled:from-gray-400 disabled:to-gray-600 disabled:cursor-not-allowed transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 active:translate-y-0"
+            >
+              {loading ? "Creating Account..." : "Create Account"}
+            </button>
+          </form>
+
+          <div className="mt-6 text-center">
+            <p className="text-gray-700 dark:text-gray-400 text-sm">
+              Already have an account?{" "}
+              <Link
+                to="/"
+                className="font-semibold text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors duration-300"
+              >
+                Sign In
+              </Link>
+            </p>
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div className="mt-6 text-center">
+          <p className="text-xs text-gray-600 dark:text-gray-500">
+            © 2025 Luxury Collection. All rights reserved.
+          </p>
+        </div>
+      </div>
     </div>
   );
 }
