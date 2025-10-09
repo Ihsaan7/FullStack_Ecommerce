@@ -41,19 +41,13 @@ const Cart = () => {
 
   // Merge cart items with product details
   useEffect(() => {
-    console.log("🔄 Cart merge effect triggered");
-    console.log("📦 Cart items from DB:", cartItem);
-    console.log("🏪 All products from loader:", allProducts);
-    console.log("📊 Cart items length:", cartItem?.length);
-    console.log("📊 All products length:", allProducts?.length);
-
     if (
       cartItem &&
       cartItem.length > 0 &&
       allProducts &&
       allProducts.length > 0
     ) {
-      const invalidProductIds = []; // Track products not found in catalog
+      const invalidProductIds = [];
 
       const enrichedCart = cartItem
         .map((cartEntry) => {
@@ -63,30 +57,22 @@ const Cart = () => {
           );
 
           if (!productDetails) {
-            console.warn(
-              `⚠️ Product ${productId} not found in catalog - will be removed`
-            );
             invalidProductIds.push(productId);
             return null;
           }
 
           return {
-            ...productDetails, // Product details first
-            ...cartEntry, // Then cart-specific data (quantity, addedAt)
-            id: productId, // Ensure consistent ID
+            ...productDetails,
+            ...cartEntry,
+            id: productId,
             quantity: cartEntry.quantity || 1,
           };
         })
-        .filter(Boolean); // Remove null entries
+        .filter(Boolean);
 
-      console.log("✅ Enriched cart:", enrichedCart);
       setCartWithDetails(enrichedCart);
 
-      // Auto-cleanup: Remove invalid products from database
       if (invalidProductIds.length > 0) {
-        console.log(
-          `🧹 Cleaning up ${invalidProductIds.length} invalid items from cart...`
-        );
         invalidProductIds.forEach((productId) => {
           removeFromCart(productId);
         });
