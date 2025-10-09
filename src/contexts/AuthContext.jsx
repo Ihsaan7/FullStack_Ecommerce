@@ -15,6 +15,9 @@ export const AuthProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+  // Auto-detect API URL based on environment
+  const API_URL = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? "/api" : "http://localhost:8000");
+
   // Check authentication status on app load
   useEffect(() => {
     checkAuth();
@@ -22,7 +25,7 @@ export const AuthProvider = ({ children }) => {
 
   const checkAuth = async () => {
     try {
-      const response = await fetch("http://localhost:8000/auth/me", {
+      const response = await fetch(`${API_URL}/auth/me`, {
         method: "GET",
         credentials: "include", // Include cookies
       });
@@ -47,7 +50,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const response = await fetch("http://localhost:8000/auth/login", {
+      const response = await fetch(`${API_URL}/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -71,7 +74,7 @@ export const AuthProvider = ({ children }) => {
 
   const signup = async (fullName, email, password) => {
     try {
-      const response = await fetch("http://localhost:8000/auth/signup", {
+      const response = await fetch(`${API_URL}/auth/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ fullName, email, password }),
@@ -109,7 +112,7 @@ export const AuthProvider = ({ children }) => {
   const logout = async () => {
     try {
       // Optionally call a logout endpoint if you have one
-      await fetch("http://localhost:8000/auth/logout", {
+      await fetch(`${API_URL}/auth/logout`, {
         method: "POST",
         credentials: "include",
       }).catch(() => {}); // Ignore errors
