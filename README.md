@@ -260,28 +260,35 @@ npm run dev
 
 ### 🔐 Authentication
 
-| Method | Endpoint       | Description       | Protected |
-| ------ | -------------- | ----------------- | --------- |
-| `POST` | `/auth/signup` | Register new user | ❌        |
-| `POST` | `/auth/login`  | Login user        | ❌        |
-| `POST` | `/auth/logout` | Logout user       | ✅        |
+| Method | Endpoint       | Description           | Auth Required |
+| ------ | -------------- | --------------------- | ------------- |
+| `POST` | `/auth/signup` | Register new user     | Public 🌐     |
+| `POST` | `/auth/login`  | Login user            | Public 🌐     |
+| `GET`  | `/auth/me`     | Get current user info | Required 🔒   |
+| `POST` | `/auth/logout` | Logout user           | Required 🔒   |
 
 ### 📦 Products
 
-| Method | Endpoint        | Description       | Protected |
-| ------ | --------------- | ----------------- | --------- |
-| `GET`  | `/products`     | Get all products  | ❌        |
-| `GET`  | `/products/:id` | Get product by ID | ❌        |
+| Method | Endpoint        | Description        | Auth Required |
+| ------ | --------------- | ------------------ | ------------- |
+| `GET`  | `/products`     | Browse all products| Public 🌐     |
+| `GET`  | `/products/:id` | View product details| Public 🌐     |
 
-### 🛒 Cart
+> 💡 **Why are products public?** E-commerce sites allow browsing without login to encourage exploration and improve SEO!
 
-| Method   | Endpoint           | Description          | Protected |
-| -------- | ------------------ | -------------------- | --------- |
-| `GET`    | `/cart`            | Get user's cart      | ✅        |
-| `POST`   | `/cart/add`        | Add item to cart     | ✅        |
-| `PUT`    | `/cart/update`     | Update cart quantity | ✅        |
-| `DELETE` | `/cart/remove/:id` | Remove item          | ✅        |
-| `DELETE` | `/cart/clear`      | Clear entire cart    | ✅        |
+### 🛒 Shopping Cart
+
+| Method   | Endpoint           | Description           | Auth Required |
+| -------- | ------------------ | --------------------- | ------------- |
+| `GET`    | `/cart`            | Get user's cart       | Required 🔒   |
+| `POST`   | `/cart/add`        | Add item to cart      | Required 🔒   |
+| `PUT`    | `/cart/update`     | Update cart quantity  | Required 🔒   |
+| `DELETE` | `/cart/remove/:id` | Remove item from cart | Required 🔒   |
+| `DELETE` | `/cart/clear`      | Clear entire cart     | Required 🔒   |
+
+**Legend:**
+- 🌐 **Public** - No authentication needed (anyone can access)
+- 🔒 **Required** - Must be logged in with valid JWT token
 
 ---
 

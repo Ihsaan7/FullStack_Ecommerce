@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { body, validationResult } from "express-validator";
 import userModel from "../models/user.js";
+import auth from "../middleware/auth.js";
 
 const router = express.Router();
 
@@ -99,7 +100,7 @@ router.post("/login", async (req, res) => {
 });
 
 // Get current user info
-router.get("/me", (req, res) => {
+router.get("/me", auth, (req, res) => {
   if (!req.user) {
     return res
       .status(401)
@@ -109,7 +110,7 @@ router.get("/me", (req, res) => {
 });
 
 // Logout route
-router.post("/logout", (req, res) => {
+router.post("/logout", auth, (req, res) => {
   res.clearCookie("token");
   res.json({ success: true, message: "Logged out successfully" });
 });
