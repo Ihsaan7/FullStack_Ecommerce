@@ -31,23 +31,15 @@ export const AuthProvider = ({ children }) => {
         const data = await response.json();
         setUser(data.user);
         setIsAuthenticated(true);
-        // Sync with localStorage for compatibility
-        if (data.user) {
-          localStorage.setItem("user", JSON.stringify(data.user));
-        }
       } else {
         // Not authenticated
         setUser(null);
         setIsAuthenticated(false);
-        localStorage.removeItem("user");
-        localStorage.removeItem("token");
       }
     } catch (error) {
       console.error("Auth check failed:", error);
       setUser(null);
       setIsAuthenticated(false);
-      localStorage.removeItem("user");
-      localStorage.removeItem("token");
     } finally {
       setIsLoading(false);
     }
@@ -70,11 +62,7 @@ export const AuthProvider = ({ children }) => {
       const data = await response.json();
       setUser(data.user);
       setIsAuthenticated(true);
-      
-      // Sync with localStorage for compatibility
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user || {}));
-      
+
       return { success: true };
     } catch (error) {
       return { success: false, error: error.message };
@@ -110,12 +98,8 @@ export const AuthProvider = ({ children }) => {
       if (data.token) {
         setUser(data.user);
         setIsAuthenticated(true);
-        
-        // Sync with localStorage for compatibility
-        localStorage.setItem("token", data.token);
-        if (data.user) localStorage.setItem("user", JSON.stringify(data.user));
       }
-      
+
       return { success: true };
     } catch (error) {
       return { success: false, error: error.message };
@@ -133,11 +117,9 @@ export const AuthProvider = ({ children }) => {
       console.error("Logout request failed:", error);
     }
 
-    // Clear state and localStorage
+    // Clear state
     setUser(null);
     setIsAuthenticated(false);
-    localStorage.removeItem("user");
-    localStorage.removeItem("token");
   };
 
   const value = {
