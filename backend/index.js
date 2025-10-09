@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import morgan from "morgan";
+import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 import startDB from "./db/db.js";
 import authRoutes from "./routes/auth.js";
@@ -14,6 +15,7 @@ dotenv.config({
 const app = express();
 app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 app.use(express.json());
+app.use(cookieParser()); // Parse cookies before auth middleware
 // attach auth middleware to populate req.user when a valid token is present
 app.use(auth);
 app.use(morgan("dev"));

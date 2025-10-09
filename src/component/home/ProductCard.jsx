@@ -14,7 +14,6 @@ const ProductCard = ({
 }) => {
   const { addToCart } = useContext(ProductContext);
   const navigate = useNavigate();
-  const [added, setAdded] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
   const imageHeight = size === "lg" ? "h-80" : "h-64";
@@ -22,8 +21,6 @@ const ProductCard = ({
   const handleAdd = (e) => {
     e.preventDefault(); // Prevent navigation
     onAddToCart(productId);
-    setAdded(true);
-    setTimeout(() => setAdded(false), 2000); // Reset after 2 seconds
   };
 
   const handleQuickView = (e) => {
@@ -92,14 +89,10 @@ const ProductCard = ({
         {/* Actions */}
         <div className="flex gap-3">
           <button
-            className={`flex-1 px-4 py-3 font-semibold transition-all duration-300 transform ${
-              added
-                ? "bg-green-500 text-white shadow-lg scale-105"
-                : "bg-gradient-to-r from-blue-600 to-slate-800 text-white hover:from-blue-700 hover:to-slate-900 shadow-md hover:shadow-lg"
-            }`}
+            className="flex-1 px-4 py-3 font-semibold transition-all duration-300 transform bg-gradient-to-r from-blue-600 to-slate-800 text-white hover:from-blue-700 hover:to-slate-900 shadow-md hover:shadow-lg hover:scale-105"
             onClick={handleAdd}
           >
-            {added ? "✓ Added to Cart" : "Add to Cart"}
+            Add to Cart
           </button>
           <Link to="/cart" className="flex-1">
             <button className="w-full px-4 py-3 bg-white/20 dark:bg-black/20 backdrop-blur-sm border border-white/30 dark:border-gray-700/50 text-gray-900 dark:text-white font-semibold hover:bg-white/30 dark:hover:bg-black/30 transition-all duration-300 shadow-md hover:shadow-lg">

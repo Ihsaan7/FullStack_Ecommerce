@@ -13,6 +13,7 @@ const CartCard = ({ product, onDecrease, onIncrease, onRemove }) => {
     url: productUrl,
   } = product;
   const url = images?.[0] || image || productUrl;
+  const categoryName = typeof category === "object" ? category?.name : category;
 
   const totalPrice = price * quantity;
 
@@ -22,10 +23,10 @@ const CartCard = ({ product, onDecrease, onIncrease, onRemove }) => {
         {/* Product Image */}
         <div className="flex-shrink-0">
           <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 overflow-hidden bg-white/5 dark:bg-black/10 border border-white/10 dark:border-blue-400/20">
-            <img 
-              src={url} 
-              alt={title} 
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
+            <img
+              src={url}
+              alt={title}
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
             />
           </div>
         </div>
@@ -38,10 +39,10 @@ const CartCard = ({ product, onDecrease, onIncrease, onRemove }) => {
                 {title}
               </h3>
               <p className="text-sm text-gray-800 dark:text-gray-400 mb-2">
-                {category || "Uncategorized"}
+                {categoryName || "Uncategorized"}
               </p>
             </div>
-            
+
             {/* Remove Button */}
             <button
               onClick={() => onRemove && onRemove(id)}
@@ -54,15 +55,19 @@ const CartCard = ({ product, onDecrease, onIncrease, onRemove }) => {
           {/* Price Info */}
           <div className="space-y-2 mb-4">
             <div className="flex items-center gap-2">
-              <span className="text-sm text-gray-800 dark:text-gray-400">Price:</span>
+              <span className="text-sm text-gray-800 dark:text-gray-400">
+                Price:
+              </span>
               <span className="text-lg font-bold text-blue-600 dark:text-blue-400">
                 ${price.toFixed(2)}
               </span>
             </div>
-            
+
             {quantity > 1 && (
               <div className="flex items-center gap-2">
-                <span className="text-sm text-gray-800 dark:text-gray-400">Total:</span>
+                <span className="text-sm text-gray-800 dark:text-gray-400">
+                  Total:
+                </span>
                 <span className="text-lg font-bold text-gray-900 dark:text-white">
                   ${totalPrice.toFixed(2)}
                 </span>
@@ -79,11 +84,11 @@ const CartCard = ({ product, onDecrease, onIncrease, onRemove }) => {
               >
                 <FaMinus className="w-3 h-3" />
               </button>
-              
+
               <span className="w-12 text-center font-semibold text-gray-900 dark:text-white">
                 {quantity}
               </span>
-              
+
               <button
                 onClick={() => onIncrease && onIncrease(id)}
                 className="w-8 h-8 bg-white/20 dark:bg-black/20 backdrop-blur-sm border border-white/30 dark:border-blue-400/40 flex items-center justify-center text-gray-700 dark:text-gray-300 hover:bg-white/30 dark:hover:bg-black/30 transition-all duration-300"
@@ -94,7 +99,9 @@ const CartCard = ({ product, onDecrease, onIncrease, onRemove }) => {
 
             {/* Total Price */}
             <div className="text-right min-w-0 flex-shrink-0">
-              <div className="text-sm text-gray-800 dark:text-gray-400">Total</div>
+              <div className="text-sm text-gray-800 dark:text-gray-400">
+                Total
+              </div>
               <div className="text-xl font-bold text-gray-900 dark:text-white">
                 ${totalPrice.toFixed(2)}
               </div>

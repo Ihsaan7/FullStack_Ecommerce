@@ -48,12 +48,9 @@ export const router = createBrowserRouter([
       },
       {
         path: "cart",
+        element: <Cart />,
         loader: recentLoader,
         errorElement: <ErrorBoundary />,
-        children: [
-          { index: true, element: <Cart /> },
-          { path: ":id", element: <Cart />, loader: recentLoader },
-        ],
       },
     ],
   },

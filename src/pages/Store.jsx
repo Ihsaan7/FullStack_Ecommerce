@@ -5,30 +5,23 @@ import {
   useSearchParams,
 } from "react-router-dom";
 import ProductCard from "../component/home/ProductCard";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 import Container from "../layout/Container";
+import { ProductContext } from "../context/ProductContext";
 
 export function Store() {
   const [searchParams] = useSearchParams();
   const selectCategory = searchParams.get("category");
-  const [cartProduct, setCartProducts] = useState([]);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const products = useLoaderData();
+  const { addToCart } = useContext(ProductContext);
 
   const handleAddToCart = async (productId) => {
-    try {
-      const response = await fetch("http://localhost:8000/cart/add", {
-        method: "POST",
-        body: JSON.stringify({ productId }),
-        headers: { "Content-Type": "application/json" },
-        credentials: "include", // Include cookies for authentication
-      });
-
-      const result = await response.json();
-      console.log("Frontend: addToCart response:", result);
-    } catch (error) {
-      console.error("Error:", error);
+    // Find the full product details
+    const product = products.find((p) => p.id === productId);
+    if (product) {
+      await addToCart(product);
     }
   };
 

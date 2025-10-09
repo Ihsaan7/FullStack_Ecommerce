@@ -11,16 +11,21 @@ const Detail = () => {
   const products = useLoaderData();
   const { theme } = useTheme();
   const [selectedImage, setSelectedImage] = useState(0);
-  
+
   const numericId = Number(id);
   const product = products.find((p) => p.id === numericId);
-  
+
   if (!product) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-white/5 to-gray-100/10 dark:from-black/10 dark:to-gray-900/20 transition-all duration-500 flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">Product Not Found</h1>
-          <Link to="/store" className="text-blue-600 dark:text-blue-400 hover:underline">
+          <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+            Product Not Found
+          </h1>
+          <Link
+            to="/store"
+            className="text-blue-600 dark:text-blue-400 hover:underline"
+          >
             ← Back to Store
           </Link>
         </div>
@@ -28,7 +33,8 @@ const Detail = () => {
     );
   }
 
-  const productImages = product.images || [product.image || product.url].filter(Boolean);
+  const productImages =
+    product.images || [product.image || product.url].filter(Boolean);
   const categoryName = product.category?.name;
 
   const relatedProducts = products
@@ -43,8 +49,8 @@ const Detail = () => {
     <div className="min-h-screen bg-gradient-to-br from-white/5 to-gray-100/10 dark:from-black/10 dark:to-gray-900/20 transition-all duration-500">
       {/* Navigation */}
       <Container className="py-6">
-        <Link 
-          to="/store" 
+        <Link
+          to="/store"
           className="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 mb-8"
         >
           <FaArrowLeft className="w-4 h-4" />
@@ -62,7 +68,7 @@ const Detail = () => {
                 alt={product.title}
                 className="w-full h-96 md:h-[500px] object-cover transition-transform duration-700 group-hover:scale-105"
               />
-              
+
               {/* Image Navigation */}
               {productImages.length > 1 && (
                 <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
@@ -148,12 +154,20 @@ const Detail = () => {
             {/* Features */}
             <div className="grid grid-cols-2 gap-4 pt-6 border-t border-white/20 dark:border-gray-700/50">
               <div className="text-center p-4 bg-white/5 dark:bg-black/10 rounded-lg">
-                <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">Free</div>
-                <div className="text-sm text-gray-600 dark:text-gray-400">Shipping</div>
+                <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
+                  Free
+                </div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">
+                  Shipping
+                </div>
               </div>
               <div className="text-center p-4 bg-white/5 dark:bg-black/10 rounded-lg">
-                <div className="text-2xl font-bold text-green-600 dark:text-green-400">30</div>
-                <div className="text-sm text-gray-600 dark:text-gray-400">Day Returns</div>
+                <div className="text-2xl font-bold text-green-600 dark:text-green-400">
+                  30
+                </div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">
+                  Day Returns
+                </div>
               </div>
             </div>
           </div>
@@ -171,7 +185,7 @@ const Detail = () => {
               </h2>
               <div className="w-24 h-1 bg-gradient-to-r from-slate-700 to-blue-900 mx-auto"></div>
             </div>
-            
+
             <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
               {relatedProducts.map((rp) => (
                 <ProductCard
@@ -195,35 +209,25 @@ export default Detail;
 
 const AddToCartButton = ({ product }) => {
   const { addToCart } = useContext(ProductContext);
-  const [added, setAdded] = useState(false);
   if (!addToCart || !product) return null;
 
-  const handleAdd = () => {
-    if (added) return;
-    addToCart({
+  const handleAdd = async () => {
+    await addToCart({
       id: product.id,
       title: product.title,
       price: product.price,
-      url: product.images?.[0] || product.image || product.url,
-      category: product.category?.name || "Uncategorized",
-      quantity: 1,
+      images: product.images || [product.image || product.url],
+      category: product.category,
     });
-    setAdded(true);
-    setTimeout(() => setAdded(false), 2000);
   };
 
   return (
     <button
       onClick={handleAdd}
-      disabled={added}
-      className={`flex-1 px-6 py-4 font-semibold transition-all duration-300 transform shadow-md hover:shadow-lg flex items-center justify-center gap-2 ${
-        added
-          ? "bg-green-500 text-white shadow-lg scale-105"
-          : "bg-gradient-to-r from-blue-600 to-slate-800 text-white hover:from-blue-700 hover:to-slate-900 hover:scale-105"
-      }`}
+      className="flex-1 px-6 py-4 font-semibold transition-all duration-300 transform shadow-md hover:shadow-lg flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-slate-800 text-white hover:from-blue-700 hover:to-slate-900 hover:scale-105"
     >
       <FaShoppingCart className="w-4 h-4" />
-      {added ? "✓ Added to Cart" : "Add to Cart"}
+      Add to Cart
     </button>
   );
 };

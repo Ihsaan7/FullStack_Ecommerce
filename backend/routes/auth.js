@@ -46,9 +46,23 @@ router.post(
     });
     const token = signToken(user);
 
+    // Set HttpOnly cookie
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+    });
+
     res.json({
+      success: true,
       token,
-      user: { id: user._id, email: user.email, role: user.role },
+      user: {
+        id: user._id,
+        email: user.email,
+        role: user.role,
+        fullName: user.fullName,
+      },
     });
   }
 );
@@ -64,7 +78,16 @@ router.post("/login", async (req, res) => {
 
   const token = signToken(user);
 
+  // Set HttpOnly cookie
+  res.cookie("token", token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+  });
+
   res.json({
+    success: true,
     token,
     user: {
       id: user._id,
@@ -75,9 +98,20 @@ router.post("/login", async (req, res) => {
   });
 });
 
-//------ MIDDLEWARE NEEDS TO BE ADDED in this route-------------
+// Get current user info
 router.get("/me", (req, res) => {
-  res.json({ user: req.user });
+  if (!req.user) {
+    return res
+      .status(401)
+      .json({ success: false, message: "Not authenticated" });
+  }
+  res.json({ success: true, user: req.user });
+});
+
+// Logout route
+router.post("/logout", (req, res) => {
+  res.clearCookie("token");
+  res.json({ success: true, message: "Logged out successfully" });
 });
 
 export default router;
