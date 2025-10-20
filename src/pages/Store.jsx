@@ -17,6 +17,13 @@ export function Store() {
   const products = useLoaderData();
   const { addToCart } = useContext(ProductContext);
 
+  // Debug logging
+  console.log("🔍 Store loaded with products:", products?.length);
+  if (products?.length > 0) {
+    console.log("📦 First product:", products[0]);
+    console.log("🖼️ First product images:", products[0].images);
+  }
+
   const handleAddToCart = async (productId) => {
     // Find the full product details
     const product = products.find((p) => p.id === productId);
