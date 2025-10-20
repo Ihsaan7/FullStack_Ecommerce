@@ -1,5 +1,4 @@
 import express from "express";
-import mongoose from "mongoose";
 import cors from "cors";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
@@ -49,7 +48,10 @@ app.use(auth);
 app.use(morgan("dev"));
 
 // Initialize database connection
-startDB();
+startDB().catch((err) => {
+  console.error("Fatal error during DB initialization:", err);
+  // Don't exit - continue running without DB
+});
 
 // Health check endpoint
 app.get("/", (req, res) => {
@@ -76,11 +78,22 @@ app.use((err, req, res, next) => {
     .json({ message: "Something went wrong!", error: err.message });
 });
 
+// Handle unhandled promise rejections
+process.on("unhandledRejection", (err) => {
+  console.error("Unhandled Rejection:", err);
+  // Don't exit process
+});
+
 // For local development
 if (process.env.NODE_ENV !== "production") {
   const PORT = process.env.PORT || 8000;
-  app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+  const server = app.listen(PORT, () => {
+    console.log(`✅ Server running on http://localhost:${PORT}`);
+  });
+
+  // Handle server errors
+  server.on("error", (err) => {
+    console.error("Server error:", err);
   });
 }
 
