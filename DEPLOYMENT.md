@@ -18,6 +18,7 @@
 ## 🔧 Environment Variables Setup
 
 ### Backend Variables (Set in Vercel)
+
 ```
 MONGODB_URI=mongodb+srv://[username]:[password]@cluster.mongodb.net/MiniEcommerceFS?retryWrites=true&w=majority
 JWT_SECRET=your_super_secure_jwt_secret_here
@@ -27,6 +28,7 @@ FRONTEND_URL=https://luxeshop.vercel.app (or your custom domain)
 ```
 
 ### Frontend Variables (Set in Vercel)
+
 ```
 VITE_API_URL=https://your-backend-url.vercel.app
 ```
@@ -42,9 +44,11 @@ For optimal performance, deploy backend and frontend as separate Vercel projects
 1. **Go to [vercel.com/new](https://vercel.com/new)**
 
 2. **Import GitHub Repository**
+
    - Select: `Ihsaan7/FullStack_Ecommerce`
 
 3. **Configure Project**
+
    - **Framework Preset**: Other
    - **Root Directory**: `backend`
    - **Build Command**: (leave empty)
@@ -52,6 +56,7 @@ For optimal performance, deploy backend and frontend as separate Vercel projects
    - **Start Command**: `node index.js`
 
 4. **Add Environment Variables** in Vercel:
+
    ```
    MONGODB_URI=your_mongodb_uri
    JWT_SECRET=your_secret
@@ -65,10 +70,12 @@ For optimal performance, deploy backend and frontend as separate Vercel projects
 ### Step 2: Deploy Frontend
 
 1. **Create Another Vercel Project**
+
    - Go to [vercel.com/new](https://vercel.com/new)
    - Select the same repository
 
 2. **Configure Project**
+
    - **Framework Preset**: Vite
    - **Root Directory**: `./` (root)
    - **Build Command**: `npm run build`
@@ -76,9 +83,11 @@ For optimal performance, deploy backend and frontend as separate Vercel projects
    - **Install Command**: `npm install`
 
 3. **Add Environment Variables**:
+
    ```
    VITE_API_URL=https://your-backend-url.vercel.app
    ```
+
    (Use the backend URL from Step 1)
 
 4. **Deploy** → You'll get frontend URL
@@ -88,12 +97,15 @@ For optimal performance, deploy backend and frontend as separate Vercel projects
 ## ✅ Post-Deployment Verification
 
 ### Test API Health
+
 ```
 GET https://your-backend.vercel.app/api/products
 ```
+
 Should return array of products from Fake Store API ✅
 
 ### Test Frontend
+
 1. Visit `https://your-frontend.vercel.app`
 2. Check browser tab shows **LuxeShop** with shopping bag favicon ✅
 3. Test these features:
@@ -110,6 +122,7 @@ Should return array of products from Fake Store API ✅
 ## 🎯 Features Deployed
 
 ### Frontend ✅
+
 - **React 19** with Vite for fast builds
 - **Tailwind CSS 4** with dark/light mode support
 - **Custom Favicon** - Shopping bag icon in browser tab
@@ -124,6 +137,7 @@ Should return array of products from Fake Store API ✅
   - Category filtering
 
 ### Backend ✅
+
 - **Express.js 5** for API routing
 - **MongoDB Atlas** for data persistence
 - **JWT Authentication** for user sessions
@@ -148,25 +162,33 @@ Should return array of products from Fake Store API ✅
 ## 🐛 Common Issues & Solutions
 
 ### Issue: CORS Errors in Console
-**Solution**: 
+
+**Solution**:
+
 - Check `VITE_API_URL` matches your backend URL
 - Verify backend has `FRONTEND_URL` environment variable set
 - Ensure both URLs have `https://` prefix
 
 ### Issue: Products Not Loading
+
 **Solution**:
+
 - Check API endpoint: `https://your-backend.vercel.app/api/products`
 - Verify Fake Store API is accessible
 - Check browser console for specific errors
 
 ### Issue: Cart Not Persisting
+
 **Solution**:
+
 - Verify MongoDB connection string is correct
 - Check user is authenticated before cart operations
 - Look at backend logs in Vercel
 
 ### Issue: Build Fails
+
 **Solution**:
+
 - Ensure all dependencies are in package.json ✅
 - Check Node.js version is v18+ ✅
 - Verify `vite.config.js` is correct ✅
@@ -188,6 +210,7 @@ Should return array of products from Fake Store API ✅
 ## 🔄 Continuous Deployment
 
 After setup, deployments happen automatically:
+
 - **Main branch push** → Production deploy
 - **Pull requests** → Preview deploy
 - **Environment variable change** → Automatic redeploy
@@ -196,13 +219,13 @@ After setup, deployments happen automatically:
 
 ## 📝 Branding Details
 
-| Element | Value |
-|---------|-------|
-| Project Name | LuxeShop |
-| Tagline | Premium E-Commerce Platform |
-| Version | 1.0.0 |
-| Favicon | Custom shopping bag (SVG) |
-| Theme Color | #3b82f6 (Blue) |
+| Element          | Value                                                                   |
+| ---------------- | ----------------------------------------------------------------------- |
+| Project Name     | LuxeShop                                                                |
+| Tagline          | Premium E-Commerce Platform                                             |
+| Version          | 1.0.0                                                                   |
+| Favicon          | Custom shopping bag (SVG)                                               |
+| Theme Color      | #3b82f6 (Blue)                                                          |
 | Meta Description | LuxeShop - Premium e-commerce platform for luxury goods and electronics |
 
 ---
@@ -210,11 +233,13 @@ After setup, deployments happen automatically:
 ## 🌟 Custom Domain (Optional)
 
 1. **Configure Domain**:
+
    - Go to Vercel Dashboard → Project Settings
    - Click "Domains"
    - Add your domain (e.g., `luxeshop.com`)
 
 2. **Update Environment**:
+
    - Set `FRONTEND_URL` to custom domain
    - Redeploy to apply changes
 
@@ -227,6 +252,7 @@ After setup, deployments happen automatically:
 ## 📈 Monitoring & Analytics
 
 **In Vercel Dashboard**:
+
 - View deployment logs
 - Check error rates
 - Monitor bandwidth usage
@@ -241,7 +267,7 @@ After setup, deployments happen automatically:
 ✅ Firefox (latest)  
 ✅ Safari (latest)  
 ✅ Edge (latest)  
-✅ Mobile browsers  
+✅ Mobile browsers
 
 ---
 
