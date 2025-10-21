@@ -4,7 +4,7 @@ import { useAuth } from "../contexts/AuthContext";
 import Toast from "../components/Toast";
 import { baseApi } from "../api/base";
 
-const apiBaseUrl = baseApi.defaults.baseURL?.replace(/\/$/, "") || "";
+const apiBaseUrl = (baseApi.defaults.baseURL || "/api").replace(/\/$/, "");
 const apiPath = (path) => `${apiBaseUrl}/${path.replace(/^\//, "")}`;
 
 export const ProductProvider = ({ children }) => {
