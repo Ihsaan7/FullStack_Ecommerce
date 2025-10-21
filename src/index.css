@@ -9,25 +9,14 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* Light mode text colors */
-  --text-primary: #1e40af;
-  --text-secondary: #0c4a6e;
 }
 
 html.dark {
   color-scheme: dark;
-  /* Dark mode text colors */
-  --text-primary: #9ca3af;
-  --text-secondary: #d1d5db;
 }
 
 html:not(.dark) {
   color-scheme: light;
-}
-
-/* Smooth transitions for theme changes - exclude color transition to allow immediate effect */
-* {
-  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 /* Custom scrollbar */
@@ -61,6 +50,12 @@ html:not(.dark) {
   background: linear-gradient(to bottom, #3b82f6, #8b5cf6);
 }
 
+/* Smooth transitions for theme changes */
+* {
+  transition: background-color 0.3s ease, border-color 0.3s ease,
+    color 0.3s ease;
+}
+
 /* Custom animations */
 @keyframes float {
   0%,
@@ -90,6 +85,28 @@ html:not(.dark) {
   to {
     transform: translateX(0);
     opacity: 1;
+  }
+}
+
+@keyframes bounce {
+  0%,
+  80%,
+  100% {
+    opacity: 0.3;
+    transform: translateY(0);
+  }
+  40% {
+    opacity: 1;
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }
 
