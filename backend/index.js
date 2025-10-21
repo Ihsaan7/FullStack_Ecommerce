@@ -23,15 +23,21 @@ const envOriginValues = [
   process.env.CORS_ALLOWED_ORIGINS,
 ];
 
+const vercelUrl = process.env.VERCEL_URL
+  ? `https://${process.env.VERCEL_URL}`
+  : undefined;
+
 const allowedOrigins = Array.from(
   new Set(
-    ["http://localhost:5173"].concat(
-      envOriginValues
-        .filter(Boolean)
-        .flatMap((value) => value.split(","))
-        .map((origin) => origin.trim())
-        .filter(Boolean)
-    )
+    ["http://localhost:5173", vercelUrl]
+      .filter(Boolean)
+      .concat(
+        envOriginValues
+          .filter(Boolean)
+          .flatMap((value) => value.split(","))
+          .map((origin) => origin.trim())
+          .filter(Boolean)
+      )
   )
 );
 
@@ -41,7 +47,7 @@ app.use(
       // Allow requests with no origin (mobile apps, Postman, etc.)
       if (!origin) return callback(null, true);
       if (
-        allowedOrigins.indexOf(origin) !== -1 ||
+        allowedOrigins.includes(origin) ||
         process.env.NODE_ENV === "development"
       ) {
         callback(null, true);

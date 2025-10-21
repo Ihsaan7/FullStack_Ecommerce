@@ -15,8 +15,10 @@ export const AuthProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  // Use environment variable for backend URL
-  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
+  // Use /api in production (monorepo rewrites); dev uses env/localhost
+  const API_URL = import.meta.env.PROD
+    ? "/api"
+    : (import.meta.env.VITE_API_URL || "http://localhost:8000");
 
   // Check authentication status on app load
   useEffect(() => {
