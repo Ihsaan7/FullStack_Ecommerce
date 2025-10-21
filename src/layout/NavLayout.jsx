@@ -10,6 +10,7 @@ import { MoonIcon, SunIcon } from "@heroicons/react/24/solid";
 import { useTheme } from "../context/ThemeContext.jsx";
 import { ProductContext } from "../context/ProductContext";
 import { useAuth } from "../contexts/AuthContext";
+import Loader from "../components/Loader";
 import {
   Link,
   Outlet,
@@ -17,12 +18,17 @@ import {
   useLoaderData,
   useMatches,
   useLocation,
+  useNavigation,
 } from "react-router-dom";
 
 export function NavLayout() {
+  const navigation = useNavigation();
+  const isLoading = navigation.state === "loading";
+
   return (
     <>
       <Navbar />
+      {isLoading && <Loader fullScreen message="Loading..." />}
       <Outlet />
     </>
   );
@@ -109,7 +115,7 @@ const Navbar = () => {
                 <div className="text-lg font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent tracking-tight">
                   LUXURY
                 </div>
-                <div className="text-xs text-blue-700 dark:text-gray-400 font-medium tracking-wider uppercase">
+                <div className="text-xs text-gray-800 dark:text-gray-400 font-medium tracking-wider uppercase">
                   COLLECTION
                 </div>
               </div>
@@ -128,7 +134,7 @@ const Navbar = () => {
                   />
                   <button
                     type="submit"
-                    className="absolute right-2 top-1/2 transform -translate-y-1/2 text-blue-600 dark:text-gray-400 hover:text-blue-700 dark:hover:text-slate-400 transition-colors duration-300"
+                    className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-700 dark:text-gray-400 hover:text-blue-600 dark:hover:text-slate-400 transition-colors duration-300"
                     aria-label="Search"
                   >
                     <FaSearch className="w-4 h-4" />
@@ -144,8 +150,8 @@ const Navbar = () => {
                 to="/store"
                 className="hidden sm:flex items-center space-x-1.5 px-3 py-2 hover:bg-white/20 dark:hover:bg-gray-800/20 transition-all duration-300 group"
               >
-                <FaStore className="w-4 h-4 text-blue-600 dark:text-gray-400 group-hover:text-blue-700 dark:group-hover:text-slate-400 transition-colors duration-300" />
-                <span className="text-blue-700 dark:text-gray-300 group-hover:text-blue-800 dark:group-hover:text-white font-medium text-sm">
+                <FaStore className="w-4 h-4 text-gray-800 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-slate-400 transition-colors duration-300" />
+                <span className="text-gray-800 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-white font-medium text-sm">
                   Store
                 </span>
               </Link>
@@ -155,8 +161,8 @@ const Navbar = () => {
                 to="/cart"
                 className="relative flex items-center space-x-1.5 px-3 py-2 hover:bg-white/20 dark:hover:bg-gray-800/20 transition-all duration-300 group mr-2"
               >
-                <FaShoppingCart className="w-4 h-4 text-blue-600 dark:text-gray-400 group-hover:text-blue-700 dark:group-hover:text-slate-400 transition-colors duration-300" />
-                <span className="hidden sm:block text-blue-700 dark:text-gray-300 group-hover:text-blue-800 dark:group-hover:text-white font-medium text-sm">
+                <FaShoppingCart className="w-4 h-4 text-gray-800 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-slate-400 transition-colors duration-300" />
+                <span className="hidden sm:block text-gray-800 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-white font-medium text-sm">
                   Cart
                 </span>
                 {/* Cart Badge */}
@@ -171,7 +177,7 @@ const Navbar = () => {
               <button
                 type="button"
                 onClick={toggleTheme}
-                className="w-10 h-10 flex items-center justify-center border border-blue-300 dark:border-gray-700/50 bg-blue-50/50 dark:bg-gray-900/30 backdrop-blur-sm text-blue-600 dark:text-gray-400 hover:bg-blue-100 dark:hover:bg-gray-800/40 hover:text-blue-700 dark:hover:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-slate-500/50 transition-all duration-300 shadow-lg"
+                className="w-10 h-10 flex items-center justify-center border border-gray-300 dark:border-gray-700/50 bg-white/30 dark:bg-gray-900/30 backdrop-blur-sm text-gray-800 dark:text-gray-400 hover:bg-white/50 dark:hover:bg-gray-800/40 hover:text-blue-600 dark:hover:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-slate-500/50 transition-all duration-300 shadow-lg"
                 aria-label="Toggle theme"
               >
                 {theme === "dark" ? (
@@ -219,7 +225,7 @@ const Navbar = () => {
               {/* Mobile Menu Button */}
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="md:hidden w-10 h-10 flex items-center justify-center border border-blue-300 dark:border-gray-700/50 bg-blue-50/50 dark:bg-gray-900/30 backdrop-blur-sm text-blue-600 dark:text-gray-400 hover:bg-blue-100 dark:hover:bg-gray-800/40 hover:text-blue-700 dark:hover:text-slate-400 transition-all duration-300 shadow-lg"
+                className="md:hidden w-10 h-10 flex items-center justify-center border border-gray-300 dark:border-gray-700/50 bg-white/30 dark:bg-gray-900/30 backdrop-blur-sm text-gray-800 dark:text-gray-400 hover:bg-white/50 dark:hover:bg-gray-800/40 hover:text-blue-600 dark:hover:text-slate-400 transition-all duration-300 shadow-lg"
                 aria-label="Toggle menu"
               >
                 <svg

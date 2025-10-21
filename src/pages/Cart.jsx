@@ -3,6 +3,7 @@ import { ProductContext } from "../context/ProductContext";
 import { useLoaderData, useParams, Link } from "react-router-dom";
 import CartCard from "../component/cart/CartCard";
 import { useTheme } from "../context/ThemeContext";
+import Loader from "../components/Loader";
 import {
   FaShoppingCart,
   FaArrowLeft,
@@ -93,16 +94,7 @@ const Cart = () => {
 
   // Loading state
   if (isLoading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-white/5 to-gray-100/10 dark:from-black/10 dark:to-gray-900/20 transition-all duration-500 flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-600 dark:text-gray-400">
-            Loading your cart...
-          </p>
-        </div>
-      </div>
-    );
+    return <Loader fullScreen message="Loading your cart..." />;
   }
 
   // Empty cart state
