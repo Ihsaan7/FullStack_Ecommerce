@@ -15,7 +15,10 @@ const Detail = () => {
 
   const numericId = Number(id);
   console.log("[DEBUG] Looking for product ID:", id, "numericId:", numericId);
-  console.log("[DEBUG] Available products:", products.map(p => ({ id: p.id, type: typeof p.id })));
+  console.log(
+    "[DEBUG] Available products:",
+    products.map((p) => ({ id: p.id, type: typeof p.id }))
+  );
   const product = products.find((p) => Number(p.id) === numericId);
 
   const handleShare = async () => {
@@ -229,6 +232,8 @@ const Detail = () => {
                   title={rp.title}
                   url={rp.images?.[0] || rp.image || rp.url}
                   category={rp.category?.name || "Uncategorized"}
+                  onAddToCart={handleAddToCart}
+                  productId={rp.id}
                 />
               ))}
             </div>

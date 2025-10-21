@@ -77,6 +77,9 @@ const Navbar = () => {
     if (found) {
       navigate(`/store/${found.id}`);
       setQuery("");
+    } else {
+      // Show no results toast or alert
+      alert(`No products found matching "${q}"`);
     }
   };
 
