@@ -10,6 +10,7 @@ const Detail = () => {
   const { id } = useParams();
   const products = useLoaderData();
   const { theme } = useTheme();
+  const { addToCart } = useContext(ProductContext);
   const [selectedImage, setSelectedImage] = useState(0);
   const [showShareToast, setShowShareToast] = useState(false);
 
@@ -39,6 +40,13 @@ const Detail = () => {
       }
     } catch (err) {
       console.log("Error sharing:", err);
+    }
+  };
+
+  const handleAddToCart = async (productId) => {
+    const relatedProduct = relatedProducts.find((p) => p.id === productId);
+    if (relatedProduct) {
+      await addToCart(relatedProduct);
     }
   };
 
