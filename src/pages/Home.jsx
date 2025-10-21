@@ -1,11 +1,20 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import Carousel from "../component/home/Crousel";
 import { Outlet, useLoaderData, Link } from "react-router-dom";
 import ProductCard from "../component/home/ProductCard";
 import Container from "../layout/Container";
+import { ProductContext } from "../context/ProductContext";
 
 const Home = () => {
   const products = useLoaderData();
+  const { addToCart } = useContext(ProductContext);
+
+  const handleAddToCart = async (productId) => {
+    const product = products.find((p) => p.id === productId);
+    if (product) {
+      await addToCart(product);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-white/5 to-gray-100/10 dark:from-black/10 dark:to-gray-900/20 transition-all duration-500">
@@ -36,6 +45,8 @@ const Home = () => {
                   title={prod.title}
                   url={prod.images[0]}
                   category={prod.category?.name || "Uncategorized"}
+                  onAddToCart={handleAddToCart}
+                  productId={prod.id}
                 />
               </div>
             ))}
@@ -65,6 +76,8 @@ const Home = () => {
                   title={prod.title}
                   url={prod.images[0]}
                   category={prod.category?.name || "Uncategorized"}
+                  onAddToCart={handleAddToCart}
+                  productId={prod.id}
                 />
               </div>
             ))}

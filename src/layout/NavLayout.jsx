@@ -38,6 +38,7 @@ const Navbar = () => {
   const [query, setQuery] = useState("");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const [searchError, setSearchError] = useState("");
   const profileMenuRef = useRef(null);
 
   // Calculate total cart items
@@ -77,9 +78,11 @@ const Navbar = () => {
     if (found) {
       navigate(`/store/${found.id}`);
       setQuery("");
+      setSearchError("");
     } else {
-      // Show no results toast or alert
-      alert(`No products found matching "${q}"`);
+      // Show styled toast instead of alert
+      setSearchError(`No products found matching "${q}"`);
+      setTimeout(() => setSearchError(""), 3000);
     }
   };
 
@@ -291,6 +294,18 @@ const Navbar = () => {
 
       {/* Spacer for fixed navbar */}
       <div className="h-16"></div>
+
+      {/* Search Error Toast */}
+      {searchError && (
+        <div className="fixed bottom-6 right-6 z-50 px-6 py-4 bg-gradient-to-r from-orange-500 to-red-600 text-white rounded-lg shadow-2xl backdrop-blur-sm border border-white/20 animate-slide-up">
+          <div className="flex items-center gap-3">
+            <svg className="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+            </svg>
+            <span className="font-medium">{searchError}</span>
+          </div>
+        </div>
+      )}
     </>
   );
 };
