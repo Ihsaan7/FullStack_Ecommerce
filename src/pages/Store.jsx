@@ -53,7 +53,7 @@ export function Store() {
           </h1>
           <button
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            className="p-2 bg-blue-50/50 dark:bg-black/20 backdrop-blur-sm border border-blue-300/50 dark:border-gray-800/30 text-blue-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-black/30 transition-all duration-300"
+            className="p-2 bg-blue-50/50 dark:bg-black/20 backdrop-blur-sm border border-blue-300/50 dark:border-gray-800/30 text-slate-900 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-black/30 transition-all duration-300"
           >
             {isSidebarOpen ? (
               <FaTimes className="w-5 h-5" />
@@ -95,7 +95,7 @@ export function Store() {
                       `block px-4 py-3 transition-all duration-300 ${
                         selectCategory === catName
                           ? "bg-gradient-to-r from-blue-600 to-slate-800 text-white font-semibold shadow-lg"
-                          : "text-blue-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-gray-800/50 hover:text-blue-800 dark:hover:text-blue-400 border border-blue-200/50 dark:border-transparent"
+                          : "text-slate-900 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-gray-800/50 hover:text-blue-800 dark:hover:text-blue-400 border border-blue-200/50 dark:border-transparent"
                       }`
                     }
                   >
@@ -135,7 +135,7 @@ export function Store() {
                       `block px-4 py-3 transition-all duration-300 ${
                         !selectCategory || selectCategory === "All"
                           ? "bg-gradient-to-r from-blue-600 to-slate-800 text-white font-semibold shadow-lg"
-                          : "text-blue-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-gray-800/50 hover:text-blue-800 dark:hover:text-blue-400 border border-blue-200/50 dark:border-transparent"
+                          : "text-slate-900 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-gray-800/50 hover:text-blue-800 dark:hover:text-blue-400 border border-blue-200/50 dark:border-transparent"
                       }`
                     }
                   >
@@ -152,7 +152,7 @@ export function Store() {
                         `block px-4 py-3 transition-all duration-300 ${
                           selectCategory === catName
                             ? "bg-gradient-to-r from-blue-600 to-slate-800 text-white font-semibold shadow-lg"
-                            : "text-blue-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-gray-800/50 hover:text-blue-800 dark:hover:text-blue-400 border border-blue-200/50 dark:border-transparent"
+                            : "text-slate-900 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-gray-800/50 hover:text-blue-800 dark:hover:text-blue-400 border border-blue-200/50 dark:border-transparent"
                         }`
                       }
                     >
@@ -172,7 +172,7 @@ export function Store() {
                   ? `${selectCategory} Products`
                   : "Everything At One Place"}
               </h1>
-              <p className="text-blue-700 dark:text-gray-400">
+              <p className="text-slate-900 dark:text-gray-400">
                 Showing {filteredProducts.length} product
                 {filteredProducts.length !== 1 ? "s" : ""}
               </p>
