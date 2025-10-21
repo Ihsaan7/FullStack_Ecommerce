@@ -14,7 +14,9 @@ const Detail = () => {
   const [showShareToast, setShowShareToast] = useState(false);
 
   const numericId = Number(id);
-  const product = products.find((p) => p.id === numericId);
+  console.log("[DEBUG] Looking for product ID:", id, "numericId:", numericId);
+  console.log("[DEBUG] Available products:", products.map(p => ({ id: p.id, type: typeof p.id })));
+  const product = products.find((p) => Number(p.id) === numericId);
 
   const handleShare = async () => {
     const shareData = {
@@ -88,7 +90,7 @@ const Detail = () => {
               <img
                 src={productImages[selectedImage]}
                 alt={product.title}
-                className="w-full h-96 md:h-[500px] object-cover transition-transform duration-700 group-hover:scale-105"
+                className="w-full h-96 md:h-[500px] object-contain transition-transform duration-700 group-hover:scale-105"
               />
 
               {/* Image Navigation */}

@@ -18,6 +18,13 @@ const ProductCard = ({
 
   const imageHeight = size === "lg" ? "h-80" : "h-64";
 
+  // Debug logging
+  console.log(`🖼️ ProductCard for ${title}:`, {
+    url,
+    images_exist: !!url,
+    fallback: url || "https://placehold.co/600x400?text=No+Image",
+  });
+
   const handleAdd = (e) => {
     e.preventDefault(); // Prevent navigation
     onAddToCart(productId);
@@ -38,11 +45,15 @@ const ProductCard = ({
       <div className={`relative ${imageHeight} w-full overflow-hidden`}>
         <Link to={`/store/${id}`}>
           <img
-            src={url}
+            src={url || "https://placehold.co/600x400?text=No+Image"}
             alt={title}
-            className={`w-full h-full object-cover transition-transform duration-700 ${
+            className={`w-full h-full object-contain transition-transform duration-700 ${
               isHovered ? "scale-110" : "scale-100"
             }`}
+            onError={(e) => {
+              console.warn(`Image failed to load for ${title}:`, url);
+              e.target.src = "https://placehold.co/600x400?text=No+Image";
+            }}
           />
         </Link>
 
