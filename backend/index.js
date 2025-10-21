@@ -29,15 +29,13 @@ const vercelUrl = process.env.VERCEL_URL
 
 const allowedOrigins = Array.from(
   new Set(
-    ["http://localhost:5173", vercelUrl]
-      .filter(Boolean)
-      .concat(
-        envOriginValues
-          .filter(Boolean)
-          .flatMap((value) => value.split(","))
-          .map((origin) => origin.trim())
-          .filter(Boolean)
-      )
+    ["http://localhost:5173", vercelUrl].filter(Boolean).concat(
+      envOriginValues
+        .filter(Boolean)
+        .flatMap((value) => value.split(","))
+        .map((origin) => origin.trim())
+        .filter(Boolean)
+    )
   )
 );
 

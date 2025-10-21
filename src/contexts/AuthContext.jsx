@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
   // Use /api in production (monorepo rewrites); dev uses env/localhost
   const API_URL = import.meta.env.PROD
     ? "/api"
-    : (import.meta.env.VITE_API_URL || "http://localhost:8000");
+    : import.meta.env.VITE_API_URL || "http://localhost:8000";
 
   // Check authentication status on app load
   useEffect(() => {
