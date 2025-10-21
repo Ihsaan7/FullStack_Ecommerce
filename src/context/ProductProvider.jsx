@@ -23,6 +23,12 @@ export const ProductProvider = ({ children }) => {
       console.log("📦 Cart fetch response status:", response.status);
 
       if (response.ok) {
+        const contentType = response.headers.get("content-type");
+        if (!contentType || !contentType.includes("application/json")) {
+          console.error("❌ Cart response is not JSON:", contentType);
+          return;
+        }
+
         const data = await response.json();
         console.log("📦 Cart data received:", data);
 

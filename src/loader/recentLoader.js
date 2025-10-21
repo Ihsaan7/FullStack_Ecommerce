@@ -146,14 +146,18 @@ const mockProducts = [
 ];
 
 export function recentLoader({ request: { signal } }) {
-  // Check if API URL is available
-  if (!import.meta.env.VITE_API_URL) {
-    console.warn("VITE_API_URL not set, using mock data");
-    return Promise.resolve(mockProducts);
-  }
-
-  return getRecent({ signal }).catch((error) => {
-    console.warn("API request failed, using mock data:", error);
-    return mockProducts;
-  });
+  return getRecent({ signal })
+    .then((data) => {
+      // Ensure we always return an array
+      if (Array.isArray(data)) {
+        console.log(`✅ Loaded ${data.length} products from API`);
+        return data;
+      }
+      console.warn("API returned non-array, using mock data", data);
+      return mockProducts;
+    })
+    .catch((error) => {
+      console.warn("API request failed, using mock data:", error);
+      return mockProducts;
+    });
 }
