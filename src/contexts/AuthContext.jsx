@@ -15,8 +15,8 @@ export const AuthProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  // Use /api prefix - Vercel proxies to backend
-  const API_URL = "/api";
+  // Use environment variable for backend URL
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
   // Check authentication status on app load
   useEffect(() => {

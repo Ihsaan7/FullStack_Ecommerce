@@ -1,20 +1,8 @@
 {
   "rewrites": [
     {
-      "source": "/api/(.*)",
-      "destination": "https://fullstack-ecommerce-5ng069m3p-egzziwd-8640s-projects.vercel.app/api/$1"
-    },
-    {
-      "source": "/auth/(.*)",
-      "destination": "https://fullstack-ecommerce-5ng069m3p-egzziwd-8640s-projects.vercel.app/auth/$1"
-    },
-    {
-      "source": "/cart/(.*)",
-      "destination": "https://fullstack-ecommerce-5ng069m3p-egzziwd-8640s-projects.vercel.app/cart/$1"
-    },
-    {
-      "source": "/products/(.*)",
-      "destination": "https://fullstack-ecommerce-5ng069m3p-egzziwd-8640s-projects.vercel.app/products/$1"
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }

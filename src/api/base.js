@@ -1,7 +1,8 @@
 import axios from "axios";
 
-// Use /api prefix for all requests - Vercel will proxy to backend
-const API_URL = "/api";
+// In production, use environment variable for backend URL
+// In development, use localhost
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
 export const baseApi = axios.create({
   baseURL: API_URL,
