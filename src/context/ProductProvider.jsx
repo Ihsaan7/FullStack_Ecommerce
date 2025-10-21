@@ -2,6 +2,10 @@ import { useEffect, useState } from "react";
 import { ProductContext } from "./ProductContext";
 import { useAuth } from "../contexts/AuthContext";
 import Toast from "../components/Toast";
+import { baseApi } from "../api/base";
+
+const apiBaseUrl = baseApi.defaults.baseURL?.replace(/\/$/, "") || "";
+const apiPath = (path) => `${apiBaseUrl}/${path.replace(/^\//, "")}`;
 
 export const ProductProvider = ({ children }) => {
   const [cartItem, setCartItems] = useState([]);
@@ -11,7 +15,7 @@ export const ProductProvider = ({ children }) => {
   const fetchCartFromDB = async () => {
     try {
       console.log("🔍 Fetching cart from database...");
-      const response = await fetch("http://localhost:8000/cart", {
+      const response = await fetch(apiPath("cart"), {
         method: "GET",
         credentials: "include",
       });
@@ -57,7 +61,7 @@ export const ProductProvider = ({ children }) => {
 
   const addToCart = async (product) => {
     try {
-      const response = await fetch("http://localhost:8000/cart/add", {
+      const response = await fetch(apiPath("cart/add"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ productId: product.id }),
@@ -99,7 +103,7 @@ export const ProductProvider = ({ children }) => {
 
   const removeFromCart = async (id) => {
     try {
-      const response = await fetch(`http://localhost:8000/cart/remove/${id}`, {
+      const response = await fetch(apiPath(`cart/remove/${id}`), {
         method: "DELETE",
         credentials: "include",
       });
@@ -123,7 +127,7 @@ export const ProductProvider = ({ children }) => {
         return;
       }
 
-      const response = await fetch("http://localhost:8000/cart/update", {
+      const response = await fetch(apiPath("cart/update"), {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ productId: id, quantity: newQuantity }),
@@ -147,7 +151,7 @@ export const ProductProvider = ({ children }) => {
 
   const clearCart = async () => {
     try {
-      const response = await fetch("http://localhost:8000/cart/clear", {
+      const response = await fetch(apiPath("cart/clear"), {
         method: "DELETE",
         credentials: "include",
       });

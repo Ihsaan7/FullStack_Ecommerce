@@ -16,12 +16,24 @@ if (process.env.NODE_ENV !== "production") {
 
 const app = express();
 
-// CORS configuration - allow multiple origins
-const allowedOrigins = [
-  "http://localhost:5173",
-  "https://your-app.vercel.app", // Will be updated after deployment
+// CORS configuration - allow multiple origins, including comma-separated env lists
+const envOriginValues = [
   process.env.FRONTEND_URL,
-].filter(Boolean);
+  process.env.FRONTEND_URLS,
+  process.env.CORS_ALLOWED_ORIGINS,
+];
+
+const allowedOrigins = Array.from(
+  new Set(
+    ["http://localhost:5173"].concat(
+      envOriginValues
+        .filter(Boolean)
+        .flatMap((value) => value.split(","))
+        .map((origin) => origin.trim())
+        .filter(Boolean)
+    )
+  )
+);
 
 app.use(
   cors({
