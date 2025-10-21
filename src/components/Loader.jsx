@@ -3,21 +3,26 @@ import React from "react";
 const Loader = ({ fullScreen = false, message = "Loading..." }) => {
   const loaderContent = (
     <div className="flex flex-col items-center justify-center gap-4">
-      {/* Animated spinner */}
+      {/* Animated modern loader */}
       <div className="relative w-16 h-16">
-        {/* Outer rotating ring */}
-        <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-blue-500 border-r-blue-500 dark:border-t-blue-400 dark:border-r-blue-400 animate-spin"></div>
-
-        {/* Middle rotating ring (slower) */}
+        {/* Outer rotating box */}
         <div
-          className="absolute inset-2 rounded-full border-4 border-transparent border-b-slate-800 border-l-slate-800 dark:border-b-slate-300 dark:border-l-slate-300"
+          className="absolute inset-0 border-3 border-transparent border-t-blue-500 border-r-blue-500 dark:border-t-blue-400 dark:border-r-blue-400"
           style={{
-            animation: "spin 3s linear infinite reverse",
+            animation: "spin 1.5s linear infinite",
           }}
         ></div>
 
-        {/* Inner pulsing circle */}
-        <div className="absolute inset-4 rounded-full bg-gradient-to-r from-blue-500 to-slate-700 dark:from-blue-400 dark:to-slate-300 animate-pulse"></div>
+        {/* Middle rotating box (slower, reverse) */}
+        <div
+          className="absolute inset-2 border-3 border-transparent border-b-slate-800 border-l-slate-800 dark:border-b-slate-300 dark:border-l-slate-300"
+          style={{
+            animation: "spin 2.5s linear infinite reverse",
+          }}
+        ></div>
+
+        {/* Inner pulsing box */}
+        <div className="absolute inset-4 bg-gradient-to-br from-blue-500 to-slate-700 dark:from-blue-400 dark:to-slate-300 animate-pulse"></div>
       </div>
 
       {/* Loading text with animation */}
