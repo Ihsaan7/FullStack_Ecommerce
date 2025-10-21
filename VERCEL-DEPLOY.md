@@ -3,6 +3,7 @@
 ## 🎯 Overview
 
 This guide will deploy your **LuxeShop** e-commerce platform to Vercel with:
+
 - **Backend API** on Vercel (Express + MongoDB)
 - **Frontend** on Vercel (React + Vite)
 - **Automatic CI/CD** on every git push
@@ -25,11 +26,13 @@ This guide will deploy your **LuxeShop** e-commerce platform to Vercel with:
 ### Generate JWT Secret
 
 Run this in your terminal:
+
 ```bash
 node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 ```
 
 **Example output** (copy yours):
+
 ```
 a3f5c2d8e9b1f4a6c7e2d9f1a3b5c7e9d0f2a4b5c7e8f9a1b2c3d4e5f6a7b8
 ```
@@ -41,23 +44,27 @@ Save this for later! ✅
 ## 🗄️ Step 2: MongoDB Atlas Setup
 
 ### 2.1 Ensure Database Ready
+
 1. Go to: https://www.mongodb.com/cloud/atlas
 2. Login to your account
 3. Create/select your cluster
 4. Create a database user (save credentials!)
 
 ### 2.2 Get Connection String
+
 1. Click "Connect" on your cluster
 2. Choose "Drivers" → "Node.js"
 3. Copy the connection string
 4. Replace `<username>` and `<password>` with your user credentials
 
 **Example**:
+
 ```
 mongodb+srv://myuser:mypassword123@cluster0.abcde.mongodb.net/luxeshop?retryWrites=true&w=majority
 ```
 
 ### 2.3 Whitelist Vercel IPs
+
 1. Go to **Security** → **Network Access**
 2. Click **"Add IP Address"**
 3. Add: `0.0.0.0/0` (allows all IPs - suitable for development)
@@ -81,12 +88,14 @@ mongodb+srv://myuser:mypassword123@cluster0.abcde.mongodb.net/luxeshop?retryWrit
 
 **Framework Preset**: Select "Other" (Node.js)
 
-**Root Directory**: 
+**Root Directory**:
+
 - Click "Edit" next to root directory
 - Change from `.` to `backend`
 - Click "✓"
 
 **Build Settings**:
+
 - Build Command: `npm install` (leave as is)
 - Output Directory: (leave empty)
 - Install Command: `npm install` (leave as is)
@@ -97,13 +106,13 @@ Click **"Environment Variables"**
 
 Add these variables **individually**:
 
-| Key | Value | Environment |
-|-----|-------|-------------|
-| `MONGODB_URI` | Your MongoDB connection string | Production |
-| `JWT_SECRET` | Your generated JWT secret | Production |
-| `JWT_SECRET_EXPIRY` | `7d` | Production |
-| `NODE_ENV` | `production` | Production |
-| `FRONTEND_URL` | `https://temp-placeholder.vercel.app` | Production |
+| Key                 | Value                                 | Environment |
+| ------------------- | ------------------------------------- | ----------- |
+| `MONGODB_URI`       | Your MongoDB connection string        | Production  |
+| `JWT_SECRET`        | Your generated JWT secret             | Production  |
+| `JWT_SECRET_EXPIRY` | `7d`                                  | Production  |
+| `NODE_ENV`          | `production`                          | Production  |
+| `FRONTEND_URL`      | `https://temp-placeholder.vercel.app` | Production  |
 
 ⚠️ You'll update `FRONTEND_URL` later after frontend deploys!
 
@@ -116,6 +125,7 @@ Add these variables **individually**:
 ### 3.5 Copy Backend URL
 
 Look for the deployed URL, like:
+
 ```
 https://luxeshop-backend-abc123.vercel.app
 ```
@@ -142,6 +152,7 @@ https://luxeshop-backend-abc123.vercel.app
 **Root Directory**: Keep as `.` (root)
 
 **Build Settings**:
+
 - Build Command: `npm run build`
 - Output Directory: `dist`
 - Install Command: `npm install`
@@ -152,11 +163,12 @@ Click **"Environment Variables"**
 
 Add this variable:
 
-| Key | Value | Environment |
-|-----|-------|-------------|
-| `VITE_API_URL` | Your backend URL from Step 3.5 | Production |
+| Key            | Value                          | Environment |
+| -------------- | ------------------------------ | ----------- |
+| `VITE_API_URL` | Your backend URL from Step 3.5 | Production  |
 
 **Example**: If backend URL is `https://luxeshop-backend-abc123.vercel.app`:
+
 ```
 VITE_API_URL=https://luxeshop-backend-abc123.vercel.app
 ```
@@ -213,11 +225,13 @@ Now you need to tell the backend where the frontend is deployed.
 ### 6.1 Test Backend API
 
 Open this URL in your browser:
+
 ```
 https://your-backend-url.vercel.app/api/products
 ```
 
-**Expected Result**: 
+**Expected Result**:
+
 - JSON array with 20 products
 - If you see this, ✅ backend works!
 
@@ -255,6 +269,7 @@ If all tests pass: 🎉 **Deployment Successful!**
 **Problem**: See blank product list or errors
 
 **Solution**:
+
 1. Check `VITE_API_URL` in frontend environment variables
 2. Verify backend URL is correct
 3. Test backend directly: `your-backend-url/api/products`
@@ -266,6 +281,7 @@ If all tests pass: 🎉 **Deployment Successful!**
 **Problem**: `Access-Control-Allow-Origin` errors
 
 **Solution**:
+
 1. Verify `FRONTEND_URL` in backend environment variables
 2. Should match your frontend deployment URL exactly
 3. Redeploy backend after updating
@@ -276,6 +292,7 @@ If all tests pass: 🎉 **Deployment Successful!**
 **Problem**: Can't add items or cart is empty
 
 **Solution**:
+
 1. Check MongoDB connection: `MONGODB_URI` must be valid
 2. Verify database allows connections from 0.0.0.0/0
 3. Check browser console for specific errors
@@ -287,6 +304,7 @@ If all tests pass: 🎉 **Deployment Successful!**
 **Problem**: Vercel build shows "Build failed"
 
 **Solution**:
+
 1. Check build logs in Vercel (red error messages)
 2. Common issues:
    - Missing dependencies (check package.json)
@@ -311,12 +329,14 @@ If all tests pass: 🎉 **Deployment Successful!**
 ### View Logs
 
 **Backend Logs**:
+
 1. Click backend project
 2. Go to **"Deployments"**
 3. Click the latest deployment
 4. Click **"Runtime Logs"**
 
 **Frontend Logs**:
+
 1. Click frontend project
 2. Go to **"Deployments"**
 3. Click the latest deployment
@@ -329,6 +349,7 @@ If all tests pass: 🎉 **Deployment Successful!**
 **Great news!** After this setup:
 
 - Every time you **push to GitHub**:
+
   - ✅ Vercel automatically rebuilds your project
   - ✅ Deploy happens in ~1-2 minutes
   - ✅ No manual action needed!
@@ -379,15 +400,15 @@ If all tests pass: 🎉 **Deployment Successful!**
 
 ## ✨ Deployment Summary
 
-| Component | Status | URL |
-|-----------|--------|-----|
-| Backend | 🟢 Deployed | `your-backend-url` |
-| Frontend | 🟢 Deployed | `your-frontend-url` |
-| MongoDB | 🟢 Connected | Atlas |
-| JWT Auth | 🟢 Secured | Configured |
-| Favicon | 🟢 Active | Shows in tab |
-| Theme | 🟢 Working | Light/Dark toggle |
-| Loader | 🟢 Animated | Shows on navigation |
+| Component | Status       | URL                 |
+| --------- | ------------ | ------------------- |
+| Backend   | 🟢 Deployed  | `your-backend-url`  |
+| Frontend  | 🟢 Deployed  | `your-frontend-url` |
+| MongoDB   | 🟢 Connected | Atlas               |
+| JWT Auth  | 🟢 Secured   | Configured          |
+| Favicon   | 🟢 Active    | Shows in tab        |
+| Theme     | 🟢 Working   | Light/Dark toggle   |
+| Loader    | 🟢 Animated  | Shows on navigation |
 
 ---
 

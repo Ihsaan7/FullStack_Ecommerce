@@ -3,12 +3,14 @@
 ## ✅ Security Verification
 
 - [x] `.gitignore` properly configured
+
   - `.env` files excluded
   - `node_modules` excluded
   - `.vercel` directory excluded
   - Sensitive files (`*.pem`, `*.key`) excluded
 
 - [x] Environment Variables Secured
+
   - MongoDB credentials removed from git history
   - JWT secrets not in codebase
   - `.env.development` removed from tracking
@@ -60,6 +62,7 @@
 ## ✅ Sensitive Data Check
 
 **What's SAFE to commit:**
+
 - Source code ✓
 - Configuration files (vercel.json, vite.config.js, etc.) ✓
 - `.env.example` template ✓
@@ -68,6 +71,7 @@
 - Package.json & package-lock.json ✓
 
 **What's NEVER committed:**
+
 - `.env` (any variant) - ✗ Excluded in .gitignore
 - `node_modules/` - ✗ Excluded in .gitignore
 - `.vercel/` - ✗ Excluded in .gitignore
@@ -75,19 +79,20 @@
 
 ## ✅ Ready for Production
 
-| Component | Status | Notes |
-|-----------|--------|-------|
-| Code | ✅ Clean | All source code ready |
-| Dependencies | ✅ Listed | package.json complete |
-| Environment | ✅ Secured | All secrets removed |
-| Config | ✅ Ready | Vercel configs in place |
-| Branding | ✅ Complete | Favicon & title added |
-| Documentation | ✅ Complete | Deployment guide ready |
-| Security | ✅ Verified | No leaks detected |
+| Component     | Status      | Notes                   |
+| ------------- | ----------- | ----------------------- |
+| Code          | ✅ Clean    | All source code ready   |
+| Dependencies  | ✅ Listed   | package.json complete   |
+| Environment   | ✅ Secured  | All secrets removed     |
+| Config        | ✅ Ready    | Vercel configs in place |
+| Branding      | ✅ Complete | Favicon & title added   |
+| Documentation | ✅ Complete | Deployment guide ready  |
+| Security      | ✅ Verified | No leaks detected       |
 
 ## 🚀 Deployment Instructions
 
 ### Step 1: Push Code to GitHub
+
 ```bash
 git add -A
 git commit -m "chore: prepare for Vercel deployment"
@@ -95,6 +100,7 @@ git push origin main
 ```
 
 ### Step 2: Create Vercel Project (Backend)
+
 1. Visit: https://vercel.com/new
 2. Import repository: `Ihsaan7/FullStack_Ecommerce`
 3. Select root directory: `backend`
@@ -102,6 +108,7 @@ git push origin main
 5. Deploy
 
 ### Step 3: Create Vercel Project (Frontend)
+
 1. Visit: https://vercel.com/new
 2. Import repository: `Ihsaan7/FullStack_Ecommerce`
 3. Select root directory: `.` (root)
@@ -110,6 +117,7 @@ git push origin main
 5. Deploy
 
 ### Step 4: Update Backend URL
+
 1. Go back to backend Vercel project settings
 2. Add environment variable:
    - `FRONTEND_URL` = frontend URL from step 3
@@ -139,6 +147,7 @@ curl https://your-backend.vercel.app/api/products
 ## ⚠️ If Environment Variables Leak
 
 **Immediate Actions:**
+
 1. Regenerate MongoDB password
 2. Create new JWT secret
 3. Update Vercel environment variables
@@ -146,6 +155,7 @@ curl https://your-backend.vercel.app/api/products
 5. Clear browser cache
 
 **Long-term:**
+
 1. Enable branch protection on GitHub
 2. Use GitHub secrets for CI/CD
 3. Regular security audits
