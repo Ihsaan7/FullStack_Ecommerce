@@ -1,9 +1,7 @@
 import axios from "axios";
 
-// Auto-detect API URL based on environment
-const API_URL =
-  import.meta.env.VITE_API_URL ||
-  (import.meta.env.PROD ? "/api" : "http://localhost:8000");
+// Use /api prefix for all requests - Vercel will proxy to backend
+const API_URL = "/api";
 
 export const baseApi = axios.create({
   baseURL: API_URL,

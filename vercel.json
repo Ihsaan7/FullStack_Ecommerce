@@ -1,41 +1,20 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "backend/index.js",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist"
-      }
-    }
-  ],
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "/backend/index.js"
+      "destination": "https://fullstack-ecommerce-5ng069m3p-egzziwd-8640s-projects.vercel.app/api/$1"
     },
     {
       "source": "/auth/(.*)",
-      "destination": "/backend/index.js"
+      "destination": "https://fullstack-ecommerce-5ng069m3p-egzziwd-8640s-projects.vercel.app/auth/$1"
     },
     {
       "source": "/cart/(.*)",
-      "destination": "/backend/index.js"
+      "destination": "https://fullstack-ecommerce-5ng069m3p-egzziwd-8640s-projects.vercel.app/cart/$1"
     },
     {
       "source": "/products/(.*)",
-      "destination": "/backend/index.js"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
+      "destination": "https://fullstack-ecommerce-5ng069m3p-egzziwd-8640s-projects.vercel.app/products/$1"
     }
-  ],
-  "env": {
-    "NODE_ENV": "production"
-  }
+  ]
 }
