@@ -27,22 +27,28 @@ export const AuthProvider = ({ children }) => {
 
   const checkAuth = async () => {
     try {
+      console.log(`🔐 Checking auth status at: ${API_URL}/auth/me`);
+      
       const response = await fetch(`${API_URL}/auth/me`, {
         method: "GET",
         credentials: "include", // Include cookies
       });
 
+      console.log(`🔐 Auth check response status: ${response.status}`);
+
       if (response.ok) {
         const data = await response.json();
+        console.log('🔐 Auth status changed - isAuthenticated: true, user:', data.user);
         setUser(data.user);
         setIsAuthenticated(true);
       } else {
         // Not authenticated
+        console.log('🔐 Auth status changed - isAuthenticated: false, user: null');
         setUser(null);
         setIsAuthenticated(false);
       }
     } catch (error) {
-      console.error("Auth check failed:", error);
+      console.error("🔐 Auth check failed:", error);
       setUser(null);
       setIsAuthenticated(false);
     } finally {
@@ -52,6 +58,8 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
+      console.log(`🔐 Attempting login for: ${email} at ${API_URL}/auth/login`);
+      
       const response = await fetch(`${API_URL}/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -59,29 +67,38 @@ export const AuthProvider = ({ children }) => {
         credentials: "include",
       });
 
+      console.log(`🔐 Login response status: ${response.status}`);
+
       if (!response.ok) {
         const error = await response.json().catch(() => ({}));
+        console.error('🔐 Login failed:', error);
         throw new Error(error.message || "Login failed");
       }
 
       const data = await response.json();
+      console.log('🔐 Login successful:', data);
       setUser(data.user);
       setIsAuthenticated(true);
 
       return { success: true };
     } catch (error) {
+      console.error('🔐 Login error:', error);
       return { success: false, error: error.message };
     }
   };
 
   const signup = async (fullName, email, password) => {
     try {
+      console.log(`🔐 Attempting signup for: ${email} at ${API_URL}/auth/signup`);
+      
       const response = await fetch(`${API_URL}/auth/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ fullName, email, password }),
         credentials: "include",
       });
+
+      console.log(`🔐 Signup response status: ${response.status}`);
 
       const data = await (async () => {
         const text = await response.text();
@@ -92,21 +109,26 @@ export const AuthProvider = ({ children }) => {
         }
       })();
 
+      console.log('🔐 Signup response data:', data);
+
       if (!response.ok) {
         const msg =
           data?.message ||
           (data?.errors && data.errors[0]?.msg) ||
           "Signup failed";
+        console.error('🔐 Signup failed:', msg);
         throw new Error(msg);
       }
 
       if (data.token) {
+        console.log('🔐 Signup successful:', data);
         setUser(data.user);
         setIsAuthenticated(true);
       }
 
       return { success: true };
     } catch (error) {
+      console.error('🔐 Signup error:', error);
       return { success: false, error: error.message };
     }
   };
